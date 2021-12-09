@@ -28,16 +28,6 @@ public class Teacher {
     private String email;
     @Column(length = 128 ,name="Location")
     private String location;
-    @OneToMany(mappedBy = "teacher")
-    private List<Course> courseList;
-
-    public void setCourseList(List<Course> courseList) {
-        this.courseList = courseList;
-    }
-
-    public List<Course> getCourseList() {
-        return courseList;
-    }
 
     public Teacher(String name, String password, String email, String location) {
         this.name = name;

@@ -1,6 +1,10 @@
 package com.youpass.pojo;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table
 public class Student {
@@ -24,6 +28,13 @@ public class Student {
     private String email;
     @Column(length = 128 ,name="Location")
     private String location;
+
+    //Set原因：主码不能重复，所以不能用List
+    @ManyToMany(mappedBy = "students")
+    private Set<Exam> users;
+
+    @ManyToMany(mappedBy = "students")
+    private Set<Course> courses;
 
     public Long getId() {
         return id;
@@ -72,12 +83,23 @@ public class Student {
         this.location = location;
     }
 
-    public Student(Long id, String name, String password, String email, String location) {
+    public Set<Exam> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<Exam> users) {
+        this.users = users;
+    }
+
+
+
+    public Student(Long id, String name, String password, String email, String location, Set<Exam> users) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
         this.location = location;
+        this.users = users;
     }
 
     public Student() {
