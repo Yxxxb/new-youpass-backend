@@ -24,6 +24,10 @@ public class TeacherId implements Serializable {
     public TeacherId() {
     }
 
+    public TeacherId(Long teacherId) {
+        this.teacherId = teacherId;
+    }
+
     public static TeacherId.Builder Builder(){
         return new Builder();
     }
