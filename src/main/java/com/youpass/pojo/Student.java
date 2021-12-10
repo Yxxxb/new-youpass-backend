@@ -1,8 +1,6 @@
 package com.youpass.pojo;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -10,14 +8,14 @@ import java.util.Set;
 public class Student {
     @Id
     @SequenceGenerator(
-            name = "Student_Sequence",
-            sequenceName = "Student_Sequence",
+            name = "student_sequence",
+            sequenceName = "student_sequence",
             initialValue = 1950000,
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "Student_Sequence"
+            generator = "student_sequence"
     )
     private Long id;
     @Column(length = 16, name = "Name")
@@ -31,7 +29,7 @@ public class Student {
 
     //Set原因：主码不能重复，所以不能用List
     @ManyToMany(mappedBy = "students")
-    private Set<Exam> users;
+    private Set<Exam> exams;
 
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses;
@@ -83,12 +81,12 @@ public class Student {
         this.location = location;
     }
 
-    public Set<Exam> getUsers() {
-        return users;
+    public Set<Exam> getExams() {
+        return exams;
     }
 
-    public void setUsers(Set<Exam> users) {
-        this.users = users;
+    public void setExams(Set<Exam> users) {
+        this.exams = users;
     }
 
 
@@ -99,7 +97,7 @@ public class Student {
         this.password = password;
         this.email = email;
         this.location = location;
-        this.users = users;
+        this.exams = users;
     }
 
     public Student() {

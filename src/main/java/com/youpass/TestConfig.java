@@ -10,16 +10,13 @@ import java.util.List;
 
 @Configuration
 public class TestConfig {
-    @Bean
-    CommandLineRunner commandLineRunner(
-            TestRepository testRepository
-    ){
-        return args -> {
-            Teacher teacher =new Teacher();
-            testRepository.saveAll(List.of(teacher));
-        };
-
-
-
-    }
+//    @Bean
+//    CommandLineRunner commandLineRunner(
+//            TestRepository testRepository
+//    ){
+//        return args -> {
+//            Teacher teacher =new Teacher();
+//            testRepository.saveAll(List.of(teacher));
+//        };
+//    }
 }
