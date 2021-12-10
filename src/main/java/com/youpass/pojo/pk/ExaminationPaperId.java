@@ -51,4 +51,34 @@ public class ExaminationPaperId implements Serializable {
     public void setQuestionId(Long questionId) {
         this.questionId = new QuestionId(questionId);
     }
+    public static ExaminationPaperId.Builder Builder(){
+        return new Builder();
+    }
+    public static class Builder{
+
+        private StudentId studentId;
+        private ExamId examId;
+        private QuestionId questionId;
+
+        public Builder setStudentId(Long studentId){
+            this.studentId.setStudentId(studentId);
+            return this;
+        }
+        public Builder setExamId(Long examId,Long courseId){
+            this.examId.setExamId(examId);
+            this.examId.setCourseId(courseId);
+            return this;
+        }
+        public Builder setQuestionId(Long questionId){
+            this.questionId.setQuestionId(questionId);
+            return this;
+        }
+        public ExaminationPaperId build(){
+            ExaminationPaperId examinationPaperId=new ExaminationPaperId();
+            examinationPaperId.examId=this.examId;
+            examinationPaperId.studentId=this.studentId;
+            examinationPaperId.questionId=this.questionId;
+            return examinationPaperId;
+        }
+    }
 }

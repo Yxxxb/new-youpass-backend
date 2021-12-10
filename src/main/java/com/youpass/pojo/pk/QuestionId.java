@@ -32,4 +32,23 @@ public class QuestionId implements Serializable {
     public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
+
+    public static QuestionId.Builder Builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private Long questionId;
+
+        public Builder setQuestionId(Long questionId) {
+            this.questionId = questionId;
+            return this;
+        }
+
+        public QuestionId build() {
+            QuestionId questionId = new QuestionId();
+            questionId.questionId = this.questionId;
+            return questionId;
+        }
+    }
 }

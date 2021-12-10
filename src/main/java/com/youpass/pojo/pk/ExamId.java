@@ -44,4 +44,25 @@ public class ExamId implements Serializable {
     public void setCourseId(Long courseId) {
         this.courseId = new CourseId(courseId);
     }
+    public static ExamId.Builder Builder(){
+        return new Builder();
+    }
+    public static class Builder{
+        private Long examId;
+        private CourseId courseId;
+        public Builder setExamId(Long examId){
+            this.examId=examId;
+            return this;
+        }
+        public Builder setCourseId(Long courseId){
+            this.courseId.setCourseId(courseId);
+            return this;
+        }
+        public ExamId build(){
+            ExamId examId=new ExamId();
+            examId.examId=this.examId;
+            examId.courseId =this.courseId;
+            return examId;
+        }
+    }
 }

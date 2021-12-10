@@ -33,4 +33,20 @@ public class CourseId implements Serializable {
     public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
+    public static CourseId.Builder Builder(){
+        return new Builder();
+    }
+    public static class Builder{
+        private Long courseId;
+
+        public Builder setCourseId(Long courseId){
+            this.courseId=courseId;
+            return this;
+        }
+        public CourseId build(){
+            CourseId courseId=new CourseId();
+            courseId.courseId=this.courseId;
+            return courseId;
+        }
+    }
 }
