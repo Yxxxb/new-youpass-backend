@@ -17,4 +17,19 @@ public class QuestionId implements Serializable {
     )
     @Column(name = "question_id")
     private Long questionId;
+
+    public QuestionId() {
+    }
+
+    public QuestionId(Long questionId) {
+        this.questionId = questionId;
+    }
+
+    public Long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
+    }
 }

@@ -10,4 +10,18 @@ public class StudentId implements Serializable {
     @Column(name = "student_id")
     private Long studentId;
 
+    public StudentId() {
+    }
+
+    public StudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
 }

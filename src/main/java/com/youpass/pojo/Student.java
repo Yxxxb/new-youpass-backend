@@ -23,12 +23,11 @@ public class Student implements Serializable {
     @Column(length = 128, name = "Location")
     private String location;
 
-    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<ExaminationPaper> examinationPaperSet=new HashSet<>();
-
-    // Set原因：主码不能重复，所以不能用List
-    @ManyToMany(mappedBy = "students")
-    private Set<Exam> exams;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ExaminationPaper> examinationPaperSet = new HashSet<>();
+    //cascade = CascadeType.ALL待定
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ExamInfo> examInfos = new HashSet<>();
 
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses;

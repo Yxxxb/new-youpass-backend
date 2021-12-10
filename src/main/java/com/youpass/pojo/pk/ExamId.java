@@ -21,4 +21,27 @@ public class ExamId implements Serializable {
     @Embedded
     private CourseId courseId;
 
+    public ExamId() {
+    }
+
+    public ExamId(Long examId, Long courseId) {
+        this.examId = examId;
+        this.courseId = new CourseId(courseId);
+    }
+
+    public Long getExamId() {
+        return examId;
+    }
+
+    public void setExamId(Long examId) {
+        this.examId = examId;
+    }
+
+    public Long getCourseId() {
+        return courseId.getCourseId();
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = new CourseId(courseId);
+    }
 }

@@ -21,4 +21,16 @@ public class CourseId implements Serializable {
 
     public CourseId() {
     }
+
+    public CourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
 }
