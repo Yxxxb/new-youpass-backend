@@ -19,7 +19,7 @@ public class ExaminationPaperId implements Serializable {
     }
 
     public ExaminationPaperId(Long studentId, Long examId,Long courseId, Long questionId) {
-        this.studentId = new StudentId(studentId);
+        this.studentId = StudentId.Builder().setStudentId(studentId).build();
         this.examId = new ExamId(examId,courseId);
         this.questionId = new QuestionId(questionId);
     }
@@ -29,7 +29,7 @@ public class ExaminationPaperId implements Serializable {
     }
 
     public void setStudentId(Long studentId) {
-        this.studentId = new StudentId(studentId);
+        this.studentId =  StudentId.Builder().setStudentId(studentId).build();
     }
 
     public Long getExamId() {

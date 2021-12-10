@@ -48,6 +48,10 @@ public class Exam implements Serializable {
     public Exam() {
     }
 
+    public static Exam.Builder Builder(){
+        return new Builder();
+    }
+
     public static class Builder{
         private ExamId id;
         private Date start_time;
