@@ -13,8 +13,23 @@ public class StudentId implements Serializable {
     public StudentId() {
     }
 
-    public StudentId(Long studentId) {
-        this.studentId = studentId;
+    public static StudentId.Builder Builder(){
+        return new Builder();
+    }
+
+    public static class Builder{
+        private Long studentId;
+
+        public Builder setStudentId(Long studentId) {
+            this.studentId = studentId;
+            return this;
+        }
+
+        public StudentId build(){
+            var studentId = new StudentId();
+            studentId.studentId = this.studentId;
+            return studentId;
+        }
     }
 
     public Long getStudentId() {
@@ -24,4 +39,6 @@ public class StudentId implements Serializable {
     public void setStudentId(Long studentId) {
         this.studentId = studentId;
     }
+
+
 }

@@ -25,4 +25,44 @@ public class Notice implements Serializable {
 
     public Notice() {
     }
+
+    public static Notice.Builder Builder(){
+        return new Builder();
+    }
+
+    public static class Builder{
+        private NoticeId id;
+        private String content;
+        private Date time;
+        private Course course;
+
+        public Builder setId(NoticeId id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setContent(String content) {
+            this.content = content;
+            return this;
+        }
+
+        public Builder setTime(Date time) {
+            this.time = time;
+            return this;
+        }
+
+        public Builder setCourse(Course course) {
+            this.course = course;
+            return this;
+        }
+
+        public Notice build(){
+            var notice = new Notice();
+            notice.id = id;
+            notice.content = content;
+            notice.time = time;
+            notice.course = course;
+            return notice;
+        }
+    }
 }

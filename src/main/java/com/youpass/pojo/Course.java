@@ -44,6 +44,10 @@ public class Course implements Serializable {
     public Course() {
     }
 
+    public static Course.Builder Builder(){
+        return new Builder();
+    }
+
     public static class Builder{
         private CourseId id;
         private String title;
