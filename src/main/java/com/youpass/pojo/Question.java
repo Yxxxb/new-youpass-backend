@@ -32,7 +32,8 @@ public class Question implements Serializable {
     @Column(name = "create_time")
     private Date create_time;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    // 不能加cascade 因为不想删除question就删除teacher
+    @ManyToOne
     @JoinColumn(name = "Teacher_id")
     private Teacher teacher;
 
@@ -43,78 +44,4 @@ public class Question implements Serializable {
     public Question() {
     }
 
-    public Question(Long id, String description, String standard_answer, Integer type, String subject, Date create_time, Teacher teacher, Course course) {
-        this.id = id;
-        this.description = description;
-        this.standard_answer = standard_answer;
-        this.type = type;
-        this.subject = subject;
-        this.create_time = create_time;
-        this.teacher = teacher;
-        this.course = course;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getStandard_answer() {
-        return standard_answer;
-    }
-
-    public void setStandard_answer(String standard_answer) {
-        this.standard_answer = standard_answer;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public Date getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
 }

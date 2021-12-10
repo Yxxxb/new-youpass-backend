@@ -32,45 +32,7 @@ public class QuestionOption implements Serializable {
     @JoinColumn(name="question_id", insertable=false, updatable=false)
     private Question question;
 
-    public QuestionOption(Long question_id, Long option_id, String content, Question question) {
-        this.question_id = question_id;
-        this.option_id = option_id;
-        this.content = content;
-        this.question = question;
-    }
-
     public QuestionOption() {
     }
 
-    public Long getQuestion_id() {
-        return question_id;
-    }
-
-    public void setQuestion_id(Long question_id) {
-        this.question_id = question_id;
-    }
-
-    public Long getOption_id() {
-        return option_id;
-    }
-
-    public void setOption_id(Long option_id) {
-        this.option_id = option_id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
 }

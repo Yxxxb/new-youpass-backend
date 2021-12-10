@@ -18,8 +18,5 @@ public class TestConfig {
             Teacher teacher =new Teacher();
             testRepository.saveAll(List.of(teacher));
         };
-
-
-
     }
 }
