@@ -4,21 +4,21 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Embeddable
-public class CourseId implements Serializable {
-
+public class ExamId implements Serializable {
     @SequenceGenerator(
-            name = "Course_Sequence",
-            sequenceName = "Course_Sequence",
+            name = "Exam_Sequence",
+            sequenceName = "Exam_Sequence",
             initialValue = 1,
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "Course_Sequence"
+            generator = "Exam_Sequence"
     )
-    @Column(name = "course_id")
-    private Long courseId;
+    @Column(name = "exam_id")
+    private Long examId;
 
-    public CourseId() {
-    }
+    @Embedded
+    private CourseId courseId;
+
 }

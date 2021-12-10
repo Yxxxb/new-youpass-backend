@@ -22,13 +22,18 @@ public class Course implements Serializable {
     private String password;
 
     //删除课程不能删除老师，所以不能加cascade
-    @MapsId("teacherId")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Teacher_id")
+    @JoinColumn(name = "Teacher_id",referencedColumnName = "teacher_id")
     private Teacher teacher;
 
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<Notice> noticeList = new HashSet<>();
+    private Set<Notice> noticeSet = new HashSet<>();
+
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Exam> examSet = new HashSet<>();
+
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Question> questionSet = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "student_course",

@@ -1,25 +1,19 @@
 package com.youpass.pojo;
 
+import com.youpass.pojo.pk.QuestionId;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
 public class Question implements Serializable {
-    @Id
-    @Column(name = "question_id")
-    @SequenceGenerator(
-            name = "Question_Sequence",
-            sequenceName = "Question_Sequence",
-            initialValue = 1,
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "Question_Sequence"
-    )
-    private Long id;
+    @EmbeddedId
+    private QuestionId id;
+
 
     @Column(length = 1024, name = "description")
     private String description;
@@ -34,12 +28,18 @@ public class Question implements Serializable {
 
     // 不能加cascade 因为不想删除question就删除teacher
     @ManyToOne
-    @JoinColumn(name = "Teacher_id")
+    @JoinColumn(name = "Teacher_id",referencedColumnName = "teacher_id")
     private Teacher teacher;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Course_id")
+    @ManyToOne
+    @JoinColumn(name = "Course_id",referencedColumnName = "course_id")
     private Course course;
+
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Option> optionSet = new HashSet<>();
+
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<ExaminationPaper> examinationPaperSet = new HashSet<>();
 
     public Question() {
     }

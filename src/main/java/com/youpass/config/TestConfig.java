@@ -1,4 +1,4 @@
-package com.youpass;
+package com.youpass.config;
 
 import com.youpass.dao.TestRepository;
 import com.youpass.pojo.Teacher;

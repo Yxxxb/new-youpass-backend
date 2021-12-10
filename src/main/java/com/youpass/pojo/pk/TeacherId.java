@@ -15,14 +15,10 @@ public class TeacherId implements Serializable {
             strategy = GenerationType.SEQUENCE,
             generator = "Teacher_Sequence"
     )
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "teacher_id")
+    private Long teacherId;
 
     // 不对外提供初始化Teacher id的方法
     public TeacherId() {
-    }
-
-    public Long getId() {
-        return id;
     }
 }

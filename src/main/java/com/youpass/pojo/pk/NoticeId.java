@@ -20,28 +20,12 @@ public class NoticeId implements Serializable {
             strategy = GenerationType.SEQUENCE,
             generator = "Notice_Sequence"
     )
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "notice_id")
+    private Long noticeId;
 
     @Embedded
     private CourseId courseId;
 
     public NoticeId() {
-    }
-
-    public NoticeId(CourseId courseId) {
-        this.courseId = courseId;
-    }
-
-    public CourseId getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(CourseId courseId) {
-        this.courseId = courseId;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

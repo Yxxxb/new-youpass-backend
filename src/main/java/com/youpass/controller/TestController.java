@@ -12,10 +12,11 @@ import java.util.List;
 @RestController
 public class TestController {
     @GetMapping("api/test")
-    public Result<Object> test(){
-        List<Student> studentList = new ArrayList<>();
-        studentList.add(new Student("234","liusyuzhi","ewr","wer"));
-        studentList.add(new Student("235674","lius657yuzhi","e35wr","w546er"));
-        return ResultUtil.success(studentList);
+    public String test(){
+        // List<Student> studentList = new ArrayList<>();
+        // studentList.add(new Student("234","liusyuzhi","ewr","wer"));
+        // studentList.add(new Student("235674","lius657yuzhi","e35wr","w546er"));
+        // return ResultUtil.success(studentList);
+        return "";
     }
 }
