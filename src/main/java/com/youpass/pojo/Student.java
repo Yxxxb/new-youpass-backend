@@ -29,17 +29,17 @@ public class Student implements Serializable {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ExamInfo> examInfos = new HashSet<>();
 
-    @ManyToMany(mappedBy = "students")
-    private Set<Course> courses;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<StuTakeCourse> stuTakeCourses = new HashSet<>();
 
     public Student() {
     }
 
-    public static Student.Builder Builder(){
+    public static Student.Builder Builder() {
         return new Builder();
     }
 
-    public static class Builder{
+    public static class Builder {
         private StudentId id;
         private String name;
         private String password;
@@ -71,7 +71,7 @@ public class Student implements Serializable {
             return this;
         }
 
-        public Student build(){
+        public Student build() {
             var student = new Student();
             student.id = id;
             student.name = name;
@@ -138,11 +138,11 @@ public class Student implements Serializable {
         this.examInfos = examInfos;
     }
 
-    public Set<Course> getCourses() {
-        return courses;
+    public Set<StuTakeCourse> getStuTakeCourses() {
+        return stuTakeCourses;
     }
 
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
+    public void setStuTakeCourses(Set<StuTakeCourse> stuTakeCourses) {
+        this.stuTakeCourses = stuTakeCourses;
     }
 }
