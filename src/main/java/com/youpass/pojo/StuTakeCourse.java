@@ -34,6 +34,16 @@ public class StuTakeCourse implements Serializable {
     public static StuTakeCourse.Builder Builder(){
         return new Builder();
     }
+
+    @Override
+    public String toString() {
+        return "StuTakeCourse{" +
+                "id=" + id +
+                ", student=" + student +
+                ", course=" + course +
+                '}';
+    }
+
     public static class Builder {
         private StuTakeCourseId id;
         private Student student;

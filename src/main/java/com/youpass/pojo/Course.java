@@ -29,7 +29,7 @@ public class Course implements Serializable {
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<Notice> noticeSet = new HashSet<>();
 
-    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
     private Set<Exam> examSet = new HashSet<>();
 
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
