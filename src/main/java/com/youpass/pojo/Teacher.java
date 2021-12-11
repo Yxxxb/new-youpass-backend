@@ -34,11 +34,6 @@ public class Teacher implements Serializable {
     @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL)
     private Set<Course> courseSet = new HashSet<>();
 
-    //放弃关系的维护
-    @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL)
-    private Set<Question> questionSet = new HashSet<>();
-
-
     public Teacher() {
     }
 
@@ -133,16 +128,8 @@ public class Teacher implements Serializable {
     public Set<Course> getCourseSet() {
         return courseSet;
     }
-
     public void setCourseSet(Set<Course> courseSet) {
         this.courseSet = courseSet;
     }
 
-    public Set<Question> getQuestionSet() {
-        return questionSet;
-    }
-
-    public void setQuestionSet(Set<Question> questionSet) {
-        this.questionSet = questionSet;
-    }
 }

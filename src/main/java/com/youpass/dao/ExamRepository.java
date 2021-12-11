@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface ExamRepository extends JpaRepository<Exam, ExamId> {
-    public static Long minId = 1L;
+    public static final Long minId = 1L;
 
     @Query("SELECT max(e.id.examId)+1 FROM Exam e where e.id.courseId = ?1  ")
     Optional<Long> getNextId(CourseId courseId);

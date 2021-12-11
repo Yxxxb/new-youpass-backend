@@ -26,10 +26,8 @@ public class Question implements Serializable {
     @Column(name = "create_time")
     private Date create_time;
 
-    // 不能加cascade 因为不想删除question就删除teacher
-    @ManyToOne
-    @JoinColumn(name = "Teacher_id",referencedColumnName = "teacher_id")
-    private Teacher teacher;
+
+
 
     @ManyToOne
     @JoinColumn(name = "Course_id",referencedColumnName = "course_id")
@@ -55,7 +53,6 @@ public class Question implements Serializable {
         private Integer type;
         private String subject;
         private Date create_time;
-        private Teacher teacher;
         private Course course;
 
         public Builder setId(QuestionId id) {
@@ -88,11 +85,6 @@ public class Question implements Serializable {
             return this;
         }
 
-        public Builder setTeacher(Teacher teacher) {
-            this.teacher = teacher;
-            return this;
-        }
-
         public Builder setCourse(Course course) {
             this.course = course;
             return this;
@@ -106,7 +98,6 @@ public class Question implements Serializable {
             question.type = type;
             question.subject = subject;
             question.create_time = create_time;
-            question.teacher = teacher;
             question.course = course;
             return question;
         }
@@ -158,14 +149,6 @@ public class Question implements Serializable {
 
     public void setCreate_time(Date create_time) {
         this.create_time = create_time;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
     }
 
     public Course getCourse() {

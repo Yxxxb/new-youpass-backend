@@ -30,6 +30,7 @@ public class StuTakeCourse implements Serializable {
 
     public StuTakeCourse() {
     }
+
     public static StuTakeCourse.Builder Builder(){
         return new Builder();
     }
