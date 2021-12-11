@@ -7,16 +7,16 @@ import java.util.Objects;
 @Embeddable
 public class CourseId implements Serializable {
 
-    @SequenceGenerator(
-            name = "Course_Sequence",
-            sequenceName = "Course_Sequence",
-            initialValue = 1,
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "Course_Sequence"
-    )
+//    @SequenceGenerator(
+//            name = "Course_Sequence",
+//            sequenceName = "Course_Sequence",
+//            initialValue = 1,
+//            allocationSize = 1
+//    )
+//    @GeneratedValue(
+//            strategy = GenerationType.SEQUENCE,
+//            generator = "Course_Sequence"
+//    )
     @Column(name = "course_id")
     private Long courseId;
 

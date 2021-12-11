@@ -23,13 +23,13 @@ public class Student implements Serializable {
     @Column(length = 128, name = "Location")
     private String location;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     private Set<ExaminationPaper> examinationPaperSet = new HashSet<>();
     //cascade = CascadeType.ALL待定
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     private Set<ExamInfo> examInfos = new HashSet<>();
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     private Set<StuTakeCourse> stuTakeCourses = new HashSet<>();
 
     public Student() {

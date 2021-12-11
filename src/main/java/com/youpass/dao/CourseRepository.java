@@ -11,7 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, CourseId> {
-    //select max(exam_id)+1 from (select exam_id from exam where course_id=:course_id)
-    @Query(value = "SELECT max(course_id)+1 FROM Course", nativeQuery = true)
+    public static final Long minId = 1000L;
+
+    @Query(value = "SELECT max(c.id.courseId)+1 FROM Course c")
     Optional<Long> getNextId();
 }

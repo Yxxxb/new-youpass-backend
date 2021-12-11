@@ -11,16 +11,16 @@ public class NoticeId implements Serializable {
      * 自己的id自动生成 course id 外部给出
      */
 
-    @SequenceGenerator(
-            name = "Notice_Sequence",
-            sequenceName = "Notice_Sequence",
-            initialValue = 1,
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "Notice_Sequence"
-    )
+//    @SequenceGenerator(
+//            name = "Notice_Sequence",
+//            sequenceName = "Notice_Sequence",
+//            initialValue = 1,
+//            allocationSize = 1
+//    )
+//    @GeneratedValue(
+//            strategy = GenerationType.SEQUENCE,
+//            generator = "Notice_Sequence"
+//    )
     @Column(name = "notice_id")
     private Long noticeId;
 

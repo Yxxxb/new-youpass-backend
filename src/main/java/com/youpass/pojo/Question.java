@@ -35,10 +35,10 @@ public class Question implements Serializable {
     @JoinColumn(name = "Course_id",referencedColumnName = "course_id")
     private Course course;
 
-    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question",cascade = CascadeType.REMOVE)
     private Set<Option> optionSet = new HashSet<>();
 
-    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question",cascade = CascadeType.REMOVE)
     private Set<ExaminationPaper> examinationPaperSet = new HashSet<>();
 
     public Question() {

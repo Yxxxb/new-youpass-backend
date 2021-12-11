@@ -8,6 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface TeacherRepository extends JpaRepository<Teacher, TeacherId> {
+    public static final Long minId = 10500L;
+
+    @Query("SELECT max(t.id.teacherId)+1 FROM Teacher t")
+    Optional<Long> getNextId();
+
     @Query("SELECT t FROM Teacher t where t.email = ?1")
     Optional<Teacher> findTeacherByEmail(String email);
 }

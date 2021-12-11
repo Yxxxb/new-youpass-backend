@@ -31,11 +31,11 @@ public class Teacher implements Serializable {
     private String location;
 
     //放弃关系的维护
-    @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacher",cascade = CascadeType.REMOVE)
     private Set<Course> courseSet = new HashSet<>();
 
     //放弃关系的维护
-    @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacher",cascade = CascadeType.REMOVE)
     private Set<Question> questionSet = new HashSet<>();
 
 

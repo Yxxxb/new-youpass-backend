@@ -10,6 +10,14 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, StudentId> {
+    public static final Long minId = 1950000L;
+
+    @Query("SELECT max(s.id.studentId)+1 FROM Student s")
+    Optional<Long> getNextId();
+
     @Query("SELECT s FROM Student s where s.email = ?1")
     Optional<Student> findStudentByEmail(String email);
+
+
+
 }
