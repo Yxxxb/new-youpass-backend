@@ -35,11 +35,8 @@ public class Course implements Serializable {
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Question> questionSet = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "student_course",
-    joinColumns = {@JoinColumn(name = "course_id",referencedColumnName = "course_id")},
-    inverseJoinColumns = {@JoinColumn(name = "student_id",referencedColumnName = "student_id")})
-    private Set<Student> students;
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<StuTakeCourse> stuTakeCourses = new HashSet<>();
 
     public Course() {
     }
@@ -56,7 +53,7 @@ public class Course implements Serializable {
 //        private Set<Notice> noticeSet = new HashSet<>();
 //        private Set<Exam> examSet = new HashSet<>();
 //        private Set<Question> questionSet = new HashSet<>();
-//        private Set<Student> students;
+//        private Set<StuTakeCourse> stuTakeCourses;
 
         public Builder setId(CourseId id){
             this.id = id;
@@ -116,10 +113,9 @@ public class Course implements Serializable {
         return questionSet;
     }
 
-    public Set<Student> getStudents() {
-        return students;
+    public Set<StuTakeCourse> getStuTakeCourses() {
+        return stuTakeCourses;
     }
-
     public void setId(CourseId id) {
         this.id = id;
     }
@@ -134,5 +130,20 @@ public class Course implements Serializable {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+    public void setNoticeSet(Set<Notice> noticeSet) {
+        this.noticeSet = noticeSet;
+    }
+
+    public void setExamSet(Set<Exam> examSet) {
+        this.examSet = examSet;
+    }
+
+    public void setQuestionSet(Set<Question> questionSet) {
+        this.questionSet = questionSet;
+    }
+
+    public void setStuTakeCourses(Set<StuTakeCourse> stuTakeCourses) {
+        this.stuTakeCourses = stuTakeCourses;
     }
 }
