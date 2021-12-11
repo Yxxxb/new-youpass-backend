@@ -34,33 +34,35 @@ public class NoticeId implements Serializable {
         this.noticeId = noticeId;
     }
 
-    public CourseId getCourseId() {
-        return courseId;
+    public Long getCourseId() {
+        return courseId.getCourseId();
     }
 
-    public void setCourseId(CourseId courseId) {
-        this.courseId = courseId;
+    public void setCourseId(Long courseId) {
+        this.courseId = new CourseId(courseId);
     }
 
-    public NoticeId(Long noticeId, CourseId courseId) {
+    public NoticeId(Long noticeId, Long courseId) {
         this.noticeId = noticeId;
-        this.courseId = courseId;
+        this.courseId = new CourseId(courseId);
     }
 
     public NoticeId() {
     }
+
     public static NoticeId.Builder Builder(){
         return new Builder();
     }
+
     public static class Builder{
         private Long noticeId;
         private CourseId courseId;
-        public Builder getNoticeId(Long noticeId1){
-            this.noticeId =noticeId1;
-            return  this;
+        public Builder getNoticeId(Long noticeId){
+            this.noticeId =noticeId;
+            return this;
         }
         public Builder setCourseId(Long courseId){
-            this.courseId.setCourseId(courseId);
+            this.courseId = new CourseId(courseId);
             return this;
         }
         public NoticeId build(){

@@ -61,16 +61,15 @@ public class ExaminationPaperId implements Serializable {
         private QuestionId questionId;
 
         public Builder setStudentId(Long studentId){
-            this.studentId.setStudentId(studentId);
+            this.studentId = new StudentId(studentId);
             return this;
         }
         public Builder setExamId(Long examId,Long courseId){
-            this.examId.setExamId(examId);
-            this.examId.setCourseId(courseId);
+            this.examId = new ExamId(examId,courseId);
             return this;
         }
         public Builder setQuestionId(Long questionId){
-            this.questionId.setQuestionId(questionId);
+            this.questionId = new QuestionId(questionId);
             return this;
         }
         public ExaminationPaperId build(){

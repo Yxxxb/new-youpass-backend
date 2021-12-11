@@ -13,6 +13,10 @@ public class StudentId implements Serializable {
     public StudentId() {
     }
 
+    public StudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
     public static StudentId.Builder Builder(){
         return new Builder();
     }
@@ -36,9 +40,7 @@ public class StudentId implements Serializable {
         return studentId;
     }
 
-    public StudentId(Long studentId) {
-        this.studentId = studentId;
-    }
+
 
     public void setStudentId(Long studentId) {
         this.studentId = studentId;

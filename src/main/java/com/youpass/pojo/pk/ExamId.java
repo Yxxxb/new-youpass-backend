@@ -55,7 +55,7 @@ public class ExamId implements Serializable {
             return this;
         }
         public Builder setCourseId(Long courseId){
-            this.courseId.setCourseId(courseId);
+            this.courseId = new CourseId(courseId);
             return this;
         }
         public ExamId build(){

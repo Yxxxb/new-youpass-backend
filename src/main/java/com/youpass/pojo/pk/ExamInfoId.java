@@ -11,28 +11,32 @@ public class ExamInfoId implements Serializable {
     @Embedded
     private ExamId examId;
 
+    public ExamInfoId() {
+    }
+
     public ExamInfoId(Long studentId, Long examId,Long courseId) {
         this.studentId = new StudentId(studentId);
         this.examId = new ExamId(examId,courseId);
     }
 
-    public StudentId getStudentId() {
-        return studentId;
+    public Long getStudentId() {
+        return studentId.getStudentId();
     }
 
-    public void setStudentId(StudentId studentId) {
-        this.studentId = studentId;
+    public void setStudentId(Long studentId) {
+        this.studentId = new StudentId(studentId);
     }
 
-    public ExamId getExamId() {
-        return examId;
+    public Long getExamId() {
+        return examId.getExamId();
     }
 
-    public void setExamId(ExamId examId) {
-        this.examId = examId;
+    public Long getCourseId(){
+        return examId.getCourseId();
     }
 
-    public ExamInfoId() {
+    public void setExamId(Long examId,Long courseId) {
+        this.examId = new ExamId(examId,courseId);
     }
 
     public static ExamInfoId.Builder Builder(){
@@ -42,12 +46,11 @@ public class ExamInfoId implements Serializable {
         private StudentId studentId;
         private ExamId examId;
         public Builder setStudentId(Long studentId){
-            this.studentId.setStudentId(studentId);
+            this.studentId = new StudentId(studentId);
             return this;
         }
         public Builder setExamId(Long examId,Long courseId){
-            this.examId.setExamId(examId);
-            this.examId.setCourseId(courseId);
+            this.examId = new ExamId(examId,courseId);
             return this;
         }
         public ExamInfoId build(){

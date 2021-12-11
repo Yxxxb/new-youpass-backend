@@ -40,9 +40,9 @@ public class OptionId implements Serializable {
     public OptionId() {
     }
 
-    public OptionId(Long optionId, QuestionId questionId) {
+    public OptionId(Long optionId, Long questionId) {
         this.optionId = optionId;
-        this.questionId = questionId;
+        this.questionId = new QuestionId(questionId);
     }
     public static OptionId.Builder Builder(){
         return new Builder();
@@ -55,7 +55,7 @@ public class OptionId implements Serializable {
             return this;
         }
         public Builder setQuestionId(Long questionId){
-            this.questionId.setQuestionId(questionId);
+            this.questionId= new QuestionId(questionId);
             return this;
         }
         public OptionId build(){
