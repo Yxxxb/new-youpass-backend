@@ -43,7 +43,7 @@ public class Exam implements Serializable {
 
     //cascade = CascadeType.ALL待定
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
-    private Set<ExamInfo> examInfos = new HashSet<>();
+    private Set<ExamInfo> examInfoSet = new HashSet<>();
 
     public Exam() {
     }
@@ -218,11 +218,11 @@ public class Exam implements Serializable {
         this.examinationPaperSet = examinationPaperSet;
     }
 
-    public Set<ExamInfo> getExamInfos() {
-        return examInfos;
+    public Set<ExamInfo> getExamInfoSet() {
+        return examInfoSet;
     }
 
-    public void setExamInfos(Set<ExamInfo> examInfos) {
-        this.examInfos = examInfos;
+    public void setExamInfoSet(Set<ExamInfo> examInfoSet) {
+        this.examInfoSet = examInfoSet;
     }
 }

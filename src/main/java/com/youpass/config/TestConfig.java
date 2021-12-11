@@ -147,19 +147,6 @@ public class TestConfig {
             stuTakeCourseRepository.save(stucourse3);
             stuTakeCourseRepository.save(stucourse4);
 
-
-            var examinfo1 = ExamInfo.Builder()
-                    .setId(new ExamInfoId(exam1.getId().getExamId(), exam1.getId().getCourseId(), s1.getId().getStudentId()))
-                    .setScore(100)
-                    .setState(1)
-                    .build();
-
-            var examinfo2 = ExamInfo.Builder()
-                    .setId(new ExamInfoId(exam2.getId().getExamId(), exam2.getId().getCourseId(), s1.getId().getStudentId()))
-                    .setScore(100)
-                    .setState(1)
-                    .build();
-
             q1.getOptionSet().add(o1);
             q1.getOptionSet().add(o2);
             course1.getQuestionSet().add(q1);
@@ -182,6 +169,46 @@ public class TestConfig {
             t1.getCourseSet().add(course1);
             t1.getCourseSet().add(course2);
             teacherRepository.save(t1);
+
+
+
+//            var examinfo1 = ExamInfo.Builder()
+//                    .setId(new ExamInfoId(exam1.getId().getExamId(), exam1.getId().getCourseId(), s1.getId().getStudentId()))
+//                    .setScore(100)
+//                    .setState(1)
+//                    .setExam(exam1)
+//                    .setStudent(s1)
+//                    .build();
+//
+//            var examinfo2 = ExamInfo.Builder()
+//                    .setId(new ExamInfoId(exam2.getId().getExamId(), exam2.getId().getCourseId(), s1.getId().getStudentId()))
+//                    .setScore(100)
+//                    .setState(1)
+//                    .setExam(exam2)
+//                    .setStudent(s1)
+//                    .build();
+//
+//            exam1.getExamInfoSet().add(examinfo1);
+//            exam2.getExamInfoSet().add(examinfo2);
+//            s1.getExamInfos().add(examinfo1);
+//            s1.getExamInfos().add(examinfo2);
+//            examRepository.save(exam1);
+//            examRepository.save(exam2);
+//            studentRepository.save(s1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //            var t2 = Teacher.Builder()
 //                    .setId(new TeacherId(teacherRepository.minId + 1))
 //                    .setName("t2")
