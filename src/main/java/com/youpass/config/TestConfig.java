@@ -48,32 +48,37 @@ public class TestConfig {
     CommandLineRunner commandLineRunner() {
         return args -> {
 
-             var s1 = Student.Builder()
-                     .setId(new StudentId(studentRepository.getNextId().isPresent()?studentRepository.getNextId().get():studentRepository.minId))
-                     .setName("danny1")
-                     .setPassword("123")
-                     .build();
-             studentRepository.save(s1);
-             var s2 = Student.Builder()
-                     .setId(new StudentId(studentRepository.getNextId().isPresent()?studentRepository.getNextId().get():studentRepository.minId))
-                     .setName("danny2")
-                     .setPassword("123")
-                     .build();
+            // var s1 = Student.Builder()
+            //         .setId(new StudentId(studentRepository.getNextId().isPresent()?studentRepository.getNextId().get():studentRepository.minId))
+            //         .setName("danny1")
+            //         .setPassword("123")
+            //         .build();
+            var s1 = Student.Builder()
+                    .setId(new StudentId(studentRepository.minId))
+                    .setName("danny1")
+                    .setPassword("123")
+                    .build();
+            studentRepository.save(s1);
+            var s2 = Student.Builder()
+                    .setId(new StudentId(studentRepository.minId + 1))
+                    .setName("danny2")
+                    .setPassword("123")
+                    .build();
             studentRepository.save(s2);
 
             var t1 = Teacher.Builder()
-                    .setId(new TeacherId(teacherRepository.getNextId().isPresent()?teacherRepository.getNextId().get():teacherRepository.minId))
+                    .setId(new TeacherId(teacherRepository.minId))
                     .setName("t1")
                     .setPassword("123")
                     .build();
             var course1 = Course.Builder()
-                    .setId(new CourseId(courseRepository.getNextId().isPresent()?courseRepository.getNextId().get():courseRepository.minId))
+                    .setId(new CourseId(courseRepository.minId))
                     .setPassword("123")
                     .setTitle("c1")
                     .setTeacher(t1)
                     .build();
             var course2 = Course.Builder()
-                    .setId(new CourseId(courseRepository.getNextId().isPresent()?courseRepository.getNextId().get():courseRepository.minId))
+                    .setId(new CourseId(courseRepository.minId + 1))
                     .setPassword("123")
                     .setTitle("c2")
                     .setTeacher(t1)
@@ -82,7 +87,7 @@ public class TestConfig {
             t1.getCourseSet().add(course2);
             teacherRepository.save(t1);
             var t2 = Teacher.Builder()
-                    .setId(new TeacherId(teacherRepository.getNextId().isPresent()?teacherRepository.getNextId().get():teacherRepository.minId))
+                    .setId(new TeacherId(teacherRepository.minId + 1))
                     .setName("t2")
                     .setPassword("123")
                     .build();

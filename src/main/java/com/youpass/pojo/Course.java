@@ -26,16 +26,16 @@ public class Course implements Serializable {
     @JoinColumn(name = "Teacher_id",referencedColumnName = "teacher_id")
     private Teacher teacher;
 
-    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<Notice> noticeSet = new HashSet<>();
 
-    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<Exam> examSet = new HashSet<>();
 
-    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<Question> questionSet = new HashSet<>();
 
-    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<StuTakeCourse> stuTakeCourses = new HashSet<>();
 
     public Course() {

@@ -38,11 +38,11 @@ public class Exam implements Serializable {
     @JoinColumn(name = "course_id", referencedColumnName = "course_id")
     private Course course;
 
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
     private Set<ExaminationPaper> examinationPaperSet = new HashSet<>();
 
     //cascade = CascadeType.ALL待定
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
     private Set<ExamInfo> examInfos = new HashSet<>();
 
     public Exam() {
