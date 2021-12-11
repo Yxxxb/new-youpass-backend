@@ -235,10 +235,31 @@ public class TestConfig {
 //                System.out.println(item.getId().getCourseId().getCourseId().toString()+" "+item.getId().getStudentId().getStudentId().toString());
 //            }
 
-            var teacher = teacherRepository.getById(new TeacherId(10500L));
-            for(var item : teacher.getCourseSet()){
-                System.out.println(item.getTitle());
-            }
+
+            /**
+             * 查询
+             */
+//            var teacher = teacherRepository.findById(new TeacherId(10500L));
+//            for(var item : teacher.get().getCourseSet()){
+//                System.out.println(item.getTitle());
+//            }
+
+
+            /**
+             *更新
+             */
+            var teacher = teacherRepository.findById(new TeacherId(10500L)).orElseThrow(()->new IllegalStateException("123"));
+            teacher.setName("danny");
+            teacherRepository.save(teacher);
+
+
+            /**
+             * 删除
+             */
+            teacherRepository.deleteById(new TeacherId(10500L));
+
+
+
 
 
 
