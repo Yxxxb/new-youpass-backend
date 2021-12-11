@@ -35,7 +35,7 @@ public class StuTakeCourse implements Serializable {
         return new Builder();
     }
     public static class Builder {
-        private StuTakeCourseId id=new StuTakeCourseId();
+        private StuTakeCourseId id = new StuTakeCourseId();
         private Student student;
         private Course course;
 

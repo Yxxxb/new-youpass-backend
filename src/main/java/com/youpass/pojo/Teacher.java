@@ -1,7 +1,10 @@
 package com.youpass.pojo;
 
 import com.youpass.pojo.pk.TeacherId;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.repository.cdi.Eager;
 import org.springframework.jdbc.core.SqlReturnType;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,7 +34,7 @@ public class Teacher implements Serializable {
     private String location;
 
     //放弃关系的维护
-    @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Course> courseSet = new HashSet<>();
 
     public Teacher() {
@@ -125,6 +128,7 @@ public class Teacher implements Serializable {
         this.location = location;
     }
 
+    @Transient
     public Set<Course> getCourseSet() {
         return courseSet;
     }

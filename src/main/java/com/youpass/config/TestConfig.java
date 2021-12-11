@@ -150,32 +150,9 @@ public class TestConfig {
                     .setCourse(course2)
                     .build();
 
-<<<<<<< Updated upstream
-            stuTakeCourseRepository.save(stucourse1);
-            stuTakeCourseRepository.save(stucourse2);
-            stuTakeCourseRepository.save(stucourse3);
-            stuTakeCourseRepository.save(stucourse4);
-=======
-
-            var examinfo1 = ExamInfo.Builder()
-                    .setId(new ExamInfoId(exam1.getId().getExamId(), exam1.getId().getCourseId(), s1.getId().getStudentId()))
-                    .setScore(100)
-                    .setState(1)
-                    .setExam(exam1)
-                    .setStudent(s1)
-                    .build();
-
-            var examinfo2 = ExamInfo.Builder()
-                    .setId(new ExamInfoId(exam2.getId().getExamId(), exam2.getId().getCourseId(), s1.getId().getStudentId()))
-                    .setScore(100)
-                    .setState(1)
-                    .setExam(exam2)
-                    .setStudent(s1)
-                    .build();
             teacherRepository.save(t1);
             studentRepository.save(s1);
             studentRepository.save(s2);
->>>>>>> Stashed changes
 
             q1.getOptionSet().add(o1);
             q1.getOptionSet().add(o2);
@@ -196,50 +173,82 @@ public class TestConfig {
             t1.getCourseSet().add(course1);
             t1.getCourseSet().add(course2);
             teacherRepository.save(t1);
-<<<<<<< Updated upstream
-
-
-
-//            var examinfo1 = ExamInfo.Builder()
-//                    .setId(new ExamInfoId(exam1.getId().getExamId(), exam1.getId().getCourseId(), s1.getId().getStudentId()))
-//                    .setScore(100)
-//                    .setState(1)
-//                    .setExam(exam1)
-//                    .setStudent(s1)
-//                    .build();
-//
-//            var examinfo2 = ExamInfo.Builder()
-//                    .setId(new ExamInfoId(exam2.getId().getExamId(), exam2.getId().getCourseId(), s1.getId().getStudentId()))
-//                    .setScore(100)
-//                    .setState(1)
-//                    .setExam(exam2)
-//                    .setStudent(s1)
-//                    .build();
-//
-//            exam1.getExamInfoSet().add(examinfo1);
-//            exam2.getExamInfoSet().add(examinfo2);
-//            s1.getExamInfos().add(examinfo1);
-//            s1.getExamInfos().add(examinfo2);
-//            examRepository.save(exam1);
-//            examRepository.save(exam2);
-//            studentRepository.save(s1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
             studentRepository.save(s1);
             studentRepository.save(s2);
->>>>>>> Stashed changes
+
+
+
+            var examinfo1 = ExamInfo.Builder()
+                    .setId(new ExamInfoId(exam1.getId().getExamId(), exam1.getId().getCourseId(), s1.getId().getStudentId()))
+                    .setScore(100)
+                    .setState(1)
+                    .setExam(exam1)
+                    .setStudent(s1)
+                    .build();
+
+            var examinfo2 = ExamInfo.Builder()
+                    .setId(new ExamInfoId(exam2.getId().getExamId(), exam2.getId().getCourseId(), s1.getId().getStudentId()))
+                    .setScore(100)
+                    .setState(1)
+                    .setExam(exam2)
+                    .setStudent(s1)
+                    .build();
+
+            exam1.getExamInfoSet().add(examinfo1);
+            exam2.getExamInfoSet().add(examinfo2);
+            s1.getExamInfos().add(examinfo1);
+            s1.getExamInfos().add(examinfo2);
+            courseRepository.save(course1);
+            studentRepository.save(s1);
+
+            var ep1= ExaminationPaper.Builder()
+                    .setId(new ExaminationPaperId(s1.getId().getStudentId(),exam1.getId().getExamId(),exam1.getId().getCourseId(),q1.getId().getQuestionId()))
+                    .setQuestion(q1)
+                    .setExam(exam1)
+                    .setStudent(s1)
+                    .setNumInPaper(12)
+                    .setSelfOrder(1)
+                    .setValue(14)
+                    .build();
+            var ep2= ExaminationPaper.Builder()
+                    .setId(new ExaminationPaperId(s2.getId().getStudentId(),exam1.getId().getExamId(),exam1.getId().getCourseId(),q1.getId().getQuestionId()))
+                    .setQuestion(q1)
+                    .setExam(exam1)
+                    .setStudent(s2)
+                    .setNumInPaper(12)
+                    .setSelfOrder(1)
+                    .setValue(14)
+                    .build();
+
+            s1.getExaminationPaperSet().add(ep1);
+            s2.getExaminationPaperSet().add(ep2);
+            exam1.getExaminationPaperSet().add(ep1);
+            exam1.getExaminationPaperSet().add(ep2);
+            q1.getExaminationPaperSet().add(ep1);
+            q1.getExaminationPaperSet().add(ep2);
+            studentRepository.save(s1);
+            studentRepository.save(s2);
+            courseRepository.save(course1);
+
+//            var course = courseRepository.getById(new CourseId(1000L));
+//            for (var item : course.getStuTakeCourses()){
+//                System.out.println(item.getId().getCourseId().getCourseId().toString()+" "+item.getId().getStudentId().getStudentId().toString());
+//            }
+
+            var teacher = teacherRepository.getById(new TeacherId(10500L));
+            for(var item : teacher.getCourseSet()){
+                System.out.println(item.getTitle());
+            }
+
+
+
+
+
+
+
+
+
+
 
 //            var t2 = Teacher.Builder()
 //                    .setId(new TeacherId(teacherRepository.minId + 1))
