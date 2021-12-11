@@ -4,18 +4,19 @@ import com.youpass.pojo.Teacher;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class TeacherId implements Serializable {
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "Teacher_Sequence"
+    )
     @SequenceGenerator(
             name = "Teacher_Sequence",
             sequenceName = "Teacher_Sequence",
             initialValue = 10500,
             allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "Teacher_Sequence"
     )
     @Column(name = "teacher_id")
     private Long teacherId;
@@ -53,5 +54,18 @@ public class TeacherId implements Serializable {
 
     public void setTeacherId(Long teacherId) {
         this.teacherId = teacherId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TeacherId teacherId1 = (TeacherId) o;
+        return Objects.equals(teacherId, teacherId1.teacherId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(teacherId);
     }
 }

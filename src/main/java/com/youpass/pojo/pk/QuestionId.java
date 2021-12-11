@@ -2,6 +2,7 @@ package com.youpass.pojo.pk;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class QuestionId implements Serializable {
@@ -50,5 +51,18 @@ public class QuestionId implements Serializable {
             questionId.questionId = this.questionId;
             return questionId;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        QuestionId that = (QuestionId) o;
+        return Objects.equals(questionId, that.questionId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(questionId);
     }
 }

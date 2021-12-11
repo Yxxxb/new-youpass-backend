@@ -1,13 +1,17 @@
 package com.youpass.config;
 
 import com.youpass.dao.*;
-import com.youpass.pojo.ExaminationPaper;
-import com.youpass.pojo.Teacher;
+import com.youpass.pojo.*;
+import com.youpass.pojo.pk.CourseId;
+import com.youpass.pojo.pk.StudentId;
+import com.youpass.pojo.pk.TeacherId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Configuration
@@ -40,8 +44,33 @@ public class TestConfig {
     public TeacherRepository teacherRepository;
 
     @Bean
+    @Transactional
     CommandLineRunner commandLineRunner() {
         return args -> {
+            // var s1 = Student.Builder().setName("danny1").setPassword("123").build();
+            // var s2 = Student.Builder().setName("danny2").setPassword("123").build();
+
+            var t1 = Teacher.Builder()
+                    .setId(new TeacherId(1L))
+                    .setName("t1")
+                    .setPassword("123")
+                    .build();
+            var t2 = Teacher.Builder()
+                    .setId(new TeacherId(2L))
+                    .setName("t2")
+                    .setPassword("123")
+                    .build();
+
+            // var course1 = Course.Builder().setId(new CourseId(1L)).setPassword("123").setTitle("c1").setTeacher(t1).build();
+            // var course2 = Course.Builder().setId(new CourseId(2L)).setPassword("123").setTitle("c2").setTeacher(t1).build();
+            //
+            // var notice1 = Notice.Builder().setContent("312").setCourse(course1).build();
+
+
+            teacherRepository.save(t1);
+            teacherRepository.save(t2);
+
+            // teacherRepository.deleteById(new TeacherId(2L));
         };
     }
 
