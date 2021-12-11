@@ -23,6 +23,7 @@ public class ExamId implements Serializable {
     private CourseId courseId;
 
     public ExamId() {
+        courseId=new CourseId();
     }
 
     public ExamId(Long examId, Long courseId) {

@@ -38,7 +38,7 @@ public class ExamInfo implements Serializable {
     }
 
     public static class Builder{
-        private ExamInfoId id;
+        private ExamInfoId id= new ExamInfoId();
         private Student student;
         private Exam exam;
         private Integer score;

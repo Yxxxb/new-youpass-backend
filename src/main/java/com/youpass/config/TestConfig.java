@@ -129,23 +129,53 @@ public class TestConfig {
                     .build();
 
             var stucourse1 = StuTakeCourse.Builder()
-                    .setId(new StuTakeCourseId(s1.getId().getStudentId(),course1.getId().getCourseId()))
+//                    .setId(new StuTakeCourseId(s1.getId().getStudentId(),course1.getId().getCourseId()))
+                    .setStudent(s1)
+                    .setCourse(course1)
                     .build();
 
             var stucourse2 = StuTakeCourse.Builder()
-                    .setId(new StuTakeCourseId(s1.getId().getStudentId(),course2.getId().getCourseId()))
+//                    .setId(new StuTakeCourseId(s1.getId().getStudentId(),course2.getId().getCourseId()))
+                    .setStudent(s1)
+                    .setCourse(course2)
                     .build();
             var stucourse3 = StuTakeCourse.Builder()
-                    .setId(new StuTakeCourseId(s2.getId().getStudentId(),course1.getId().getCourseId()))
+//                    .setId(new StuTakeCourseId(s2.getId().getStudentId(),course1.getId().getCourseId()))
+                    .setStudent(s2)
+                    .setCourse(course1)
                     .build();
             var stucourse4 = StuTakeCourse.Builder()
-                    .setId(new StuTakeCourseId(s2.getId().getStudentId(),course2.getId().getCourseId()))
+//                    .setId(new StuTakeCourseId(s2.getId().getStudentId(),course2.getId().getCourseId()))
+                    .setStudent(s2)
+                    .setCourse(course2)
                     .build();
 
+<<<<<<< Updated upstream
             stuTakeCourseRepository.save(stucourse1);
             stuTakeCourseRepository.save(stucourse2);
             stuTakeCourseRepository.save(stucourse3);
             stuTakeCourseRepository.save(stucourse4);
+=======
+
+            var examinfo1 = ExamInfo.Builder()
+                    .setId(new ExamInfoId(exam1.getId().getExamId(), exam1.getId().getCourseId(), s1.getId().getStudentId()))
+                    .setScore(100)
+                    .setState(1)
+                    .setExam(exam1)
+                    .setStudent(s1)
+                    .build();
+
+            var examinfo2 = ExamInfo.Builder()
+                    .setId(new ExamInfoId(exam2.getId().getExamId(), exam2.getId().getCourseId(), s1.getId().getStudentId()))
+                    .setScore(100)
+                    .setState(1)
+                    .setExam(exam2)
+                    .setStudent(s1)
+                    .build();
+            teacherRepository.save(t1);
+            studentRepository.save(s1);
+            studentRepository.save(s2);
+>>>>>>> Stashed changes
 
             q1.getOptionSet().add(o1);
             q1.getOptionSet().add(o2);
@@ -163,12 +193,10 @@ public class TestConfig {
             s1.getStuTakeCourses().add(stucourse2);
             s2.getStuTakeCourses().add(stucourse3);
             s2.getStuTakeCourses().add(stucourse4);
-            studentRepository.save(s1);
-            studentRepository.save(s2);
-
             t1.getCourseSet().add(course1);
             t1.getCourseSet().add(course2);
             teacherRepository.save(t1);
+<<<<<<< Updated upstream
 
 
 
@@ -208,6 +236,10 @@ public class TestConfig {
 
 
 
+=======
+            studentRepository.save(s1);
+            studentRepository.save(s2);
+>>>>>>> Stashed changes
 
 //            var t2 = Teacher.Builder()
 //                    .setId(new TeacherId(teacherRepository.minId + 1))

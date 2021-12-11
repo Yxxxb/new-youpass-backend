@@ -30,6 +30,7 @@ public class StuTakeCourseId implements Serializable {
     }
 
     public StuTakeCourseId() {
+        courseId= new CourseId();
     }
 
     public StuTakeCourseId(Long studentId, Long courseId) {
