@@ -1,5 +1,7 @@
 package com.youpass.util.ReturnType.Result;
 
+import java.util.List;
+
 public class ResultUtil {
 
     /**

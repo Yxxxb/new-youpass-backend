@@ -1,0 +1,62 @@
+#######################################
+上传题目测试
+#######################################
+[{
+    "description": "求sinx的最大值",
+    "createTime": "2021-12-12",
+    "type": "2",
+    "courseId":1000,
+    "subject":"数学",
+    "standardAnswer":"1"
+},{
+    "description": "求cosx的最大值",
+    "createTime": "2021-12-13",
+    "type": "2",
+    "courseId":1000,
+    "subject":"数学",
+    "standardAnswer":"2"
+},{
+    "description": "求tanx的最大值",
+    "createTime": "2021-12-14",
+    "type": "2",
+    "courseId":1000,
+    "subject":"数学",
+    "standardAnswer":"正无穷"
+},{
+    "description": "什么时候你们才能脱单啊",
+    "createTime": "2021-12-12",
+    "type": "1",
+    "courseId":1000,
+    "subject":"数学",
+    "standardAnswer":"12",
+    "optionInfoList":[{
+        "optionId":1,
+        "content":"明天"
+    },{
+        "optionId":2,
+        "content":"后天"
+    },{
+        "optionId":3,
+        "content":"新年"
+    }]
+},{
+    "description": "什么时候我们才能做完所有项目啊",
+    "createTime": "2021-12-12",
+    "type": "0",
+    "courseId":1000,
+    "subject":"数学",
+    "standardAnswer":"1",
+    "optionInfoList":[{
+        "optionId":1,
+        "content":"明天"
+    },{
+        "optionId":2,
+        "content":"后天"
+    },{
+        "optionId":3,
+        "content":"新年"
+    }]
+}]
+#######################################
+xxxx测试
+#######################################

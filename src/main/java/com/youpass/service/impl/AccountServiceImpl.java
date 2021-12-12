@@ -16,18 +16,31 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+
+import static com.youpass.util.ReturnType.Result.ResultEnum.USER_NOT_LOGIN;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
+    private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
+
+    @Autowired
+    public AccountServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository) {
+        this.studentRepository = studentRepository;
+        this.teacherRepository = teacherRepository;
+    }
+
     @Override
     public Result<Object> SignUp(UserInfo signUpInfo) {
         /*错误处理*/
-        if(signUpInfo.getPassword()==null
-                ||signUpInfo.getName()==null
-                ||signUpInfo.getEmail()==null
-                ||signUpInfo.getType()==null){
+        if (signUpInfo.getPassword() == null
+                || signUpInfo.getName() == null
+                || signUpInfo.getEmail() == null
+                || signUpInfo.getType() == null) {
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
         }
 
@@ -46,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
                 studentRepository.save(student);
                 return ResultUtil.success(id);
             }
-        } else if (signUpInfo.getType() == 0){
+        } else if (signUpInfo.getType() == 0) {
             Optional<Teacher> teacherOptional = teacherRepository.findTeacherByEmail(signUpInfo.getEmail());
             if (teacherOptional.isPresent()) {
                 return ResultUtil.error(ResultEnum.EMAIL_IS_EXISTS);
@@ -61,91 +74,60 @@ public class AccountServiceImpl implements AccountService {
                 teacherRepository.save(teacher);
                 return ResultUtil.success(id);
             }
-        }else{
+        } else {
             return ResultUtil.error(ResultEnum.UNKNOWN_ERROR);
         }
     }
 
     @Override
-    public Result<Object> Login(HttpServletRequest request,UserInfo loginInfo) {
-        if (loginInfo.getId()==null||loginInfo.getPassword()==null){
+    public Result<Object> Login(HttpServletRequest request, UserInfo loginInfo) {
+        if (loginInfo.getId() == null || loginInfo.getPassword() == null) {
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
         }
-        if(studentRepository.existsById(new StudentId(loginInfo.getId()))){
+        if (studentRepository.existsById(new StudentId(loginInfo.getId()))) {
             var student = studentRepository.findById(new StudentId(loginInfo.getId())).get();
-            if(student.getPassword().equals(loginInfo.getPassword())){
+            if (student.getPassword().equals(loginInfo.getPassword())) {
                 //如果相同
                 HttpSession session = request.getSession(true);
-                session.setAttribute("id",loginInfo.getId());
+                session.setAttribute("id", loginInfo.getId());
                 return ResultUtil.success();
-            }else{
+            } else {
                 return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
             }
-        }else if(teacherRepository.existsById(new TeacherId(loginInfo.getId()))){
+        } else if (teacherRepository.existsById(new TeacherId(loginInfo.getId()))) {
             var teacher = teacherRepository.findById(new TeacherId(loginInfo.getId())).get();
-            if(teacher.getPassword().equals(loginInfo.getPassword())){
+            if (teacher.getPassword().equals(loginInfo.getPassword())) {
                 //如果相同
                 HttpSession session = request.getSession(true);
-                session.setAttribute("id",loginInfo.getId());
+                session.setAttribute("id", loginInfo.getId());
                 return ResultUtil.success();
-            }else{
+            } else {
                 return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
             }
-        }else{
+        } else {
             return ResultUtil.error(ResultEnum.USER_MISS);
         }
     }
 
-    private final StudentRepository studentRepository;
-    private final TeacherRepository teacherRepository;
-
-    @Autowired
-    public AccountServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository) {
-        this.studentRepository = studentRepository;
-        this.teacherRepository = teacherRepository;
+    @Override
+    public Result<Object> CheckState(Long id) {
+        //因为有拦截器 所以到了这里就一定可以
+        return ResultUtil.success();
     }
 
-    // /**
-    //  * 该方法供Controller层使用，完成学生注册的业务逻辑
-    //  * @param student Student类的对象
-    //  * @return 若注册成功，返回新生成的id，若失败，返回失败相关信息
-    //  */
-    // @Override
-    // public Result<Object> stuSignUp(Student student) {
-    //     Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
-    //     if (studentOptional.isPresent()) {
-    //         String msg="Email has been taken!";
-    //         return ResultUtil.error(1,msg);
-    //     }
-    //     studentRepository.save(student);
-    //
-    //     //此处的返回内容等于前端交互时再具体决定修改
-    //     Map<String,Long> resultMap= new HashMap<>();
-    //     resultMap.put("产生的新学号",student.getId());
-    //
-    //     return ResultUtil.success(resultMap);
-    // }
-    // /**
-    //  * 该方法供Controller层使用，完成老师注册的业务逻辑
-    //  * @param teacher Teacher类的对象
-    //  * @return 若注册成功，返回新生成的id，若失败，返回失败相关信息
-    //  */
-    // @Override
-    // public Result<Object> teacherSignUp(Teacher teacher) {
-    //
-    //     Optional<Teacher> teacherOptional = teacherRepository.findTeacherByEmail(teacher.getEmail());
-    //     if (teacherOptional.isPresent()) {
-    //         String msg="Email has been taken!";
-    //         return ResultUtil.error(1,msg);
-    //     }
-    //     teacherRepository.save(teacher);
-    //
-    //     //此处的返回内容等于前端交互时再具体决定修改
-    //     Map<String,Long> resultMap= new HashMap<>();
-    //     resultMap.put("产生的新工号",teacher.getId().getId());
-    //
-    //     return ResultUtil.success(resultMap);
-    // }
+    @Override
+    public Result<Object> getIdentity(Long id) {
+        if (teacherRepository.existsById(new TeacherId(id))) {
+            return ResultUtil.success(0);
+        } else {
+            return ResultUtil.success(1);
+        }
+    }
+
+    @Override
+    public Result<Object> getUserInfo(Long id) {
+        return null;
+    }
 
 
 }

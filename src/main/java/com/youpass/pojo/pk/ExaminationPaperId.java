@@ -27,7 +27,10 @@ public class ExaminationPaperId implements Serializable {
         this.examId = new ExamId(examId,courseId);
         this.questionId = new QuestionId(questionId);
     }
-
+    public ExaminationPaperId( Long examId, Long courseId, Long questionId) {
+        this.examId = new ExamId(examId,courseId);
+        this.questionId = new QuestionId(questionId);
+    }
     public Long getStudentId() {
         return studentId.getStudentId();
     }
