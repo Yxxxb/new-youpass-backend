@@ -20,7 +20,7 @@ public class ExaminationPaper implements Serializable {
     @Column(name = "value")
     private int value;
     @Column(name = "stu_point")
-    private int stuPoint;
+    private Integer stuPoint;
     @Column(name = "numinpaper")
     private int numInPaper;
 
@@ -59,7 +59,7 @@ public class ExaminationPaper implements Serializable {
         private int selfOrder;
         private String stuAnswer;
         private int value;
-        private int stuPoint;
+        private Integer stuPoint;
         private int numInPaper;
         private Student student;
         private Exam exam;
@@ -89,7 +89,7 @@ public class ExaminationPaper implements Serializable {
             return this;
         }
 
-        public Builder setStuPoint(int stuPoint) {
+        public Builder setStuPoint(Integer stuPoint) {
             this.stuPoint = stuPoint;
             return this;
         }
@@ -161,11 +161,11 @@ public class ExaminationPaper implements Serializable {
         this.value = value;
     }
 
-    public int getStuPoint() {
+    public Integer getStuPoint() {
         return stuPoint;
     }
 
-    public void setStuPoint(int stuPoint) {
+    public void setStuPoint(Integer stuPoint) {
         this.stuPoint = stuPoint;
     }
 

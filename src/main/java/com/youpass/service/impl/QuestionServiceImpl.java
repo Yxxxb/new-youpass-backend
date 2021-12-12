@@ -96,16 +96,13 @@ public class QuestionServiceImpl implements QuestionService {
                 questionInfo.getExamId() == null) {
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
         }
-        var exam = Exam.Builder()
-                .setId(new ExamId(questionInfo.getExamId(), questionInfo.getCourseId()))
-                .setCourse(Course.Builder().setId(new CourseId(questionInfo.getCourseId())).build())
-                .build();
-        examRepository.save(exam);
-        var epSet = exam.getExaminationPaperSet();
+
+        var exam= examRepository.findById(new ExamId(questionInfo.getExamId(), questionInfo.getCourseId()));
+        var epSet = exam.get().getExaminationPaperSet();
         Set<ExaminationPaper> epReturnSet = new HashSet<>();
 
         for (var item : epSet) {
-            if (item.getQuestion().getId().getQuestionId().equals(questionInfo.getQuestionId())) {
+            if (item.getQuestion().getId().getQuestionId().equals(questionInfo.getQuestionId())&& (item.getStuPoint()==null)) {
                 epReturnSet.add(item);
             }
         }
