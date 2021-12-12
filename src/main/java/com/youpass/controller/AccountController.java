@@ -6,6 +6,7 @@ import com.youpass.util.ReturnType.Result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
@@ -44,8 +45,58 @@ public class AccountController {
         return accountService.SignUp(userInfo);
     }
 
+    /**
+     * 登录
+     *
+     * @param request  用来获取session
+     * @param userInfo id 账号
+     *                 password 密码
+     * @return 成功
+     * {
+     * "code": 100,
+     * "msg": "成功",
+     * "data": null
+     * }
+     */
     @PostMapping(path = "login")
     public Result<Object> Login(HttpServletRequest request, @RequestBody UserInfo userInfo) {
         return accountService.Login(request, userInfo);
+    }
+
+    /**
+     * 验证是否登录（验证session）
+     *
+     * @param id 用户id
+     * @return {
+     * "code": 100,
+     * "msg": "成功",
+     * "data": null
+     * }
+     */
+    @GetMapping(path = "checkState")
+    public Result<Object> CheckState(@RequestAttribute(name="id") Long id) {
+        return accountService.CheckState(id);
+    }
+
+    /**
+     * 获取这个用户是老师还是学生
+     *
+     * @param id
+     * @return 学生
+     * {
+     * "code": 100,
+     * "msg": "成功",
+     * "data": 1        [学生data值是1]
+     * }
+     * 老师
+     * {
+     * "code": 100,
+     * "msg": "成功",
+     * "data": 0        [//]老师data是0]
+     * }
+     */
+    @GetMapping(path = "getIdentity")
+    public Result<Object> GetIdentity(@RequestAttribute(name="id") Long id) {
+        return accountService.getIdentity(id);
     }
 }
