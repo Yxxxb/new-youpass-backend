@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface QuestionService {
-    public Result<Object> uploadQuestion(HttpServletRequest request, List<QuestionInfo> questionInfoList);
+    public Result<Object> uploadQuestion(List<QuestionInfo> questionInfoList);
 
     Result<Object> getStudentDoingQuestion(QuestionInfo questionInfo);
 }

@@ -1,5 +1,7 @@
 package com.youpass.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.youpass.pojo.pk.OptionId;
 
 import javax.persistence.*;
@@ -15,6 +17,7 @@ public class Option implements Serializable {
     @Column(length = 256,name = "content")
     private String content;
 
+    @JsonIgnore
     @MapsId("questionId")
     @ManyToOne
     @JoinColumn(name="question_id",referencedColumnName = "question_id")

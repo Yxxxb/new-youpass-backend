@@ -1,5 +1,7 @@
 package com.youpass.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.youpass.pojo.pk.ExamInfoId;
 import com.youpass.pojo.pk.StudentId;
 
@@ -12,11 +14,13 @@ public class ExamInfo implements Serializable {
     @EmbeddedId
     private ExamInfoId id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "student_id")
     @MapsId("studentId")
     private Student student;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "exam_id", referencedColumnName = "exam_id"),

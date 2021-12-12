@@ -1,5 +1,5 @@
 #######################################
-上传题目测试
+QuestionController.uploadQuestion测试
 #######################################
 [{
     "description": "求sinx的最大值",
@@ -58,5 +58,13 @@
     }]
 }]
 #######################################
-xxxx测试
+QuestionController.getStudentDoingQuestion测试
+#######################################
+{
+    "questionId":7,
+    "courseId":1000,
+    "examId":1
+}
+#######################################
+QuestionController.getStudentDoingQuestion测试
 #######################################

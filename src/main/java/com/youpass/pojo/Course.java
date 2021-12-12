@@ -1,5 +1,7 @@
 package com.youpass.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.xml.txw2.annotation.XmlCDATA;
 import com.youpass.pojo.pk.CourseId;
 import org.aspectj.weaver.ast.Not;
@@ -22,19 +24,24 @@ public class Course implements Serializable {
     private String password;
 
     //删除课程不能删除老师，所以不能加cascade
+    @JsonIgnoreProperties(value = "course")
     @ManyToOne
     @JoinColumn(name = "Teacher_id",referencedColumnName = "teacher_id")
     private Teacher teacher;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<Notice> noticeSet = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<Exam> examSet = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<Question> questionSet = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private Set<StuTakeCourse> stuTakeCourses = new HashSet<>();
 
