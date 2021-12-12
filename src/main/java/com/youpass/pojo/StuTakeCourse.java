@@ -5,6 +5,7 @@ import com.youpass.pojo.pk.StudentId;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Student_Course")
@@ -90,5 +91,18 @@ public class StuTakeCourse implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StuTakeCourse that = (StuTakeCourse) o;
+        return Objects.equals(id, that.id) && Objects.equals(student, that.student) && Objects.equals(course, that.course);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, student, course);
     }
 }

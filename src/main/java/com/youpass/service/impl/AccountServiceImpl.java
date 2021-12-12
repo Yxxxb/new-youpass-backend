@@ -12,14 +12,30 @@ import com.youpass.util.ReturnType.Result.Result;
 import com.youpass.util.ReturnType.Result.ResultEnum;
 import com.youpass.util.ReturnType.Result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.youpass.util.ReturnType.Result.ResultEnum.File_ERROR;
 import static com.youpass.util.ReturnType.Result.ResultEnum.USER_NOT_LOGIN;
 
 @Service
@@ -126,8 +142,103 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Result<Object> getUserInfo(Long id) {
-        return null;
+        if (studentRepository.existsById(new StudentId(id))) {
+            var student = studentRepository.findById(new StudentId(id)).get();
+            var userInfo = new UserInfo();
+            userInfo.setEmail(student.getEmail());
+            userInfo.setName(student.getName());
+            userInfo.setLocation(student.getLocation());
+            userInfo.setType(1);
+            return ResultUtil.success(userInfo);
+        } else if (teacherRepository.existsById(new TeacherId(id))) {
+            var teacher = teacherRepository.findById(new TeacherId(id)).get();
+            var userInfo = new UserInfo();
+            userInfo.setEmail(teacher.getEmail());
+            userInfo.setName(teacher.getName());
+            userInfo.setLocation(teacher.getLocation());
+            userInfo.setType(0);
+            return ResultUtil.success(userInfo);
+        } else {
+            return ResultUtil.error(ResultEnum.USER_MISS);
+        }
     }
 
+    @Override
+    public Result<Object> updateUserInfo(UserInfo userInfo) {
+        if (userInfo.getId() == null
+                || userInfo.getLocation() == null
+                || userInfo.getEmail() == null
+                || userInfo.getName() == null) {
+            return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
+        }
+        if (studentRepository.existsById(new StudentId(userInfo.getId()))) {
+            var student = studentRepository.findById(new StudentId(userInfo.getId())).get();
+            student.setName(userInfo.getName());
+            student.setEmail(userInfo.getEmail());
+            student.setLocation(userInfo.getLocation());
+            studentRepository.save(student);
+            return ResultUtil.success();
+        } else if (teacherRepository.existsById(new TeacherId(userInfo.getId()))) {
+            var teacher = teacherRepository.findById(new TeacherId(userInfo.getId())).get();
+            teacher.setName(userInfo.getName());
+            teacher.setEmail(userInfo.getEmail());
+            teacher.setLocation(userInfo.getLocation());
+            teacherRepository.save(teacher);
+            return ResultUtil.success();
+        } else {
+            return ResultUtil.error(ResultEnum.USER_MISS);
+        }
+    }
 
+    @Override
+    public Result<Object> quitAccount(HttpServletRequest request) {
+        if (request.getSession().getAttribute("id") == null) {
+            return ResultUtil.error(USER_NOT_LOGIN);
+        } else {
+            request.getSession().removeAttribute("id");
+            return ResultUtil.success();
+        }
+    }
+
+    @Override
+    public Result<Object> uploadImage(Long id, MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
+        }
+        try {
+            byte[] bytes = file.getBytes();
+            String workingDirectory = System.getProperty("user.dir");
+            String imgDirectory = workingDirectory + "\\Img";
+            File imgFolder = new File(imgDirectory);
+            if (!imgFolder.exists() && !imgFolder.isDirectory()) {
+                imgFolder.mkdirs();
+            }
+            Path path = Paths.get(imgDirectory + "\\" + id.toString() + ".jpg");
+            Files.write(path, bytes);
+            return ResultUtil.success();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResultUtil.error(File_ERROR);
+        }
+    }
+
+    @Override
+    public void getImage(Long id, HttpServletResponse response) {
+        String workingDirectory = System.getProperty("user.dir");
+        String imgDirectory = workingDirectory + "\\Img";
+        String imgPath = imgDirectory + "\\" + id.toString() + ".jpg";
+        if (!new File(imgPath).exists()) {
+            imgPath = imgDirectory + "\\default.jpg";
+        }
+        File file = new File(imgPath);
+
+        try {
+            InputStream targetStream = new FileInputStream(file);
+            response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+            StreamUtils.copy(targetStream, response.getOutputStream());
+        }
+        catch (IOException e){
+            System.out.println("文件出现问题");
+        }
+    }
 }

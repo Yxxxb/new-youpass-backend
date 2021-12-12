@@ -37,7 +37,7 @@ public class QuestionServiceImpl implements QuestionService {
     public Result<Object> uploadQuestion(HttpServletRequest request, List<QuestionInfo> questionInfoList) {
         //获取session
         if (request.getSession() == null) {
-            return ResultUtil.error(ResultEnum.SESSION_MISS);
+            return ResultUtil.error(ResultEnum.USER_NOT_LOGIN);
         }
         var session = request.getSession();
         Long studentId = (Long) session.getAttribute("id");

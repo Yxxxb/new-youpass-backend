@@ -15,7 +15,8 @@ public class MyConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns(
                         "/api/signup",
-                        "/api/login"
+                        "/api/login",
+                        "/api/test"
                 );
     }
 }

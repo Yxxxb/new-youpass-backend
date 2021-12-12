@@ -58,4 +58,16 @@ public class UserInfo {
     public void setType(Integer type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", type=" + type +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }
