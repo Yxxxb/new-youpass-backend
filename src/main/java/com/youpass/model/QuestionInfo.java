@@ -6,30 +6,6 @@ import java.util.List;
 public class QuestionInfo {
     private  Long questionId;
     private  Long courseId;
-
-    public Long getExamId() {
-        return examId;
-    }
-
-    @Override
-    public String toString() {
-        return "QuestionInfo{" +
-                "questionId=" + questionId +
-                ", courseId=" + courseId +
-                ", examId=" + examId +
-                ", description='" + description + '\'' +
-                ", type=" + type +
-                ", standardAnswer='" + standardAnswer + '\'' +
-                ", subject='" + subject + '\'' +
-                ", createTime=" + createTime +
-                ", optionInfoList=" + optionInfoList +
-                '}';
-    }
-
-    public void setExamId(Long examId) {
-        this.examId = examId;
-    }
-
     private Long examId;
     private String description;
     private Integer type;
@@ -115,5 +91,28 @@ public class QuestionInfo {
     public void setOptionInfoList(List<OptionInfo> optionInfoList) {
         this.optionInfoList = optionInfoList;
     }
+    public Long getExamId() {
+        return examId;
+    }
+    public void setExamId(Long examId) {
+        this.examId = examId;
+    }
+    @Override
+    public String toString() {
+        return "QuestionInfo{" +
+                "questionId=" + questionId +
+                ", courseId=" + courseId +
+                ", examId=" + examId +
+                ", description='" + description + '\'' +
+                ", type=" + type +
+                ", standardAnswer='" + standardAnswer + '\'' +
+                ", subject='" + subject + '\'' +
+                ", createTime=" + createTime +
+                ", optionInfoList=" + optionInfoList +
+                '}';
+    }
+
+
+
 
 }

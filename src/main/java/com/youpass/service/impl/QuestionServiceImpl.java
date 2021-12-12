@@ -1,23 +1,21 @@
 package com.youpass.service.impl;
 
+import com.youpass.dao.ExamRepository;
 import com.youpass.dao.ExaminationPaperRepository;
 import com.youpass.dao.OptionRepository;
 import com.youpass.dao.QuestionRepository;
 import com.youpass.model.OptionInfo;
 import com.youpass.model.QuestionInfo;
+import com.youpass.model.QuestionStuReturn;
 import com.youpass.pojo.*;
-import com.youpass.pojo.pk.CourseId;
-import com.youpass.pojo.pk.ExaminationPaperId;
-import com.youpass.pojo.pk.OptionId;
-import com.youpass.pojo.pk.QuestionId;
+import com.youpass.pojo.pk.*;
 import com.youpass.service.QuestionService;
 import com.youpass.util.ReturnType.Result.Result;
 import com.youpass.util.ReturnType.Result.ResultEnum;
 import com.youpass.util.ReturnType.Result.ResultUtil;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -25,22 +23,19 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final OptionRepository optionRepository;
     private final ExaminationPaperRepository examinationPaperRepository;
+    private final ExamRepository examRepository;
 
-    public QuestionServiceImpl(QuestionRepository questionRepository, OptionRepository optionRepository, ExaminationPaperRepository examinationPaperRepository) {
+    public QuestionServiceImpl(QuestionRepository questionRepository, OptionRepository optionRepository, ExaminationPaperRepository examinationPaperRepository, ExamRepository examRepository) {
         this.questionRepository = questionRepository;
         this.optionRepository = optionRepository;
         this.examinationPaperRepository = examinationPaperRepository;
+        this.examRepository = examRepository;
     }
 
 
     @Override
-    public Result<Object> uploadQuestion(HttpServletRequest request, List<QuestionInfo> questionInfoList) {
-        //获取session
-        if (request.getSession() == null) {
-            return ResultUtil.error(ResultEnum.SESSION_MISS);
-        }
-        var session = request.getSession();
-        Long studentId = (Long) session.getAttribute("id");
+    public Result<Object> uploadQuestion(List<QuestionInfo> questionInfoList) {
+
         //错误处理
         for (QuestionInfo item : questionInfoList) {
             if (item.getDescription() == null ||
@@ -101,8 +96,27 @@ public class QuestionServiceImpl implements QuestionService {
                 questionInfo.getExamId() == null) {
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
         }
-        var examinationPaperList = examinationPaperRepository.findById(new ExaminationPaperId(questionInfo.getExamId(), questionInfo.getCourseId(), questionInfo.getQuestionId()));
-        return null;
+        var exam = Exam.Builder()
+                .setId(new ExamId(questionInfo.getExamId(), questionInfo.getCourseId()))
+                .setCourse(Course.Builder().setId(new CourseId(questionInfo.getCourseId())).build())
+                .build();
+        examRepository.save(exam);
+        var epSet = exam.getExaminationPaperSet();
+        Set<ExaminationPaper> epReturnSet = new HashSet<>();
+
+        for (var item : epSet) {
+            if (item.getQuestion().getId().getQuestionId().equals(questionInfo.getQuestionId())) {
+                epReturnSet.add(item);
+            }
+        }
+
+        Optional<Question> questionOptional = questionRepository.findById(new QuestionId(questionInfo.getQuestionId()));
+        if (questionOptional.isEmpty()) {
+            return ResultUtil.error(ResultEnum.USER_MISS);
+        }
+
+        QuestionStuReturn questionStuReturn= new QuestionStuReturn(epReturnSet,questionOptional.get());
+        return ResultUtil.success(questionStuReturn);
 
     }
 }

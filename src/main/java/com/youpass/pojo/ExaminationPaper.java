@@ -1,5 +1,7 @@
 package com.youpass.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.youpass.pojo.pk.ExaminationPaperId;
 
 import javax.persistence.*;
@@ -22,12 +24,14 @@ public class ExaminationPaper implements Serializable {
     @Column(name = "numinpaper")
     private int numInPaper;
 
+    @JsonIgnore
     @MapsId("studentId")
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "student_id")
     private Student student;
 
     //exam有两个主码，这里必须将两个主码都添加进来
+    @JsonIgnore
     @MapsId("examId")
     @ManyToOne
     @JoinColumns({
@@ -36,6 +40,7 @@ public class ExaminationPaper implements Serializable {
     })
     private Exam exam;
 
+    @JsonIgnore
     @MapsId("questionId")
     @ManyToOne
     @JoinColumn(name = "question_id", referencedColumnName = "question_id")

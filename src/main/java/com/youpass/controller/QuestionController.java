@@ -44,9 +44,9 @@ public class QuestionController {
     @PostMapping(path = "update")
     public Result<Object> uploadQuestion(HttpServletRequest request, @RequestBody List<QuestionInfo> questionInfoList) {
 //        System.out.println(questionInfoList);
-      return questionService.uploadQuestion(request,questionInfoList);
+      return questionService.uploadQuestion(questionInfoList);
     }
-    @GetMapping(path = "getStu")
+    @PostMapping(path = "getStu")
     public Result<Object> getStudentDoingQuestion( @RequestBody QuestionInfo questionInfo){
         return questionService.getStudentDoingQuestion(questionInfo);
     }
