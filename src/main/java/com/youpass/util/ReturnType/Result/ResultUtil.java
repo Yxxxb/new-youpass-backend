@@ -24,4 +24,11 @@ public class ResultUtil {
         result.setMsg(msg);
         return result;
     }
+    public static Result<Object> error(ResultEnum resultEnum){
+        Result<Object>result =new Result<>();
+        result.setCode(resultEnum.getCode());
+        result.setMsg(resultEnum.getMsg());
+        return result;
+    }
+
 }

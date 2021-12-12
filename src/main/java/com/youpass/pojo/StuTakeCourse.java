@@ -29,15 +29,20 @@ public class StuTakeCourse implements Serializable {
     }
 
     public StuTakeCourse() {
+        id = new StuTakeCourseId();
     }
 
     public static StuTakeCourse.Builder Builder(){
         return new Builder();
     }
     public static class Builder {
-        private StuTakeCourseId id = new StuTakeCourseId();
+        private StuTakeCourseId id;
         private Student student;
         private Course course;
+
+        Builder(){
+            id = new StuTakeCourseId();
+        }
 
         public Builder setId(StuTakeCourseId id) {
             this.id = id;

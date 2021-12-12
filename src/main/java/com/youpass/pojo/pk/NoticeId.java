@@ -43,36 +43,46 @@ public class NoticeId implements Serializable {
         this.courseId = new CourseId(courseId);
     }
 
+    public NoticeId(Long noticeId, CourseId courseId) {
+        this.noticeId = noticeId;
+        this.courseId = courseId;
+    }
+
     public NoticeId(Long noticeId, Long courseId) {
         this.noticeId = noticeId;
         this.courseId = new CourseId(courseId);
     }
 
+    public NoticeId(Long noticeId) {
+        this.noticeId = noticeId;
+    }
+
     public NoticeId() {
+        courseId = new CourseId();
     }
 
-    public static NoticeId.Builder Builder(){
-        return new Builder();
-    }
-
-    public static class Builder{
-        private Long noticeId;
-        private CourseId courseId;
-        public Builder getNoticeId(Long noticeId){
-            this.noticeId =noticeId;
-            return this;
-        }
-        public Builder setCourseId(Long courseId){
-            this.courseId = new CourseId(courseId);
-            return this;
-        }
-        public NoticeId build(){
-            NoticeId noticeId =new NoticeId();
-            noticeId.courseId=this.courseId;
-            noticeId.noticeId=this.noticeId;
-            return noticeId;
-        }
-    }
+//    public static NoticeId.Builder Builder(){
+//        return new Builder();
+//    }
+//
+//    public static class Builder{
+//        private Long noticeId;
+//        private CourseId courseId;
+//        public Builder getNoticeId(Long noticeId){
+//            this.noticeId =noticeId;
+//            return this;
+//        }
+//        public Builder setCourseId(Long courseId){
+//            this.courseId = new CourseId(courseId);
+//            return this;
+//        }
+//        public NoticeId build(){
+//            NoticeId noticeId =new NoticeId();
+//            noticeId.courseId=this.courseId;
+//            noticeId.noticeId=this.noticeId;
+//            return noticeId;
+//        }
+//    }
 
     @Override
     public boolean equals(Object o) {

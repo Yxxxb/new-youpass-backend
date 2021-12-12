@@ -42,6 +42,7 @@ public class ExaminationPaper implements Serializable {
     private Question question;
 
     public ExaminationPaper() {
+        id = new ExaminationPaperId();
     }
 
     public static ExaminationPaper.Builder Builder(){
@@ -58,6 +59,10 @@ public class ExaminationPaper implements Serializable {
         private Student student;
         private Exam exam;
         private Question question;
+
+        Builder(){
+            id = new ExaminationPaperId();
+        }
 
         public Builder setId(ExaminationPaperId id) {
             this.id = id;

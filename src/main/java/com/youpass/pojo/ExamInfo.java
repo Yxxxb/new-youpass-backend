@@ -31,6 +31,7 @@ public class ExamInfo implements Serializable {
     private Integer state;
 
     public ExamInfo() {
+        id = new ExamInfoId();
     }
 
     public static ExamInfo.Builder Builder(){
@@ -38,11 +39,15 @@ public class ExamInfo implements Serializable {
     }
 
     public static class Builder{
-        private ExamInfoId id= new ExamInfoId();
+        private ExamInfoId id;
         private Student student;
         private Exam exam;
         private Integer score;
         private Integer state;
+
+        Builder(){
+            id = new ExamInfoId();
+        }
 
         public Builder setId(ExamInfoId id) {
             this.id = id;

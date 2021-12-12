@@ -14,9 +14,10 @@ public class ExamInfoId implements Serializable {
 
     public ExamInfoId() {
         examId=new ExamId();
+        studentId = new StudentId();
     }
 
-    public ExamInfoId(Long studentId, Long examId,Long courseId) {
+    public ExamInfoId(Long studentId, Long examId, Long courseId) {
         this.studentId = new StudentId(studentId);
         this.examId = new ExamId(examId,courseId);
     }

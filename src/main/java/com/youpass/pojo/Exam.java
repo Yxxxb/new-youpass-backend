@@ -46,6 +46,7 @@ public class Exam implements Serializable {
     private Set<ExamInfo> examInfoSet = new HashSet<>();
 
     public Exam() {
+        id = new ExamId();
     }
 
     public static Exam.Builder Builder(){
@@ -63,6 +64,10 @@ public class Exam implements Serializable {
         private Integer filledNum;
         private Integer completionNum;
         private Course course;
+
+        Builder(){
+            id = new ExamId();
+        }
 
         public Builder setCourse(Course course) {
             this.course = course;

@@ -24,6 +24,7 @@ public class Notice implements Serializable {
     private Course course;
 
     public Notice() {
+        id = new NoticeId();
     }
 
     public static Notice.Builder Builder(){
@@ -35,6 +36,10 @@ public class Notice implements Serializable {
         private String content;
         private Date time;
         private Course course;
+
+        Builder(){
+            id = new NoticeId();
+        }
 
         public Builder setId(NoticeId id) {
             this.id = id;

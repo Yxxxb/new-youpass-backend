@@ -27,8 +27,6 @@ public class Question implements Serializable {
     private Date create_time;
 
 
-
-
     @ManyToOne
     @JoinColumn(name = "Course_id",referencedColumnName = "course_id")
     private Course course;
@@ -40,6 +38,7 @@ public class Question implements Serializable {
     private Set<ExaminationPaper> examinationPaperSet = new HashSet<>();
 
     public Question() {
+        id = new QuestionId();
     }
 
     public static Question.Builder Builder(){
@@ -54,6 +53,10 @@ public class Question implements Serializable {
         private String subject;
         private Date create_time;
         private Course course;
+
+        Builder(){
+            id = new QuestionId();
+        }
 
         public Builder setId(QuestionId id) {
             this.id = id;

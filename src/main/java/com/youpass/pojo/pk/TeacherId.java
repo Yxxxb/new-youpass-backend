@@ -29,24 +29,24 @@ public class TeacherId implements Serializable {
         this.teacherId = teacherId;
     }
 
-    public static TeacherId.Builder Builder(){
-        return new Builder();
-    }
-
-    public static class Builder{
-        private Long teacherId;
-
-        public Builder setTeacherId(Long teacherId) {
-            this.teacherId = teacherId;
-            return this;
-        }
-
-        public TeacherId build(){
-            var teacherId = new TeacherId();
-            teacherId.teacherId = this.teacherId;
-            return teacherId;
-        }
-    }
+//    public static TeacherId.Builder Builder(){
+//        return new Builder();
+//    }
+//
+//    public static class Builder{
+//        private Long teacherId;
+//
+//        public Builder setTeacherId(Long teacherId) {
+//            this.teacherId = teacherId;
+//            return this;
+//        }
+//
+//        public TeacherId build(){
+//            var teacherId = new TeacherId();
+//            teacherId.teacherId = this.teacherId;
+//            return teacherId;
+//        }
+//    }
 
     public Long getTeacherId() {
         return teacherId;

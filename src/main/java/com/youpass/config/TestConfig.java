@@ -84,24 +84,24 @@ public class TestConfig {
                     .setTeacher(t1)
                     .build();
             var exam1 = Exam.Builder()
-                    .setId(new ExamId(examRepository.minId, course1.getId().getCourseId()))
+                    .setId(new ExamId(examRepository.minId))
                     .setTitle("exam1")
                     .setChoiceNum(3)
                     .setCourse(course1)
                     .build();
             var exam2 = Exam.Builder()
-                    .setId(new ExamId(examRepository.minId + 1, course1.getId().getCourseId()))
+                    .setId(new ExamId(examRepository.minId + 1))
                     .setTitle("exam2")
                     .setChoiceNum(4)
                     .setCourse(course1)
                     .build();
             var notice1 = Notice.Builder()
-                    .setId(new NoticeId(noticeRepository.minId, course1.getId().getCourseId()))
+                    .setId(new NoticeId(noticeRepository.minId))
                     .setCourse(course1)
                     .setContent("开课了")
                     .build();
             var notice2 = Notice.Builder()
-                    .setId(new NoticeId(noticeRepository.minId + 1, course1.getId().getCourseId()))
+                    .setId(new NoticeId(noticeRepository.minId + 1))
                     .setCourse(course1)
                     .setContent("开课了111")
                     .build();
@@ -162,6 +162,9 @@ public class TestConfig {
             course1.getExamSet().add(exam2);
             course1.getNoticeSet().add(notice1);
             course1.getNoticeSet().add(notice2);
+
+
+
             course1.getStuTakeCourses().add(stucourse1);
             course1.getStuTakeCourses().add(stucourse3);
             course2.getStuTakeCourses().add(stucourse2);
@@ -170,9 +173,21 @@ public class TestConfig {
             s1.getStuTakeCourses().add(stucourse2);
             s2.getStuTakeCourses().add(stucourse3);
             s2.getStuTakeCourses().add(stucourse4);
+
+
+
             t1.getCourseSet().add(course1);
             t1.getCourseSet().add(course2);
+
+
+
+
+
             teacherRepository.save(t1);
+
+
+
+
             studentRepository.save(s1);
             studentRepository.save(s2);
 

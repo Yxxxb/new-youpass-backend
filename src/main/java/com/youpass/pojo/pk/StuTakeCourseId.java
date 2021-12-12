@@ -31,34 +31,41 @@ public class StuTakeCourseId implements Serializable {
 
     public StuTakeCourseId() {
         courseId= new CourseId();
+        studentId = new StudentId();
     }
 
     public StuTakeCourseId(Long studentId, Long courseId) {
         this.studentId = new StudentId(studentId);
         this.courseId = new CourseId(courseId);
     }
-    public static StuTakeCourseId.Builder Builder(){
-        return new Builder();
+
+    public StuTakeCourseId(StudentId studentId, CourseId courseId) {
+        this.studentId = studentId;
+        this.courseId = courseId;
     }
-    public static class Builder {
-        private StudentId studentId;
-        private CourseId courseId;
 
-        public Builder setStudentId(Long studentId) {
-            this.studentId = new StudentId(studentId);
-            return this;
-        }
-
-        public Builder setCourseId(Long courseId) {
-            this.courseId = new CourseId(courseId);
-            return this;
-        }
-
-        public StuTakeCourseId build() {
-            StuTakeCourseId stuTakeCourseId = new StuTakeCourseId();
-            stuTakeCourseId.studentId = this.studentId;
-            stuTakeCourseId.courseId = this.courseId;
-            return stuTakeCourseId;
-        }
-    }
+//    public static StuTakeCourseId.Builder Builder(){
+//        return new Builder();
+//    }
+//    public static class Builder {
+//        private StudentId studentId;
+//        private CourseId courseId;
+//
+//        public Builder setStudentId(Long studentId) {
+//            this.studentId = new StudentId(studentId);
+//            return this;
+//        }
+//
+//        public Builder setCourseId(Long courseId) {
+//            this.courseId = new CourseId(courseId);
+//            return this;
+//        }
+//
+//        public StuTakeCourseId build() {
+//            StuTakeCourseId stuTakeCourseId = new StuTakeCourseId();
+//            stuTakeCourseId.studentId = this.studentId;
+//            stuTakeCourseId.courseId = this.courseId;
+//            return stuTakeCourseId;
+//        }
+//    }
 }

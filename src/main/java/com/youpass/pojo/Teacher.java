@@ -38,6 +38,7 @@ public class Teacher implements Serializable {
     private Set<Course> courseSet = new HashSet<>();
 
     public Teacher() {
+        id = new TeacherId();
     }
 
     public static Teacher.Builder Builder(){
@@ -50,6 +51,10 @@ public class Teacher implements Serializable {
         private String password;
         private String email;
         private String location;
+
+        Builder(){
+            id = new TeacherId();
+        }
 
         public Builder setId(TeacherId id) {
             this.id = id;

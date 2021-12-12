@@ -17,10 +17,13 @@ public class ExaminationPaperId implements Serializable {
     private QuestionId questionId;
 
     public ExaminationPaperId() {
+        this.studentId = new StudentId();
+        this.examId = new ExamId();
+        this.questionId = new QuestionId();
     }
 
-    public ExaminationPaperId(Long studentId, Long examId,Long courseId, Long questionId) {
-        this.studentId = StudentId.Builder().setStudentId(studentId).build();
+    public ExaminationPaperId(Long studentId, Long examId, Long courseId, Long questionId) {
+        this.studentId = new StudentId(studentId);
         this.examId = new ExamId(examId,courseId);
         this.questionId = new QuestionId(questionId);
     }
@@ -30,7 +33,7 @@ public class ExaminationPaperId implements Serializable {
     }
 
     public void setStudentId(Long studentId) {
-        this.studentId =  StudentId.Builder().setStudentId(studentId).build();
+        this.studentId =  new StudentId(studentId);
     }
 
     public Long getExamId() {
@@ -52,35 +55,37 @@ public class ExaminationPaperId implements Serializable {
     public void setQuestionId(Long questionId) {
         this.questionId = new QuestionId(questionId);
     }
-    public static ExaminationPaperId.Builder Builder(){
-        return new Builder();
-    }
-    public static class Builder{
 
-        private StudentId studentId;
-        private ExamId examId;
-        private QuestionId questionId;
 
-        public Builder setStudentId(Long studentId){
-            this.studentId = new StudentId(studentId);
-            return this;
-        }
-        public Builder setExamId(Long examId,Long courseId){
-            this.examId = new ExamId(examId,courseId);
-            return this;
-        }
-        public Builder setQuestionId(Long questionId){
-            this.questionId = new QuestionId(questionId);
-            return this;
-        }
-        public ExaminationPaperId build(){
-            ExaminationPaperId examinationPaperId=new ExaminationPaperId();
-            examinationPaperId.examId=this.examId;
-            examinationPaperId.studentId=this.studentId;
-            examinationPaperId.questionId=this.questionId;
-            return examinationPaperId;
-        }
-    }
+    //    public static ExaminationPaperId.Builder Builder(){
+//        return new Builder();
+//    }
+//    public static class Builder{
+//
+//        private StudentId studentId;
+//        private ExamId examId;
+//        private QuestionId questionId;
+//
+//        public Builder setStudentId(Long studentId){
+//            this.studentId = new StudentId(studentId);
+//            return this;
+//        }
+//        public Builder setExamId(Long examId,Long courseId){
+//            this.examId = new ExamId(examId,courseId);
+//            return this;
+//        }
+//        public Builder setQuestionId(Long questionId){
+//            this.questionId = new QuestionId(questionId);
+//            return this;
+//        }
+//        public ExaminationPaperId build(){
+//            ExaminationPaperId examinationPaperId=new ExaminationPaperId();
+//            examinationPaperId.examId=this.examId;
+//            examinationPaperId.studentId=this.studentId;
+//            examinationPaperId.questionId=this.questionId;
+//            return examinationPaperId;
+//        }
+//    }
 
     @Override
     public boolean equals(Object o) {

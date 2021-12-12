@@ -26,9 +26,19 @@ public class ExamId implements Serializable {
         courseId=new CourseId();
     }
 
+    public ExamId(Long examId) {
+        this.examId = examId;
+        courseId = new CourseId();
+    }
+
     public ExamId(Long examId, Long courseId) {
         this.examId = examId;
         this.courseId = new CourseId(courseId);
+    }
+
+    public ExamId(Long examId, CourseId courseId) {
+        this.examId = examId;
+        this.courseId = courseId;
     }
 
     public Long getExamId() {
@@ -46,27 +56,32 @@ public class ExamId implements Serializable {
     public void setCourseId(Long courseId) {
         this.courseId = new CourseId(courseId);
     }
-    public static ExamId.Builder Builder(){
-        return new Builder();
+
+    public void setCourseId(CourseId courseId) {
+        this.courseId = courseId;
     }
-    public static class Builder{
-        private Long examId;
-        private CourseId courseId;
-        public Builder setExamId(Long examId){
-            this.examId=examId;
-            return this;
-        }
-        public Builder setCourseId(Long courseId){
-            this.courseId = new CourseId(courseId);
-            return this;
-        }
-        public ExamId build(){
-            ExamId examId=new ExamId();
-            examId.examId=this.examId;
-            examId.courseId =this.courseId;
-            return examId;
-        }
-    }
+
+    //    public static ExamId.Builder Builder(){
+//        return new Builder();
+//    }
+//    public static class Builder{
+//        private Long examId;
+//        private CourseId courseId;
+//        public Builder setExamId(Long examId){
+//            this.examId=examId;
+//            return this;
+//        }
+//        public Builder setCourseId(Long courseId){
+//            this.courseId = new CourseId(courseId);
+//            return this;
+//        }
+//        public ExamId build(){
+//            ExamId examId=new ExamId();
+//            examId.examId=this.examId;
+//            examId.courseId =this.courseId;
+//            return examId;
+//        }
+//    }
 
     @Override
     public boolean equals(Object o) {

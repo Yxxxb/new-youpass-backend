@@ -21,6 +21,7 @@ public class Option implements Serializable {
     private Question question;
 
     public Option() {
+        id = new OptionId();
     }
 
     public static Option.Builder Builder(){
@@ -31,6 +32,10 @@ public class Option implements Serializable {
         private OptionId id;
         private String content;
         private Question question;
+
+        Builder(){
+            id = new OptionId();
+        }
 
         public Builder setId(OptionId id) {
             this.id = id;

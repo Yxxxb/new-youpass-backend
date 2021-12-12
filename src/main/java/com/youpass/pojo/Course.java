@@ -39,6 +39,7 @@ public class Course implements Serializable {
     private Set<StuTakeCourse> stuTakeCourses = new HashSet<>();
 
     public Course() {
+        id = new CourseId();
     }
 
     public static Course.Builder Builder(){
@@ -54,6 +55,10 @@ public class Course implements Serializable {
 //        private Set<Exam> examSet = new HashSet<>();
 //        private Set<Question> questionSet = new HashSet<>();
 //        private Set<StuTakeCourse> stuTakeCourses;
+
+        Builder(){
+            id = new CourseId();
+        }
 
         public Builder setId(CourseId id){
             this.id = id;

@@ -41,31 +41,41 @@ public class OptionId implements Serializable {
     public OptionId() {
     }
 
+    public OptionId(Long optionId) {
+        this.optionId = optionId;
+    }
+
     public OptionId(Long optionId, Long questionId) {
         this.optionId = optionId;
         this.questionId = new QuestionId(questionId);
     }
-    public static OptionId.Builder Builder(){
-        return new Builder();
+
+    public OptionId(Long optionId, QuestionId questionId) {
+        this.optionId = optionId;
+        this.questionId = questionId;
     }
-    public static class Builder{
-        private Long optionId;
-        private QuestionId questionId;
-        public Builder setOptionId(Long optionId){
-            this.optionId=optionId;
-            return this;
-        }
-        public Builder setQuestionId(Long questionId){
-            this.questionId= new QuestionId(questionId);
-            return this;
-        }
-        public OptionId build(){
-            OptionId optionId=new OptionId();
-            optionId.optionId=this.optionId;
-            optionId.questionId=this.questionId;
-            return optionId;
-        }
-    }
+
+    //    public static OptionId.Builder Builder(){
+//        return new Builder();
+//    }
+//    public static class Builder{
+//        private Long optionId;
+//        private QuestionId questionId;
+//        public Builder setOptionId(Long optionId){
+//            this.optionId=optionId;
+//            return this;
+//        }
+//        public Builder setQuestionId(Long questionId){
+//            this.questionId= new QuestionId(questionId);
+//            return this;
+//        }
+//        public OptionId build(){
+//            OptionId optionId=new OptionId();
+//            optionId.optionId=this.optionId;
+//            optionId.questionId=this.questionId;
+//            return optionId;
+//        }
+//    }
 
     @Override
     public boolean equals(Object o) {
