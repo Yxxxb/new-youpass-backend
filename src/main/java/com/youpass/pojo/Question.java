@@ -1,5 +1,7 @@
 package com.youpass.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.youpass.pojo.pk.QuestionId;
 
 import javax.persistence.*;
@@ -26,14 +28,16 @@ public class Question implements Serializable {
     @Column(name = "create_time")
     private Date create_time;
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Course_id",referencedColumnName = "course_id")
     private Course course;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
     private Set<Option> optionSet = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
     private Set<ExaminationPaper> examinationPaperSet = new HashSet<>();
 

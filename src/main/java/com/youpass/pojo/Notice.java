@@ -1,5 +1,7 @@
 package com.youpass.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.youpass.pojo.pk.NoticeId;
 
 import javax.persistence.Column;
@@ -18,6 +20,7 @@ public class Notice implements Serializable {
     @Column(name = "time")
     private Date time;
 
+    @JsonIgnore
     @MapsId("courseId")
     @ManyToOne
     @JoinColumn(name = "course_id",referencedColumnName = "course_id")

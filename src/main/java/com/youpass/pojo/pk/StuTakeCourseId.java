@@ -5,6 +5,7 @@ import com.youpass.pojo.StuTakeCourse;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class StuTakeCourseId implements Serializable {
@@ -68,4 +69,17 @@ public class StuTakeCourseId implements Serializable {
 //            return stuTakeCourseId;
 //        }
 //    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StuTakeCourseId that = (StuTakeCourseId) o;
+        return Objects.equals(studentId, that.studentId) && Objects.equals(courseId, that.courseId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentId, courseId);
+    }
 }

@@ -1,5 +1,6 @@
 package com.youpass.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youpass.pojo.pk.TeacherId;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.repository.cdi.Eager;
@@ -34,6 +35,7 @@ public class Teacher implements Serializable {
     private String location;
 
     //放弃关系的维护
+    @JsonIgnore
     @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Course> courseSet = new HashSet<>();
 

@@ -26,9 +26,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         } else {
             System.out.println("放行 id = " + id);
             request.setAttribute("id", id);
-            System.out.println(request.getAttribute("id"));
             return true;
         }
     }
-
 }

@@ -1,10 +1,13 @@
 package com.youpass.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.youpass.pojo.pk.StuTakeCourseId;
 import com.youpass.pojo.pk.StudentId;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Student_Course")
@@ -12,11 +15,13 @@ public class StuTakeCourse implements Serializable {
     @EmbeddedId
     private StuTakeCourseId id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "student_id")
     @MapsId("studentId")
     private Student student;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "course_id")
     @MapsId("courseId")
@@ -90,5 +95,18 @@ public class StuTakeCourse implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StuTakeCourse that = (StuTakeCourse) o;
+        return Objects.equals(id, that.id) && Objects.equals(student, that.student) && Objects.equals(course, that.course);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, student, course);
     }
 }

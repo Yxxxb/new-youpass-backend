@@ -13,7 +13,8 @@ public enum ResultEnum {
     //xsc 700
     INFO_DEFICIENCY(700,"信息缺失"),
     USER_MISS(701,"用户不存在"),
-    USER_NOT_LOGIN(702,"用户没有登录")
+    USER_NOT_LOGIN(702,"用户没有登录"),
+    File_ERROR(703,"文件操作出现问题"),
     ;
     private Integer code;
     private String msg;
