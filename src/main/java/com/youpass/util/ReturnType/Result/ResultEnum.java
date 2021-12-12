@@ -9,6 +9,7 @@ public enum ResultEnum {
     //xsc 700
     INFO_DEFICIENCY(700,"信息缺失"),
     USER_MISS(701,"用户不存在"),
+    SESSION_MISS(600,"session信息错误"),
     ;
     private Integer code;
     private String msg;

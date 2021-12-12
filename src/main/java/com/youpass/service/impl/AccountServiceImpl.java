@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -120,8 +122,8 @@ public class AccountServiceImpl implements AccountService {
     //     studentRepository.save(student);
     //
     //     //此处的返回内容等于前端交互时再具体决定修改
-    //     Map<String,Long> resultMap= new HashMap<>();
-    //     resultMap.put("产生的新学号",student.getId());
+    //    Map<String,Long> resultMap= new HashMap<>();
+    //         resultMap.put("产生的新学号",student.getId());
     //
     //     return ResultUtil.success(resultMap);
     // }
