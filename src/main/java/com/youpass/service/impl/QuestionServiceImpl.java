@@ -6,7 +6,8 @@ import com.youpass.dao.OptionRepository;
 import com.youpass.dao.QuestionRepository;
 import com.youpass.model.OptionInfo;
 import com.youpass.model.QuestionInfo;
-import com.youpass.model.QuestionStuReturn;
+import com.youpass.model.ReturnType.QuestionStuReturn;
+import com.youpass.model.StudentExamPaperInfo;
 import com.youpass.pojo.*;
 import com.youpass.pojo.pk.*;
 import com.youpass.service.QuestionService;
@@ -97,23 +98,53 @@ public class QuestionServiceImpl implements QuestionService {
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
         }
 
-        var exam= examRepository.findById(new ExamId(questionInfo.getExamId(), questionInfo.getCourseId()));
+        var exam = examRepository.findById(new ExamId(questionInfo.getExamId(), questionInfo.getCourseId()));
+        if (exam.isEmpty()) {
+            return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
+        }
         var epSet = exam.get().getExaminationPaperSet();
-        Set<ExaminationPaper> epReturnSet = new HashSet<>();
+        //最终要返回的学生列表
+        Set<StudentExamPaperInfo> studentReturnSet = new HashSet<>();
 
+        //将满足要求的学生加入Set中
         for (var item : epSet) {
-            if (item.getQuestion().getId().getQuestionId().equals(questionInfo.getQuestionId())&& (item.getStuPoint()==null)) {
-                epReturnSet.add(item);
+            if (item.getQuestion().getId().getQuestionId().equals(questionInfo.getQuestionId()) && (item.getStuPoint() == null)) {
+                studentReturnSet.add(new StudentExamPaperInfo(
+                        item.getId().getStudentId(),
+                        item.getNumInPaper(),
+                        item.getStuAnswer(),
+                        item.getValue()));
             }
         }
 
+        //找到相应的题目
         Optional<Question> questionOptional = questionRepository.findById(new QuestionId(questionInfo.getQuestionId()));
         if (questionOptional.isEmpty()) {
             return ResultUtil.error(ResultEnum.USER_MISS);
         }
+        //题目信息
+        Question question = questionOptional.get();
 
-        QuestionStuReturn questionStuReturn= new QuestionStuReturn(epReturnSet,questionOptional.get());
-        return ResultUtil.success(questionStuReturn);
+        //最终要返回选项的List
+        List<OptionInfo> optionInfoList = new ArrayList<>();
+
+        //将选项添加到List中
+        for (var item : question.getOptionSet()) {
+            optionInfoList.add(new OptionInfo(
+                    item.getId().getOptionId(),
+                    item.getId().getQuestionId().getQuestionId(),
+                    item.getContent()));
+        }
+        //最终要返回的题目信息
+        QuestionInfo questionInfoReturn = new QuestionInfo(
+                question.getId().getQuestionId(),
+                question.getDescription(),
+                question.getType(),
+                question.getStandard_answer(),
+                question.getSubject(),
+                optionInfoList);
+
+        return ResultUtil.success(new QuestionStuReturn(studentReturnSet,questionInfoReturn));
 
     }
 }

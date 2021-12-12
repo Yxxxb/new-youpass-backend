@@ -12,9 +12,10 @@ public class QuestionInfo {
     private String standardAnswer;
     private String subject;
     private Date createTime;
+    private Integer questionValue;
     private List<OptionInfo> optionInfoList;
 
-    public QuestionInfo(Long questionId, Long courseId, Long examId, String description, Integer type, String standardAnswer, String subject, Date createTime, List<OptionInfo> optionInfoList) {
+    public QuestionInfo(Long questionId, Long courseId, Long examId, String description, Integer type, String standardAnswer, String subject, Date createTime, Integer questionValue, List<OptionInfo> optionInfoList) {
         this.questionId = questionId;
         this.courseId = courseId;
         this.examId = examId;
@@ -23,6 +24,16 @@ public class QuestionInfo {
         this.standardAnswer = standardAnswer;
         this.subject = subject;
         this.createTime = createTime;
+        this.questionValue = questionValue;
+        this.optionInfoList = optionInfoList;
+    }
+
+    public QuestionInfo(Long questionId, String description, Integer type, String standardAnswer, String subject, List<OptionInfo> optionInfoList) {
+        this.questionId = questionId;
+        this.description = description;
+        this.type = type;
+        this.standardAnswer = standardAnswer;
+        this.subject = subject;
         this.optionInfoList = optionInfoList;
     }
 
@@ -97,6 +108,15 @@ public class QuestionInfo {
     public void setExamId(Long examId) {
         this.examId = examId;
     }
+
+    public Integer getQuestionValue() {
+        return questionValue;
+    }
+
+    public void setQuestionValue(Integer questionValue) {
+        this.questionValue = questionValue;
+    }
+
     @Override
     public String toString() {
         return "QuestionInfo{" +

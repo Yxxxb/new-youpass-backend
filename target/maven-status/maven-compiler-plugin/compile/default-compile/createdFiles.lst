@@ -20,7 +20,6 @@ com\youpass\pojo\pk\CourseId.class
 com\youpass\pojo\Question$Builder.class
 com\youpass\pojo\Student$Builder.class
 com\youpass\model\ExamReturnInfo.class
-com\youpass\model\QuestionStuReturn.class
 com\youpass\NewYoupassBackendApplication.class
 com\youpass\pojo\pk\ExaminationPaperId.class
 com\youpass\model\CourseInfo.class
@@ -49,7 +48,9 @@ com\youpass\service\AccountService.class
 com\youpass\pojo\Notice.class
 com\youpass\pojo\StuTakeCourse.class
 com\youpass\service\ScoreService.class
+com\youpass\model\ReturnType\QuestionStuReturn.class
 com\youpass\pojo\Student.class
+com\youpass\model\StudentExamPaperInfo.class
 com\youpass\dao\ExaminationPaperRepository.class
 com\youpass\pojo\pk\ExamInfoId$Builder.class
 com\youpass\dao\TeacherRepository.class
