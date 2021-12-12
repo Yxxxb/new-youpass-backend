@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.youpass.util.ReturnType.Result.ResultEnum.USER_NOT_LOGIN;
