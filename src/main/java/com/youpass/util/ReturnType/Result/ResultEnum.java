@@ -5,6 +5,7 @@ public enum ResultEnum {
     SUCCESS(100, "成功"),
     EMAIL_IS_EXISTS(1, "邮箱已存在"),
     //yxb 500
+    COURSE_MISS(500, "课程不存在"),
     //lyz 600
     //xsc 700
     INFO_DEFICIENCY(700,"信息缺失"),
