@@ -271,7 +271,7 @@ public class TestConfig {
             /**
              * 删除
              */
-            teacherRepository.deleteById(new TeacherId(10500L));
+//            teacherRepository.deleteById(new TeacherId(10500L));
 
 
 
