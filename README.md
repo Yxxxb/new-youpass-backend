@@ -14,7 +14,6 @@
 
 1. 通过题目获得一个题目没有批改过的学生名单 GetStudofQuesController.Post //修改成Get
 2. 通过考生信息获得考试所有题目信息 TakeexamController.Get
-3. 学生上传答案 TakeexamController.PostAnswer
 4. 上传题目到题库 UploadQuestionController.Post
 
 
@@ -27,6 +26,7 @@
 4. 删除session TakeexamController.Delete
 5. 查看课程的所有考试 ExamController.GetbyCourseId
 6. 学生查看所有考试信息 ExamController.Get
+6. 学生上传答案 TakeexamController.PostAnswer
 
 
 
