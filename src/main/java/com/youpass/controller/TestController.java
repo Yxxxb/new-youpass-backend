@@ -14,8 +14,8 @@ import java.util.List;
 @RestController
 public class TestController {
     @GetMapping("api/test")
-    public String test(@RequestAttribute(name="id") Long id){
-        System.out.println(id);
+    public String test(HttpServletRequest request){
+        System.out.println(request.getSession().getAttribute("course_id"));
         return "";
     }
 }
