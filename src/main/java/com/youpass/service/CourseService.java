@@ -9,4 +9,6 @@ public interface CourseService {
     public Result<Object> deleteCourse(Long teacherId, Long courseId);
 
     Result<Object> createCourse(Long teacherId, CourseInfo courseInfo);
+
+    Result<Object> joinCourse(Long studentId, CourseInfo courseInfo);
 }

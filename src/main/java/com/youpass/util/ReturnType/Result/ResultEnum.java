@@ -11,6 +11,8 @@ public enum ResultEnum {
     QUESTION_ERROR(503,"题库数量不足"),
     //lyz 600
     SESSION_MISS(600, "session miss"),
+    ALREADY_EXISTS(601,"学生已经加入了该课程"),
+    PASSWORD_ERROR(602,"密码错误"),
     //xsc 700
     INFO_DEFICIENCY(700,"信息缺失"),
     USER_MISS(701,"用户不存在"),
