@@ -7,7 +7,8 @@ public enum ResultEnum {
     //yxb 500
     COURSE_MISS(500, "课程不存在"),
     WITHOUT_AUTHORITY(501,"用户没有考试权限"),
-    ANSWER_MISS(502,"用户没有考试权限"),
+    ANSWER_TYPE_MISS(502,"题目类型错误"),
+    QUESTION_ERROR(503,"题库数量不足"),
     //lyz 600
     SESSION_MISS(600, "session miss"),
     //xsc 700

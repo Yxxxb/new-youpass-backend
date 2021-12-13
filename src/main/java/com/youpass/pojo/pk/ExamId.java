@@ -3,6 +3,7 @@ package com.youpass.pojo.pk;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Optional;
 
 @Embeddable
 public class ExamId implements Serializable {

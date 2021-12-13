@@ -1,5 +1,6 @@
 package com.youpass.controller;
 
+import com.youpass.model.PostAnswerInfo;
 import com.youpass.model.ReleaseExamInfo;
 import com.youpass.model.SetSessionInfo;
 import com.youpass.model.UserInfo;
@@ -34,90 +35,97 @@ public class ExamController {
      * @param courseId;
      * @return 成功情况
      * {
-     *   "code": 100,
-     *   "msg": "成功",
-     *   "data": [
-     *     {
-     *       "exam_id": {
-     *         "examId": 1,
-     *         "courseId": 1000
-     *       },
-     *       "start_time": null,
-     *       "end_time": null,
-     *       "title": "exam1"
-     *     },
-     *     {
-     *       "exam_id": {
-     *         "examId": 2,
-     *         "courseId": 1000
-     *       },
-     *       "start_time": null,
-     *       "end_time": null,
-     *       "title": "exam2"
-     *     }
-     *   ]
+     * "code": 100,
+     * "msg": "成功",
+     * "data": [
+     * {
+     * "exam_id": {
+     * "examId": 1,
+     * "courseId": 1000
+     * },
+     * "start_time": null,
+     * "end_time": null,
+     * "title": "exam1"
+     * },
+     * {
+     * "exam_id": {
+     * "examId": 2,
+     * "courseId": 1000
+     * },
+     * "start_time": null,
+     * "end_time": null,
+     * "title": "exam2"
+     * }
+     * ]
      * }
      * 失败情况
      * {
-     *   "code": 500,
-     *   "msg": "课程不存在",
-     *   "data": null
+     * "code": 500,
+     * "msg": "课程不存在",
+     * "data": null
      * }
      */
-    @GetMapping (path = "courseGetExam/{courseId}")
+    @GetMapping(path = "courseGetExam/{courseId}")
     public Result<Object> GetExamsByCourseId(@PathVariable("courseId") Long courseId) {
         return examService.GetExamsByCourseId(courseId);
     }
 
     /**
-     *
      * @param id
      * @return 成功情况
      * {
-     *   "code": 100,
-     *   "msg": "成功",
-     *   "data": [
-     *     {
-     *       "exam_id": {
-     *         "examId": 1,
-     *         "courseId": 1000
-     *       },
-     *       "start_time": null,
-     *       "end_time": null,
-     *       "title": "exam1"
-     *     },
-     *     {
-     *       "exam_id": {
-     *         "examId": 2,
-     *         "courseId": 1000
-     *       },
-     *       "start_time": null,
-     *       "end_time": null,
-     *       "title": "exam2"
-     *     }
-     *   ]
+     * "code": 100,
+     * "msg": "成功",
+     * "data": [
+     * {
+     * "exam_id": {
+     * "examId": 1,
+     * "courseId": 1000
+     * },
+     * "start_time": null,
+     * "end_time": null,
+     * "title": "exam1"
+     * },
+     * {
+     * "exam_id": {
+     * "examId": 2,
+     * "courseId": 1000
+     * },
+     * "start_time": null,
+     * "end_time": null,
+     * "title": "exam2"
+     * }
+     * ]
      * }
      */
     @GetMapping(path = "studentGetExam")
-    public Result<Object> GetExamsByStudentId(@RequestAttribute(name="id") Long id) {
+    public Result<Object> GetExamsByStudentId(@RequestAttribute(name = "id") Long id) {
         return examService.GetExamByStudentId(id);
     }
 
     @PostMapping(path = "setSession")
-    public Result<Object> SetSession(HttpServletRequest request, @RequestAttribute(name="id") Long id, @RequestBody SetSessionInfo setSessionInfo) throws ParseException {
+    public Result<Object> SetSession(HttpServletRequest request, @RequestAttribute(name = "id") Long id, @RequestBody SetSessionInfo setSessionInfo) throws ParseException {
         return examService.SetSession(request, id, setSessionInfo);
     }
 
     @PostMapping(path = "releasetest")
-    public Result<Object> ReleaseTest(@RequestAttribute(name="exam_id") Long id) {
-        System.out.println(id);
-        return null;
-        //        return examService.ReleaseTest(id, releaseExamInfo);
+    public Result<Object> ReleaseTest(@RequestAttribute(name = "id") Long id, ReleaseExamInfo releaseExamInfo) {
+        return examService.ReleaseTest(id, releaseExamInfo);
     }
 
     @PostMapping(path = "takeexam/studentPostAnswer")
-    public Result<Object> PostAnswer(@RequestAttribute(name="id") Long id) {
-        return examService.CheckState(id);
+    public Result<Object> PostAnswer(HttpServletRequest request, @RequestAttribute(name = "id") Long id, @RequestBody PostAnswerInfo postAnswerInfo) {
+        return examService.PostAnswer(request, id, postAnswerInfo);
+    }
+
+    @DeleteMapping(path = "takeexam/deleteSession")
+    public Result<Object> DeleteSession(HttpServletRequest request, @RequestAttribute(name = "id") Long id) {
+        return examService.DeleteSession(request, id);
+    }
+
+    @GetMapping(path = "takeexam/getExamQuestion")
+    public Result<Object> GetExamQuestion(HttpServletRequest request, @RequestAttribute(name = "id") Long id) {
+        return examService.GetExamQuestion(request, id);
     }
 }
 

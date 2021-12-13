@@ -22,10 +22,15 @@ public class ReleaseExamInfo {
     private Integer completion_num;
     private Integer filled_num;
 
+    private Integer choice_value;
+    private Integer multi_choice_value;
+    private Integer completion_value;
+    private Integer filled_value;
+
     public ReleaseExamInfo() {
     }
 
-    public ReleaseExamInfo(Long courseId, Long examId, String title, Date start_time, Date end_time, Integer choice_num, Integer multi_choice_num, Integer completion_num, Integer filled_num) {
+    public ReleaseExamInfo(Long courseId, Long examId, String title, Date start_time, Date end_time, Integer choice_num, Integer multi_choice_num, Integer completion_num, Integer filled_num, Integer choice_value, Integer multi_choice_value, Integer completion_value, Integer filled_value) {
         this.courseId = courseId;
         this.examId = examId;
         this.title = title;
@@ -35,6 +40,10 @@ public class ReleaseExamInfo {
         this.multi_choice_num = multi_choice_num;
         this.completion_num = completion_num;
         this.filled_num = filled_num;
+        this.choice_value = choice_value;
+        this.multi_choice_value = multi_choice_value;
+        this.completion_value = completion_value;
+        this.filled_value = filled_value;
     }
 
     public Long getCourseId() {
@@ -107,5 +116,37 @@ public class ReleaseExamInfo {
 
     public void setFilled_num(Integer filled_num) {
         this.filled_num = filled_num;
+    }
+
+    public Integer getChoice_value() {
+        return choice_value;
+    }
+
+    public void setChoice_value(Integer choice_value) {
+        this.choice_value = choice_value;
+    }
+
+    public Integer getMulti_choice_value() {
+        return multi_choice_value;
+    }
+
+    public void setMulti_choice_value(Integer multi_choice_value) {
+        this.multi_choice_value = multi_choice_value;
+    }
+
+    public Integer getCompletion_value() {
+        return completion_value;
+    }
+
+    public void setCompletion_value(Integer completion_value) {
+        this.completion_value = completion_value;
+    }
+
+    public Integer getFilled_value() {
+        return filled_value;
+    }
+
+    public void setFilled_value(Integer filled_value) {
+        this.filled_value = filled_value;
     }
 }
