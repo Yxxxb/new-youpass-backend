@@ -3,6 +3,7 @@ com\youpass\dao\StuTakeCourseRepository.class
 com\youpass\dao\CourseRepository.class
 com\youpass\service\impl\AccountServiceImpl.class
 com\youpass\config\LoginHandlerInterceptor.class
+com\youpass\model\SetSessionInfo.class
 com\youpass\pojo\Course$Builder.class
 com\youpass\pojo\Exam$Builder.class
 com\youpass\service\impl\QuestionServiceImpl.class
@@ -10,6 +11,7 @@ com\youpass\util\SendMsgUtil.class
 com\youpass\dao\StudentRepository.class
 com\youpass\pojo\ExamInfo.class
 com\youpass\controller\QuestionController.class
+com\youpass\config\TakeExamHandlerInterceptor.class
 com\youpass\pojo\pk\OptionId.class
 com\youpass\service\impl\StudentServiceImpl.class
 com\youpass\pojo\ExaminationPaper.class
@@ -17,12 +19,14 @@ com\youpass\pojo\pk\StuTakeCourseId.class
 com\youpass\service\impl\ScoreServiceImpl.class
 com\youpass\dao\TestRepository.class
 com\youpass\pojo\pk\CourseId.class
+com\youpass\controller\ScoreController.class
 com\youpass\pojo\Question$Builder.class
+com\youpass\model\ScoreInfo.class
 com\youpass\pojo\Student$Builder.class
 com\youpass\model\ExamReturnInfo.class
+com\youpass\util\Tools.class
 com\youpass\NewYoupassBackendApplication.class
 com\youpass\pojo\pk\ExaminationPaperId.class
-com\youpass\model\CourseInfo.class
 com\youpass\config\TestConfig.class
 com\youpass\pojo\ExaminationPaper$Builder.class
 com\youpass\controller\ExamController.class
@@ -64,6 +68,7 @@ com\youpass\controller\TestController.class
 com\youpass\dao\ExamRepository.class
 com\youpass\dao\NoticeRepository.class
 com\youpass\pojo\StuTakeCourse$Builder.class
+com\youpass\model\ReleaseExamInfo.class
 com\youpass\model\UserInfo.class
 com\youpass\service\ExamService.class
 com\youpass\model\QuestionInfo.class

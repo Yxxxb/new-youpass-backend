@@ -65,6 +65,18 @@ QuestionController.getStudentDoingQuestion测试
     "courseId":1000,
     "examId":1
 }
+
 #######################################
-QuestionController.getStudentDoingQuestion测试
+ScoreController.calStuScore测试
+#######################################
+{
+    "courseId":1000,
+    "examId":1
+}
+#######################################
+ScoreController.getGrade测试
+#######################################
+http://localhost:5050/api/score/getGrade/1000/1
+#######################################
+ScoreController.calStuScore测试
 #######################################

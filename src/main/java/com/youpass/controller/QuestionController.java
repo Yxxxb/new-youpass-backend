@@ -36,7 +36,7 @@ public class QuestionController {
      *    {
      *    "code": 100,
      *    "msg": "成功",
-     *    "data": 上传题目成功     //账号
+     *    "data": 上传题目成功
      *    }
      *
      */
@@ -49,22 +49,18 @@ public class QuestionController {
     /**
      * 根据传入的相关题目信息获取在考试中考了这道题但是还没有被批改的学生的信息和这道题目的相关信息
      * @param questionInfo 传入的信息
-     *     private Long questionId; //必须
-     *     private Long courseId;   //必须
-     *     private Long examId;     //必须
-     *     private String description;
-     *     private Integer type;
-     *     private String standardAnswer;
-     *     private String subject;
-     *     private Date createTime;
-     *     private Integer questionValue;
-     *     private List<OptionInfo> optionInfoList;
+     *     private Long questionId;
+     *     private Long courseId;
+     *     private Long examId;
      * @return
      *     成功情况
      *     {
      *     "code": 100,
      *     "msg": "成功",
-     *     "data": 上传题目成功     //账号
+     *     "data": class QuestionStuReturn{
+     *             Set<StudentExamPaperInfo> studentList;
+     *             QuestionInfo questionInfo;
+     *             }
      *     }
      */
     @PostMapping(path = "getStu")

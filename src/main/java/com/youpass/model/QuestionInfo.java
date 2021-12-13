@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 public class QuestionInfo {
-    private  Long questionId;
-    private  Long courseId;
+    private Long questionId;
+    private Long courseId;
     private Long examId;
     private String description;
     private Integer type;
@@ -13,6 +13,8 @@ public class QuestionInfo {
     private String subject;
     private Date createTime;
     private Integer questionValue;
+
+    private List<ScoreInfo> scoreInfoList;
     private List<OptionInfo> optionInfoList;
 
     public QuestionInfo(Long questionId, Long courseId, Long examId, String description, Integer type, String standardAnswer, String subject, Date createTime, Integer questionValue, List<OptionInfo> optionInfoList) {
@@ -115,6 +117,14 @@ public class QuestionInfo {
 
     public void setQuestionValue(Integer questionValue) {
         this.questionValue = questionValue;
+    }
+
+    public List<ScoreInfo> getScoreInfoList() {
+        return scoreInfoList;
+    }
+
+    public void setScoreInfoList(List<ScoreInfo> scoreInfoList) {
+        this.scoreInfoList = scoreInfoList;
     }
 
     @Override
