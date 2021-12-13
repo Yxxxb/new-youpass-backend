@@ -49,8 +49,7 @@ public class QuestionServiceImpl implements QuestionService {
             if ((item.getType() == 0 || item.getType() == 1) && item.getOptionInfoList().size() == 0) {
                 return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
             }
-            //将传来的standard转换编码存入
-            
+            //TODO:将传来的standard转换编码存入
             //获取下一个questionId
             var questionId = questionRepository.getNextId().orElse(questionRepository.minId);
             //将题目信息上传到数据库中
