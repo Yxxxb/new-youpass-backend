@@ -1,8 +1,11 @@
+com\youpass\model\StuInfoOfCourse.class
+com\youpass\controller\StudentController.class
 com\youpass\service\NoticeService.class
 com\youpass\dao\StuTakeCourseRepository.class
 com\youpass\dao\CourseRepository.class
 com\youpass\service\impl\AccountServiceImpl.class
 com\youpass\config\LoginHandlerInterceptor.class
+com\youpass\model\StuInfoOfCourse$StuInfoOfExam.class
 com\youpass\pojo\Course$Builder.class
 com\youpass\pojo\Exam$Builder.class
 com\youpass\service\impl\QuestionServiceImpl.class
@@ -18,6 +21,7 @@ com\youpass\service\impl\ScoreServiceImpl.class
 com\youpass\dao\TestRepository.class
 com\youpass\pojo\pk\CourseId.class
 com\youpass\pojo\Question$Builder.class
+com\youpass\controller\NoticeController.class
 com\youpass\pojo\Student$Builder.class
 com\youpass\model\ExamReturnInfo.class
 com\youpass\NewYoupassBackendApplication.class
@@ -47,6 +51,7 @@ com\youpass\pojo\Notice$Builder.class
 com\youpass\service\AccountService.class
 com\youpass\pojo\Notice.class
 com\youpass\pojo\StuTakeCourse.class
+com\youpass\model\NoticeInfo.class
 com\youpass\service\ScoreService.class
 com\youpass\model\ReturnType\QuestionStuReturn.class
 com\youpass\pojo\Student.class
@@ -61,6 +66,7 @@ com\youpass\util\ReturnType\Result\Result.class
 com\youpass\dao\QuestionRepository.class
 com\youpass\pojo\pk\NoticeId.class
 com\youpass\controller\TestController.class
+com\youpass\controller\CourseController.class
 com\youpass\dao\ExamRepository.class
 com\youpass\dao\NoticeRepository.class
 com\youpass\pojo\StuTakeCourse$Builder.class

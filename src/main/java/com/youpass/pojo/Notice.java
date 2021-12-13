@@ -49,6 +49,11 @@ public class Notice implements Serializable {
             return this;
         }
 
+        public Builder setId(Long id) {
+            this.id = new NoticeId(id);
+            return this;
+        }
+
         public Builder setContent(String content) {
             this.content = content;
             return this;
@@ -72,5 +77,41 @@ public class Notice implements Serializable {
             notice.course = course;
             return notice;
         }
+    }
+
+    public NoticeId getId() {
+        return id;
+    }
+
+    public void setId(NoticeId id) {
+        this.id = id;
+    }
+
+    public void setId(Long id) {
+        this.id = new NoticeId(id);
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }
