@@ -16,9 +16,10 @@ public class MyConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginHandlerInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(
-                        "/api/signup",
-                        "/api/login",
-                        "/api/test"
+                        "/api/accountController/signup",
+                        "/api/accountController/login",
+                        "/api/test",
+                        "/error"
                 );
 
         registry.addInterceptor(new TakeExamHandlerInterceptor())

@@ -33,10 +33,10 @@
 # Score
 
 1. 计算试卷总分 ExamController.CalStuScore
-2. 获得某课程所有考试的分数 CorrectingChoiceController.GradeGet
-3. 自动批改 CorrectingChoiceController.Post
-4. 手动批改 CorrectingChoiceController.ManualCorrectingPost
-5. 通过student_id &course_id 获得学生该门课所有考试的成绩 ExamController.GetStuScore
+2. 查找某门考试所有学生的分数 CourseController.GradeGet
+3. 自动批改 CorrectingChoiceController.Post   **//未测试**
+4. 手动批改 CorrectingChoiceController.ManualCorrectingPost  **//未测试**
+5. 通过student_id &course_id 获得学生该门课所有考试的成绩 **//未测试** ExamController.GetStuScore
 
 # Student
 
@@ -58,6 +58,7 @@
 # Notice
 
 1. 查看消息 NoticeCheckController.Get
+2. 插入session
 
 
 
