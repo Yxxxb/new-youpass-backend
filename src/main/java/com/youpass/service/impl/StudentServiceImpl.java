@@ -13,6 +13,7 @@ import com.youpass.util.ReturnType.Result.ResultEnum;
 import com.youpass.util.ReturnType.Result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public Result<Object> deleteStudentFromCourse(Long teacherId, Long studentId,Long courseId) {
         if(courseRepository.existsById(new CourseId(courseId))){
             var course = courseRepository.findById(new CourseId(courseId)).get();

@@ -19,6 +19,7 @@ import com.youpass.util.ReturnType.Result.ResultEnum;
 import com.youpass.util.ReturnType.Result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public Result<Object> deleteCourse(Long teacherId, Long courseId) {
         if (courseRepository.existsById(new CourseId(courseId))) {
             var course = courseRepository.findById(new CourseId(courseId)).get();
@@ -88,6 +90,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public Result<Object> getCourseOfUser(Long id) {
         if(teacherRepository.existsById(new TeacherId(id))){
             System.out.println("老师");
@@ -107,6 +110,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public Result<Object> createCourse(Long teacherId, CourseInfo courseInfo) {
         if (teacherId == null ||
                 courseInfo.getTitle() == null ||
@@ -143,6 +147,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public Result<Object> joinCourse(Long studentId, CourseInfo courseInfo) {
         if(studentId==null||
         courseInfo.getCourseId()==null||
@@ -174,7 +179,14 @@ public class CourseServiceImpl implements CourseService {
                 .setCourse(courseOptional.get())
                 .setId(new StuTakeCourseId(studentId,courseInfo.getCourseId()))
                 .build();
-        stuTakeCourseRepository.save(stuTakeCourse);
+        Student student = studentOptional.get();
+        Course course = courseOptional.get();
+
+        student.getStuTakeCourses().add(stuTakeCourse);
+        course.getStuTakeCourses().add(stuTakeCourse);
+
+        studentRepository.save(student);
+        courseRepository.save(course);
         //因为已经发布的考试每位学生已经有题了，所以对于后加进来的学生，是没有对应的题的，因此也没有必要将他们加入到学生考试的表中
         return ResultUtil.success("加入课程成功");
     }

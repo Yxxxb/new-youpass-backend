@@ -1,8 +1,11 @@
 package com.youpass.config;
 
 import com.youpass.dao.*;
+import com.youpass.model.*;
+import com.youpass.model.ReturnType.ExamQuestionReturn;
 import com.youpass.pojo.*;
 import com.youpass.pojo.pk.*;
+import com.youpass.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -10,327 +13,276 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Configuration
 public class TestConfig {
     @Autowired
-    public CourseRepository courseRepository;
-
+    private AccountService accountService;
     @Autowired
-    public ExaminationPaperRepository examinationPaperRepository;
-
+    private CourseService courseService;
     @Autowired
-    public ExamInfoRepository examInfoRepository;
-
+    private ExamService examService;
     @Autowired
-    public ExamRepository examRepository;
-
+    private NoticeService noticeService;
     @Autowired
-    public NoticeRepository noticeRepository;
-
+    private QuestionService questionService;
     @Autowired
-    public OptionRepository optionRepository;
-
+    private ScoreService scoreService;
     @Autowired
-    public QuestionRepository questionRepository;
-
+    private StudentService studentService;
     @Autowired
-    public StudentRepository studentRepository;
-
+    CourseRepository courseRepository;
     @Autowired
-    public TeacherRepository teacherRepository;
-
+    ExaminationPaperRepository examinationPaperRepository;
     @Autowired
-    public StuTakeCourseRepository stuTakeCourseRepository;
+    ExamInfoRepository examInfoRepository;
+    @Autowired
+    ExamRepository examRepository;
+    @Autowired
+    NoticeRepository noticeRepository;
+    @Autowired
+    OptionRepository optionRepository;
+    @Autowired
+    QuestionRepository questionRepository;
+    @Autowired
+    StudentRepository studentRepository;
+    @Autowired
+    StuTakeCourseRepository stuTakeCourseRepository;
+    @Autowired
+    TeacherRepository teacherRepository;
+
 
     @Bean
     @Transactional
     CommandLineRunner commandLineRunner() {
         return args -> {
 
-//             var s1 = Student.Builder()
-//                     .setId(new StudentId(studentRepository.getNextId().isPresent()?studentRepository.getNextId().get():studentRepository.minId))
-//                     .setName("danny1")
-//                     .setPassword("123")
-//                     .build();
-            var s1 = Student.Builder()
-                    .setId(new StudentId(studentRepository.minId))
-                    .setName("danny1")
-                    .setPassword("123")
-                    .build();
-
-            var s2 = Student.Builder()
-                    .setId(new StudentId(studentRepository.minId + 1))
-                    .setName("danny2")
-                    .setPassword("123")
-                    .build();
-
-            var t1 = Teacher.Builder()
-                    .setId(new TeacherId(teacherRepository.minId))
-                    .setName("t1")
-                    .setPassword("123")
-                    .build();
-            var course1 = Course.Builder()
-                    .setId(new CourseId(courseRepository.minId))
-                    .setPassword("123")
-                    .setTitle("c1")
-                    .setTeacher(t1)
-                    .build();
-            var course2 = Course.Builder()
-                    .setId(new CourseId(courseRepository.minId + 1))
-                    .setPassword("123")
-                    .setTitle("c2")
-                    .setTeacher(t1)
-                    .build();
-            var exam1 = Exam.Builder()
-                    .setId(new ExamId(examRepository.minId))
-                    .setTitle("exam1")
-                    .setChoiceNum(3)
-                    .setCourse(course1)
-                    .build();
-            var exam2 = Exam.Builder()
-                    .setId(new ExamId(examRepository.minId + 1))
-                    .setTitle("exam2")
-                    .setChoiceNum(4)
-                    .setCourse(course1)
-                    .build();
-            var notice1 = Notice.Builder()
-                    .setId(new NoticeId(noticeRepository.minId))
-                    .setCourse(course1)
-                    .setContent("开课了")
-                    .build();
-            var notice2 = Notice.Builder()
-                    .setId(new NoticeId(noticeRepository.minId + 1))
-                    .setCourse(course1)
-                    .setContent("开课了111")
-                    .build();
-            var q1 = Question.Builder()
-                    .setId(new QuestionId(questionRepository.minId))
-                    .setCourse(course1)
-                    .setDescription("12334546")
-                    .build();
-
-            var o1 = Option.Builder()
-                    .setId(new OptionId(optionRepository.minId, q1.getId().getQuestionId()))
-                    .setContent("234345")
-                    .setQuestion(q1)
-                    .build();
-            var o2 = Option.Builder()
-                    .setId(new OptionId(optionRepository.minId + 1, q1.getId().getQuestionId()))
-                    .setContent("234345534")
-                    .setQuestion(q1)
-                    .build();
-
-            var q2 = Question.Builder()
-                    .setId(new QuestionId(questionRepository.minId + 1))
-                    .setCourse(course1)
-                    .setDescription("12334546123")
-                    .build();
-
-            var stucourse1 = StuTakeCourse.Builder()
-//                    .setId(new StuTakeCourseId(s1.getId().getStudentId(),course1.getId().getCourseId()))
-                    .setStudent(s1)
-                    .setCourse(course1)
-                    .build();
-
-            var stucourse2 = StuTakeCourse.Builder()
-//                    .setId(new StuTakeCourseId(s1.getId().getStudentId(),course2.getId().getCourseId()))
-                    .setStudent(s1)
-                    .setCourse(course2)
-                    .build();
-            var stucourse3 = StuTakeCourse.Builder()
-//                    .setId(new StuTakeCourseId(s2.getId().getStudentId(),course1.getId().getCourseId()))
-                    .setStudent(s2)
-                    .setCourse(course1)
-                    .build();
-            var stucourse4 = StuTakeCourse.Builder()
-//                    .setId(new StuTakeCourseId(s2.getId().getStudentId(),course2.getId().getCourseId()))
-                    .setStudent(s2)
-                    .setCourse(course2)
-                    .build();
-
-            teacherRepository.save(t1);
-            studentRepository.save(s1);
-            studentRepository.save(s2);
-
-            q1.getOptionSet().add(o1);
-            q1.getOptionSet().add(o2);
-            course1.getQuestionSet().add(q1);
-            course1.getQuestionSet().add(q2);
-            course1.getExamSet().add(exam1);
-            course1.getExamSet().add(exam2);
-            course1.getNoticeSet().add(notice1);
-            course1.getNoticeSet().add(notice2);
-
-
-
-            course1.getStuTakeCourses().add(stucourse1);
-            course1.getStuTakeCourses().add(stucourse3);
-            course2.getStuTakeCourses().add(stucourse2);
-            course2.getStuTakeCourses().add(stucourse4);
-            s1.getStuTakeCourses().add(stucourse1);
-            s1.getStuTakeCourses().add(stucourse2);
-            s2.getStuTakeCourses().add(stucourse3);
-            s2.getStuTakeCourses().add(stucourse4);
-
-
-
-            t1.getCourseSet().add(course1);
-            t1.getCourseSet().add(course2);
-
-
-
-
-
-            teacherRepository.save(t1);
-
-
-
-
-            studentRepository.save(s1);
-            studentRepository.save(s2);
-
-
-
-            var examinfo1 = ExamInfo.Builder()
-                    .setId(new ExamInfoId(exam1.getId().getExamId(), exam1.getId().getCourseId(), s1.getId().getStudentId()))
-                    .setScore(100)
-                    .setState(1)
-                    .setExam(exam1)
-                    .setStudent(s1)
-                    .build();
-
-            var examinfo2 = ExamInfo.Builder()
-                    .setId(new ExamInfoId(exam2.getId().getExamId(), exam2.getId().getCourseId(), s1.getId().getStudentId()))
-                    .setScore(100)
-                    .setState(1)
-                    .setExam(exam2)
-                    .setStudent(s1)
-                    .build();
-
-            exam1.getExamInfoSet().add(examinfo1);
-            exam2.getExamInfoSet().add(examinfo2);
-            s1.getExamInfos().add(examinfo1);
-            s1.getExamInfos().add(examinfo2);
-            courseRepository.save(course1);
-            studentRepository.save(s1);
-
-            var ep1= ExaminationPaper.Builder()
-                    .setId(new ExaminationPaperId(s1.getId().getStudentId(),exam1.getId().getExamId(),exam1.getId().getCourseId(),q1.getId().getQuestionId()))
-                    .setQuestion(q1)
-                    .setExam(exam1)
-                    .setStudent(s1)
-                    .setNumInPaper(12)
-                    .setSelfOrder(1)
-                    .setValue(14)
-                    .build();
-            var ep2= ExaminationPaper.Builder()
-                    .setId(new ExaminationPaperId(s2.getId().getStudentId(),exam1.getId().getExamId(),exam1.getId().getCourseId(),q1.getId().getQuestionId()))
-                    .setQuestion(q1)
-                    .setExam(exam1)
-                    .setStudent(s2)
-                    .setNumInPaper(12)
-                    .setSelfOrder(1)
-                    .setValue(14)
-                    .build();
-
-            s1.getExaminationPaperSet().add(ep1);
-            s2.getExaminationPaperSet().add(ep2);
-            exam1.getExaminationPaperSet().add(ep1);
-            exam1.getExaminationPaperSet().add(ep2);
-            q1.getExaminationPaperSet().add(ep1);
-            q1.getExaminationPaperSet().add(ep2);
-            studentRepository.save(s1);
-            studentRepository.save(s2);
-            courseRepository.save(course1);
-
-//            var course = courseRepository.getById(new CourseId(1000L));
-//            for (var item : course.getStuTakeCourses()){
-//                System.out.println(item.getId().getCourseId().getCourseId().toString()+" "+item.getId().getStudentId().getStudentId().toString());
-//            }
-
-
-            /**
-             * 查询
-             */
-//            var teacher = teacherRepository.findById(new TeacherId(10500L));
-//            for(var item : teacher.get().getCourseSet()){
-//                System.out.println(item.getTitle());
-//            }
-
-
-            /**
-             *更新
-             */
-            var teacher = teacherRepository.findById(new TeacherId(10500L)).orElseThrow(()->new IllegalStateException("123"));
-            teacher.setName("danny");
-            teacherRepository.save(teacher);
-
-
-            /**
-             * 删除
-             */
-//            teacherRepository.deleteById(new TeacherId(10500L));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//            var t2 = Teacher.Builder()
-//                    .setId(new TeacherId(teacherRepository.minId + 1))
-//                    .setName("t2")
-//                    .setPassword("123")
+//            var userInfo = new UserInfo();
+//            userInfo.setName("student" );
+//            userInfo.setPassword("123");
+//            userInfo.setEmail("123@123");
+//            userInfo.setType(1);
+//            accountService.SignUp(userInfo);
+//
+//            var userInfo1 = new UserInfo();
+//            userInfo1.setName("teacher" );
+//            userInfo1.setPassword("123");
+//            userInfo1.setEmail("123@123");
+//            userInfo1.setType(0);
+//            accountService.SignUp(userInfo1);
+//
+//
+//            CourseInfo courseInfo = new CourseInfo();
+//            courseInfo.setTitle("course");
+//            courseInfo.setPassword("123");
+//            courseService.createCourse(10500L, courseInfo);
+//
+////
+//            var course = courseRepository.findById(new CourseId(1000L)).get();
+//            course.setTitle("123lkjfasl; fewr");
+//            courseRepository.save(course);
+////
+//            var student1 = studentRepository.findById(new StudentId(1950000L)).get();
+//
+//            var stucourse1 = StuTakeCourse.Builder()
+////                    .setId(new StuTakeCourseId(s1.getId().getStudentId(),course1.getId().getCourseId()))
+//                    .setStudent(student1)
+//                    .setCourse(course)
 //                    .build();
-//            teacherRepository.save(t2);
-
-
-            //
-            // var notice1 = Notice.Builder().setContent("312").setCourse(course1).build();
-
-
-//            teacherRepository.save(t1);
-//            teacherRepository.save(t2);
-
-            // teacherRepository.deleteById(new TeacherId(2L));
+////            stuTakeCourseRepository.save(stucourse1);
+//
+//            student1.getStuTakeCourses().add(stucourse1);
+//            studentRepository.save(student1);
+//            System.out.println(course.getStuTakeCourses().toString());
+//            System.out.println(student1.getStuTakeCourses().toString());
 
 
 
-//            var t1 = Teacher.Builder()
-//                    .setId(new TeacherId(teacherRepository.minId))
-//                    .setName("t1")
-//                    .setPassword("123")
-//                    .build();
-//            var course1 = Course.Builder()
-//                    .setId(new CourseId(courseRepository.minId))
-//                    .setPassword("123")
-//                    .setTitle("c1")
-//                    .setTeacher(t1)
-//                    .build();
-//            var course2 = Course.Builder()
-//                    .setId(new CourseId(courseRepository.minId + 1))
-//                    .setPassword("123")
-//                    .setTitle("c2")
-//                    .setTeacher(t1)
-//                    .build();
-//            teacherRepository.save(t1);
-//            courseRepository.save(course1);
-//            courseRepository.save(course2);
-//            Teacher teacherRepositoryById = teacherRepository.getById(t1.getId());
-//            var courseSet = teacherRepositoryById.getCourseSet();
-////            for(var item:teacherRepositoryById.getCourseSet()){
-////                System.out.println(item.getId().getCourseId());
-////                System.out.println(item.getTitle());
-//            }
+
+
+
+            添加学生
+            Integer studentNum = 10;
+            for (Integer i = 0; i < studentNum; i++) {
+                var userInfo = new UserInfo();
+                userInfo.setName("student" + i.toString());
+                userInfo.setPassword("123");
+                userInfo.setEmail("123@123" + i.toString());
+                userInfo.setType(1);
+                accountService.SignUp(userInfo);
+            }
+            //添加老师
+            Integer teacherNum = 10;
+            for (Integer i = 0; i < teacherNum; i++) {
+                var userInfo = new UserInfo();
+                userInfo.setName("teacher" + i.toString());
+                userInfo.setPassword("123");
+                userInfo.setEmail("123@123" + i.toString());
+                userInfo.setType(0);
+                accountService.SignUp(userInfo);
+            }
+            //为老师添加课程
+            Integer courseNum = 2;
+            var teacherList = teacherRepository.findAll();
+            for (var teacher : teacherList) {
+                for (Integer i = 0; i < courseNum; i++) {
+                    CourseInfo courseInfo = new CourseInfo();
+                    courseInfo.setTitle("course" + i.toString());
+                    courseInfo.setPassword("123");
+                    courseService.createCourse(teacher.getId().getTeacherId(), courseInfo);
+                }
+            }
+
+
+            {
+                //学生加入课程
+                var courseList = courseRepository.findAll();
+                var studentList = studentRepository.findAll();
+                int a = 0;
+                for (var course : courseList) {
+                    for (var student : studentList) {
+                        CourseInfo courseInfo = new CourseInfo();
+                        courseInfo.setCourseId(course.getId().getCourseId());
+                        courseInfo.setPassword(course.getPassword());
+                        courseService.joinCourse(student.getId().getStudentId(), courseInfo);
+                        System.out.println(a);
+                    }
+                    a++;
+                }
+            }
+            //添加题目
+            {
+                Integer choiceNum = 5;
+                Integer multiNum = 5;
+                Integer FilledNum = 5;
+                Integer Completion = 5;
+
+                List<QuestionInfo> questionInfoList = new ArrayList<>();
+                for (Integer i = 0; i < choiceNum; i++) {
+                    QuestionInfo questionInfo = new QuestionInfo();
+                    questionInfo.setDescription("des" + i.toString());
+                    questionInfo.setCreateTime(new Date());
+                    questionInfo.setType(0);
+                    questionInfo.setCourseId(1000L);
+                    questionInfo.setSubject("123");
+                    questionInfo.setStandardAnswer("0");
+                    List<OptionInfo> optionList = new ArrayList<>();
+                    for (Long j = 1L; j < 4L; j++) {
+                        optionList.add(new OptionInfo(j, 0L, "123"));
+                    }
+                    questionInfo.setOptionInfoList(optionList);
+                    questionInfoList.add(questionInfo);
+                }
+                for (Integer i = 0; i < multiNum; i++) {
+                    QuestionInfo questionInfo = new QuestionInfo();
+                    questionInfo.setDescription("des" + i.toString());
+                    questionInfo.setCreateTime(new Date());
+                    questionInfo.setType(1);
+                    questionInfo.setCourseId(1000L);
+                    questionInfo.setSubject("123");
+                    questionInfo.setStandardAnswer("0");
+                    List<OptionInfo> optionList = new ArrayList<>();
+                    for (Long j = 1L; j < 4L; j++) {
+                        optionList.add(new OptionInfo(j, 0L, "123"));
+                    }
+                    questionInfo.setOptionInfoList(optionList);
+                    questionInfoList.add(questionInfo);
+                }
+                for (Integer i = 0; i < multiNum; i++) {
+                    QuestionInfo questionInfo = new QuestionInfo();
+                    questionInfo.setDescription("des" + i.toString());
+                    questionInfo.setCreateTime(new Date());
+                    questionInfo.setType(2);
+                    questionInfo.setCourseId(1000L);
+                    questionInfo.setSubject("123");
+                    questionInfo.setStandardAnswer("0");
+                    questionInfoList.add(questionInfo);
+                }
+                for (Integer i = 0; i < multiNum; i++) {
+                    QuestionInfo questionInfo = new QuestionInfo();
+                    questionInfo.setDescription("des" + i.toString());
+                    questionInfo.setCreateTime(new Date());
+                    questionInfo.setType(3);
+                    questionInfo.setCourseId(1000L);
+                    questionInfo.setSubject("123");
+                    questionInfo.setStandardAnswer("0");
+                    questionInfoList.add(questionInfo);
+                }
+                questionService.uploadQuestion(questionInfoList);
+
+            }
+
+            //考试
+            {
+                var courseList = courseRepository.findAll();
+                var releaseExamInfo = new ReleaseExamInfo();
+                releaseExamInfo.setCourseId(1000L);
+                releaseExamInfo.setTitle("exam");
+                releaseExamInfo.setChoice_num(2);
+                releaseExamInfo.setMulti_choice_num(2);
+                releaseExamInfo.setFilled_num(2);
+                releaseExamInfo.setCompletion_num(2);
+                releaseExamInfo.setChoice_value(2);
+                releaseExamInfo.setMulti_choice_value(2);
+                releaseExamInfo.setFilled_value(2);
+                releaseExamInfo.setCompletion_value(2);
+                examService.ReleaseTest(1000L, releaseExamInfo);
+            }
+
+            //上传答案
+            {
+                var studentList = studentRepository.findAll();
+                for (var student : studentList) {
+                    for (Long i = 1L; i <= 20; i++) {
+                        PostAnswerInfo postAnswerInfo = new PostAnswerInfo();
+                        postAnswerInfo.setQuestionId(i);
+                        postAnswerInfo.setStuFillAnswer("0");
+                        List<Character> stuChoiceAnswer = new ArrayList<Character>();
+                        stuChoiceAnswer.add('C');
+                        postAnswerInfo.setStuChoiceAnswer(stuChoiceAnswer);
+                        System.out.println("@@@");
+                        examService.PostAnswer(1L, 1000L, student.getId().getStudentId(), postAnswerInfo);
+                    }
+
+                }
+            }
+
+            //批卷
+            {
+                //自动批改
+
+//                for(Long i =1L;i<=20;i++){
+//                    QuestionInfo questionInfo = new QuestionInfo();
+//                    questionInfo.setExamId(1L);
+//                    questionInfo.setQuestionId(i);
+//                    questionInfo.setCourseId(1000L);
+//                    scoreService.autoCorrect(questionInfo);
+//                }
+
+                var studentList = studentRepository.findAll();
+                //手动批改
+                for(Long i=1L;i<20;i++){
+                    List<ScoreInfo> scoreInfoList = new ArrayList<>();
+                    for(var student : studentList){
+                        ScoreInfo scoreInfo = new ScoreInfo();
+                        scoreInfo.setStudentId(student.getId().getStudentId());
+                        scoreInfo.setScore((int)(Math.random()*100));
+                        scoreInfoList.add(scoreInfo);
+                    }
+                    QuestionInfo questionInfo = new QuestionInfo();
+                    questionInfo.setExamId(1L);
+                    questionInfo.setQuestionId(i);
+                    questionInfo.setCourseId(1000L);
+                    questionInfo.setScoreInfoList(scoreInfoList);
+                    System.out.println("***");
+                    scoreService.manualCorrect(questionInfo);
+                }
+            }
+
+
         };
     }
 

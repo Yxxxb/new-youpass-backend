@@ -18,6 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,6 +52,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Result<Object> SignUp(UserInfo signUpInfo) {
         /*错误处理*/
         if (signUpInfo.getPassword() == null
@@ -164,6 +166,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Result<Object> updateUserInfo(UserInfo userInfo) {
         if (userInfo.getId() == null
                 || userInfo.getLocation() == null

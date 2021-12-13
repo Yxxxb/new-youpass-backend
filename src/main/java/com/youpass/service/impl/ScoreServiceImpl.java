@@ -5,15 +5,13 @@ import com.youpass.model.QuestionInfo;
 import com.youpass.model.ReturnType.CourseExamInfoReturn;
 import com.youpass.model.ScoreInfo;
 import com.youpass.pojo.*;
-import com.youpass.pojo.pk.CourseId;
-import com.youpass.pojo.pk.ExamId;
-import com.youpass.pojo.pk.ExaminationPaperId;
-import com.youpass.pojo.pk.QuestionId;
+import com.youpass.pojo.pk.*;
 import com.youpass.service.ScoreService;
 import com.youpass.util.ReturnType.Result.Result;
 import com.youpass.util.ReturnType.Result.ResultEnum;
 import com.youpass.util.ReturnType.Result.ResultUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -23,20 +21,21 @@ import java.util.Set;
 @Service
 public class ScoreServiceImpl implements ScoreService {
     private final ExamRepository examRepository;
-    private final ExamInfoRepository examInfoRepository;
     private final ExaminationPaperRepository examinationPaperRepository;
     private final QuestionRepository questionRepository;
     private final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
 
-    public ScoreServiceImpl(ExamRepository examRepository, ExamInfoRepository examInfoRepository, ExaminationPaperRepository examinationPaperRepository, QuestionRepository questionRepository, CourseRepository courseRepository) {
+    public ScoreServiceImpl(ExamRepository examRepository, ExaminationPaperRepository examinationPaperRepository, QuestionRepository questionRepository, CourseRepository courseRepository, StudentRepository studentRepository) {
         this.examRepository = examRepository;
-        this.examInfoRepository = examInfoRepository;
         this.examinationPaperRepository = examinationPaperRepository;
         this.questionRepository = questionRepository;
         this.courseRepository = courseRepository;
+        this.studentRepository = studentRepository;
     }
 
     @Override
+    @Transactional
     public Result<Object> calStuScore(QuestionInfo stuInfo) {
         //错误检测
         if (stuInfo.getCourseId() == null ||
@@ -94,6 +93,7 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
+    @Transactional
     public Result<Object> autoCorrect(QuestionInfo questionInfo) {
         //错误处理
         if (questionInfo.getExamId() == null ||
@@ -139,6 +139,7 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
+    @Transactional
     public Result<Object> manualCorrect(QuestionInfo questionInfo) {
         //错误处理
         if (questionInfo.getExamId() == null ||
@@ -158,7 +159,10 @@ public class ScoreServiceImpl implements ScoreService {
             }
             examinationPaperOptional.get().setStuPoint(scoreInfo.getScore());
             examinationPaperRepository.save(examinationPaperOptional.get());
+
+
         }
+        System.out.println("3123123");
 
         return ResultUtil.success("该题手动批改完成");
     }

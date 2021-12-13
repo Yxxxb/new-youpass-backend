@@ -19,7 +19,7 @@ import java.text.ParseException;
  */
 
 @RestController
-@RequestMapping(path = "api")
+@RequestMapping(path = "api/exam")
 public class ExamController {
     private final ExamService examService;
 

@@ -16,7 +16,8 @@ public interface CourseService {
     public Result<Object> getCourseByTName(String teacherName);
 
     public Result<Object> getCourseOfUser(Long id);
-    Result<Object> createCourse(Long teacherId, CourseInfo courseInfo);
 
-    Result<Object> joinCourse(Long studentId, CourseInfo courseInfo);
+    public Result<Object> createCourse(Long teacherId, CourseInfo courseInfo);
+
+    public Result<Object> joinCourse(Long studentId, CourseInfo courseInfo);
 }

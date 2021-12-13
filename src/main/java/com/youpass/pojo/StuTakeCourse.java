@@ -16,13 +16,13 @@ public class StuTakeCourse implements Serializable {
     private StuTakeCourseId id;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", referencedColumnName = "student_id")
     @MapsId("studentId")
     private Student student;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", referencedColumnName = "course_id")
     @MapsId("courseId")
     private Course course;
@@ -40,6 +40,16 @@ public class StuTakeCourse implements Serializable {
     public static StuTakeCourse.Builder Builder(){
         return new Builder();
     }
+
+    @Override
+    public String toString() {
+        return "StuTakeCourse{" +
+                "id=" + id +
+                ", student=" + student +
+                ", course=" + course +
+                '}';
+    }
+
     public static class Builder {
         private StuTakeCourseId id;
         private Student student;

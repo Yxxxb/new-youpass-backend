@@ -76,7 +76,16 @@ ScoreController.calStuScore测试
 #######################################
 ScoreController.getGrade测试
 #######################################
+
 http://localhost:5050/api/score/getGrade/1000/1
+
 #######################################
-ScoreController.calStuScore测试
+ScoreController.getStuScore测试
+#######################################
+
+用1950000登录
+http://localhost:5050/api/score/getStuScore/1000
+
+#######################################
+CourseController.createCourse测试
 #######################################
