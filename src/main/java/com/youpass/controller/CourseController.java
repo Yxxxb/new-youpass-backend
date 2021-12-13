@@ -151,7 +151,7 @@ public class CourseController {
         return courseService.getCourseOfUser(id);
     }
 
-
+    /**
      * 老师创建课程
      * @param teacherId 老师的id
      * @param courseInfo 要创建的课程的相关信息

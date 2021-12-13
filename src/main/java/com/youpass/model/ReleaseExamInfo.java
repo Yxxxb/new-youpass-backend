@@ -12,7 +12,6 @@ import java.util.Date;
  */
 public class ReleaseExamInfo {
     private Long courseId;
-    private Long examId;
     private String title;
     private Date start_time;
     private Date end_time;
@@ -30,9 +29,8 @@ public class ReleaseExamInfo {
     public ReleaseExamInfo() {
     }
 
-    public ReleaseExamInfo(Long courseId, Long examId, String title, Date start_time, Date end_time, Integer choice_num, Integer multi_choice_num, Integer completion_num, Integer filled_num, Integer choice_value, Integer multi_choice_value, Integer completion_value, Integer filled_value) {
+    public ReleaseExamInfo(Long courseId, String title, Date start_time, Date end_time, Integer choice_num, Integer multi_choice_num, Integer completion_num, Integer filled_num, Integer choice_value, Integer multi_choice_value, Integer completion_value, Integer filled_value) {
         this.courseId = courseId;
-        this.examId = examId;
         this.title = title;
         this.start_time = start_time;
         this.end_time = end_time;
@@ -52,14 +50,6 @@ public class ReleaseExamInfo {
 
     public void setCourseId(Long courseId) {
         this.courseId = courseId;
-    }
-
-    public Long getExamId() {
-        return examId;
-    }
-
-    public void setExamId(Long examId) {
-        this.examId = examId;
     }
 
     public String getTitle() {
