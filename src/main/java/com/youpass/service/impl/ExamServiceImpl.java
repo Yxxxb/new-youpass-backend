@@ -78,7 +78,6 @@ public class ExamServiceImpl implements ExamService {
     public Result<Object> ReleaseTest(Long teacherIdGet, ReleaseExamInfo releaseExamInfo) {
 
         TeacherId teacherId = new TeacherId(teacherIdGet);
-        ExamId examId = new ExamId(releaseExamInfo.getExamId());
         CourseId courseId = new CourseId(releaseExamInfo.getCourseId());
 
         Course course = new Course();
@@ -342,15 +341,16 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Result<Object> GetExamQuestion(HttpServletRequest request, Long studentIdGet) {
         StudentId studentId = new StudentId(studentIdGet);
-        ExamId examId = new ExamId((Long) request.getAttribute("exam_id"));
         CourseId courseId = new CourseId((Long) request.getAttribute("course_id"));
+        ExamId examId = new ExamId((Long) request.getAttribute("exam_id"), courseId);
 
         // 找到exam和examinationPaper
         var student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Did Not Find Student"));
         var exam = examRepository.findById(examId).orElseThrow(() -> new IllegalStateException("Did Not Find Exam"));
         List<ExaminationPaper> examinationPaperList = new ArrayList<>();
         for (ExaminationPaper s : student.getExaminationPaperSet()) {
-            if (s.getExam().getCourse().getId() == courseId && s.getExam().getId() == examId) {
+            if (Objects.equals(s.getExam().getCourse().getId().getCourseId(), courseId.getCourseId()) &&
+                    Objects.equals(s.getExam().getId().getExamId(), examId.getExamId())) {
                 examinationPaperList.add(s);
             }
         }
@@ -359,6 +359,9 @@ public class ExamServiceImpl implements ExamService {
         List<QuestionInfoReturn> questionList = new ArrayList<>();
         for (ExaminationPaper s : examinationPaperList){
             List<OptionInfo> options = new ArrayList<>();
+            if (s.getQuestion().getType() == null) {
+                return ResultUtil.error(ResultEnum.ANSWER_TYPE_MISS);
+            }
             if (s.getQuestion().getType() < 2) {
                 for (Option option : s.getQuestion().getOptionSet()) {
                     options.add(new OptionInfo(
