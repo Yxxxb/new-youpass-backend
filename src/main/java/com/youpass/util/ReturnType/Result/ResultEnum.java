@@ -15,6 +15,9 @@ public enum ResultEnum {
     USER_MISS(701,"用户不存在"),
     USER_NOT_LOGIN(702,"用户没有登录"),
     File_ERROR(703,"文件操作出现问题"),
+    NOT_TEACHER(704,"不是老师"),
+    NOT_STUDENT(705,"不是学生"),
+    PERMISSION_DENIED(706,"没有此权限"),
     ;
     private Integer code;
     private String msg;
