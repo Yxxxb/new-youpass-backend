@@ -101,9 +101,15 @@ public class ScoreController {
 
     /**
      * 查找某个学生某门课程的所有考试的成绩
-     * @param id
-     * @param courseId
-     * @return
+     * @param id 学生的id
+     * @param courseId 课程的id
+     * @return Set<CourseExamInfoReturn>
+     *     class CourseExamInfoReturn{
+     *         private Long courseId;
+     *         private Long examId;
+     *         private String title;
+     *         private Integer score;
+     *         }
      */
     @GetMapping(path = "getStuScore/{courseId}")
     public Result<Object> getStuScore(@RequestAttribute(name = "id") Long id, @PathVariable Long courseId){
