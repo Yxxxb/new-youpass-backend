@@ -1,10 +1,12 @@
 package com.youpass.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@AllArgsConstructor
 public class MyConfig implements WebMvcConfigurer {
 
     @Override
@@ -19,5 +21,8 @@ public class MyConfig implements WebMvcConfigurer {
                         "/api/test",
                         "/error"
                 );
+
+        registry.addInterceptor(new TakeExamHandlerInterceptor())
+                .addPathPatterns("/api/takeexam/**");
     }
 }
