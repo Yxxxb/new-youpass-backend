@@ -1,10 +1,14 @@
 package com.youpass.controller;
 
+import com.youpass.dao.CourseRepository;
+import com.youpass.dao.TeacherRepository;
 import com.youpass.pojo.Student;
+import com.youpass.pojo.pk.TeacherId;
 import com.youpass.util.ReturnType.Result.Result;
 import com.youpass.util.ReturnType.Result.ResultUtil;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
@@ -32,23 +36,28 @@ import java.util.List;
 
 @RestController
 public class TestController {
-    @GetMapping("api/test")
 
-    public void test(HttpServletResponse response) throws IOException {
+    private final TeacherRepository teacherRepository;
 
-        Long id = 1950000L;
+    private CourseRepository courseRepository;
 
-        String workingDirectory = System.getProperty("user.dir");
-        String imgDirectory = workingDirectory + "\\Img";
-        String imgPath = imgDirectory + "\\" + id.toString() + ".jpg";
-        if (!new File(imgPath).exists()) {
-            imgPath = imgDirectory + "\\default.jpg";
-        }
-        System.out.println(imgPath);
-        File file = new File(imgPath);
-        InputStream targetStream = new FileInputStream(file);
-
-        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        StreamUtils.copy(targetStream, response.getOutputStream());
+    @Autowired
+    public TestController(TeacherRepository teacherRepository,
+                          CourseRepository courseRepository) {
+        this.teacherRepository = teacherRepository;
+        this.courseRepository = courseRepository;
     }
+
+    @GetMapping("api/test")
+    public Result<Object> test() {
+        var teacher = teacherRepository.findTeacherByName("danny");
+        return ResultUtil.success(teacher);
+    }
+
+    @GetMapping("api/test2")
+    public Result<Object> test2() {
+        var course = courseRepository.findCourseByTitle("c1");
+        return ResultUtil.success(course);
+    }
+
 }

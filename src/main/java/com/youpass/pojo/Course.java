@@ -20,40 +20,41 @@ public class Course implements Serializable {
 
     @Column(length = 64, name = "title")
     private String title;
+    @JsonIgnore
     @Column(length = 32, name = "password")
     private String password;
 
     //删除课程不能删除老师，所以不能加cascade
-    @JsonIgnoreProperties(value = "course")
+    @JsonIgnoreProperties(value = {"email", "location"})
     @ManyToOne
-    @JoinColumn(name = "Teacher_id",referencedColumnName = "teacher_id")
+    @JoinColumn(name = "Teacher_id", referencedColumnName = "teacher_id")
     private Teacher teacher;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private Set<Notice> noticeSet = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private Set<Exam> examSet = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private Set<Question> questionSet = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private Set<StuTakeCourse> stuTakeCourses = new HashSet<>();
 
     public Course() {
         id = new CourseId();
     }
 
-    public static Course.Builder Builder(){
+    public static Course.Builder Builder() {
         return new Builder();
     }
 
-    public static class Builder{
+    public static class Builder {
         private CourseId id;
         private String title;
         private String password;
@@ -63,31 +64,31 @@ public class Course implements Serializable {
 //        private Set<Question> questionSet = new HashSet<>();
 //        private Set<StuTakeCourse> stuTakeCourses;
 
-        Builder(){
+        Builder() {
             id = new CourseId();
         }
 
-        public Builder setId(CourseId id){
+        public Builder setId(CourseId id) {
             this.id = id;
             return this;
         }
 
-        public Builder setTitle(String title){
+        public Builder setTitle(String title) {
             this.title = title;
             return this;
         }
 
-        public Builder setPassword(String password){
+        public Builder setPassword(String password) {
             this.password = password;
             return this;
         }
 
-        public Builder setTeacher(Teacher teacher){
+        public Builder setTeacher(Teacher teacher) {
             this.teacher = teacher;
             return this;
         }
 
-        public Course build(){
+        public Course build() {
             var course = new Course();
             course.id = this.id;
             course.title = this.title;
@@ -128,6 +129,7 @@ public class Course implements Serializable {
     public Set<StuTakeCourse> getStuTakeCourses() {
         return stuTakeCourses;
     }
+
     public void setId(CourseId id) {
         this.id = id;
     }
@@ -143,6 +145,7 @@ public class Course implements Serializable {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
+
     public void setNoticeSet(Set<Notice> noticeSet) {
         this.noticeSet = noticeSet;
     }
