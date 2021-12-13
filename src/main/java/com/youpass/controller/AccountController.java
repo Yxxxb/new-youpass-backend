@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 
 @RestController
-@RequestMapping(path = "api/accountController")
+@RequestMapping(path = "api/account")
 public class AccountController {
     private final AccountService accountService;
 

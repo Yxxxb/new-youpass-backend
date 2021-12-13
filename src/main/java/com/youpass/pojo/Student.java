@@ -18,6 +18,7 @@ public class Student implements Serializable {
 
     @Column(length = 16, name = "Name")
     private String name;
+    @JsonIgnore
     @Column(length = 32, name = "Password")
     private String password;
     @Column(length = 32, name = "Email")
