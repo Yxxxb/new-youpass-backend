@@ -23,6 +23,6 @@ public class MyConfig implements WebMvcConfigurer {
                 );
 
         registry.addInterceptor(new TakeExamHandlerInterceptor())
-                .addPathPatterns("/api/takeexam/**");
+                .addPathPatterns("/api/exam/takeExam/**","/api/test");
     }
 }

@@ -74,6 +74,7 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
+    @Transactional
     public Result<Object> getGrade(Long courseId, Long examId) {
         //错误处理
         if (courseId == null || examId == null) {
@@ -168,6 +169,7 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
+    @Transactional
     public Result<Object> getStuScore(Long studentId, Long courseId) {
         if(studentId==null||courseId==null){
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);

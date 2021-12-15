@@ -41,6 +41,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    @Transactional
     public Result<Object> GetExamsByCourseId(Long courseIdGet) {
         if (courseIdGet == null) {
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
@@ -59,6 +60,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    @Transactional
     public Result<Object> GetExamByStudentId(Long studentIdGet) {
         StudentId studentId = new StudentId(studentIdGet);
         var student = studentRepository.findById(studentId).get();
@@ -180,184 +182,125 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Result<Object> SetSession(HttpServletRequest request, Long studentIdGet, SetSessionInfo setSessionInfo) throws ParseException {
-        StudentId studentId = new StudentId(studentIdGet);
-        ExamId examId = new ExamId(setSessionInfo.getExamId());
-        CourseId courseId = new CourseId(setSessionInfo.getCourseId());
+    @Transactional
+    public Result<Object> SetSession(HttpServletRequest request, Long studentIdGet, SetSessionInfo setSessionInfo) {
+        if (setSessionInfo.getExamId() == null
+                || setSessionInfo.getCourseId() == null) {
+            return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
+        }
 
-        var student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Did Not Find Student"));
-        Exam exam = new Exam();
-        ExamInfo examInfo = new ExamInfo();
+        if (!studentRepository.existsById(new StudentId(studentIdGet))) {
+            return ResultUtil.error(ResultEnum.USER_MISS);
+        }
+        var student = studentRepository.findById(new StudentId(studentIdGet)).get();
         for (ExamInfo s : student.getExamInfos()) {
-            if (s.getExam().getCourse().getId() == courseId && s.getExam().getId() == examId) {
-                exam = s.getExam();
-                examInfo = s;
-                break;
+            if (s.getExam().getId().getCourseId().equals(setSessionInfo.getCourseId())
+                    && s.getExam().getId().getExamId().equals(setSessionInfo.getExamId())) {
+                HttpSession session = request.getSession(true);
+                session.setAttribute("examId", setSessionInfo.getExamId());
+                session.setAttribute("courseId", setSessionInfo.getCourseId());
+                return ResultUtil.success();
             }
         }
-
-        HttpSession session = request.getSession(true);
-        session.setAttribute("exam_id", setSessionInfo.getExamId());
-        session.setAttribute("course_id", setSessionInfo.getCourseId());
-
-        //getstate是null报错
-//        if(examInfo.getState()==0 || examInfo.getState()==1){
-//            examInfo.setState(1);
-//            examInfoRepository.save(examInfo);
-//        }
-        return ResultUtil.success();
-
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-//        Date startTime = exam.getStart_time();
-//        Date endTime = exam.getEnd_time();
-//        Date date = new Date();
-//        String nowTimeString = formatter.format(new Date());
-//        Date nowTime = formatter.parse(nowTimeString);
-//
-//        if ((nowTime.before(startTime)) && ((nowTime.after(endTime)))) {
-//            HttpSession session = request.getSession(true);
-//            session.setAttribute("exam_id", setSessionInfo.getExamId());
-//            session.setAttribute("course_id", setSessionInfo.getCourseId());
-//
-//            if(examInfo.getState()==0 || examInfo.getState()==1){
-//                examInfo.setState(1);
-//                examInfoRepository.save(examInfo);
-//            }
-//            return ResultUtil.success();
-//        } else {
-//            return ResultUtil.error(ResultEnum.COURSE_MISS);
-//        }
+        //未找到对应考试
+        return ResultUtil.error(ResultEnum.EXAM_MISS);
     }
 
     @Override
     @Transactional
-    public Result<Object> PostAnswer(HttpServletRequest request, Long studentIdGet, PostAnswerInfo postAnswerInfo) {
-        System.out.println("---------------------------");
-        System.out.println(request.getAttribute("exam_id"));
-        System.out.println(request.getAttribute("course_id"));
-
-        StudentId studentId = new StudentId(studentIdGet);
-        ExamId examId = new ExamId((Long) request.getAttribute("exam_id"));
-        CourseId courseId = new CourseId((Long) request.getAttribute("course_id"));
-        QuestionId questionId = new QuestionId(postAnswerInfo.getQuestionId());
-
-        var student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Did Not Find Student"));
-        ExaminationPaper examinationPaper = new ExaminationPaper();
-        Question question = new Question();
-        for (ExaminationPaper s : student.getExaminationPaperSet()) {
-            if (s.getExam().getCourse().getId() == courseId && s.getExam().getId() == examId && s.getQuestion().getId() == questionId) {
-                examinationPaper = s;
-                question = s.getQuestion();
-                break;
-            }
+    public Result<Object> PostAnswer(PostAnswerInfo postAnswerInfo) {
+        if (postAnswerInfo.getStudentId() == null
+                || postAnswerInfo.getExamId() == null
+                || postAnswerInfo.getCourseId() == null
+                || postAnswerInfo.getQuestionId() == null) {
+            return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
         }
 
-        if (question.getType() == 0 || question.getType() == 1) {
-            examinationPaper.setStuAnswer(Tools.RandOrderIndexReturn(
-                    examinationPaper.getSelfOrder(),
-                    question.getOptionSet().size(),
-                    postAnswerInfo.getStuChoiceAnswer()));
-            examinationPaperRepository.save(examinationPaper);
-        } else if (question.getType() == 2 || question.getType() == 3) {
-            examinationPaper.setStuAnswer(postAnswerInfo.getStuFillAnswer());
-            examinationPaperRepository.save(examinationPaper);
-        } else {
-            return ResultUtil.error(ResultEnum.ANSWER_TYPE_MISS);
+        if (!studentRepository.existsById(new StudentId(postAnswerInfo.getStudentId()))) {
+            return ResultUtil.error(ResultEnum.USER_MISS);
         }
-        return ResultUtil.success();
-    }
-
-    @Override
-    @Transactional
-    public Result<Object> PostAnswer(Long exam_id,Long course_id, Long studentIdGet, PostAnswerInfo postAnswerInfo) {
-
-        StudentId studentId = new StudentId(studentIdGet);
-        CourseId courseId = new CourseId(course_id);
-        ExamId examId = new ExamId(exam_id,courseId);
-
-        QuestionId questionId = new QuestionId(postAnswerInfo.getQuestionId());
-
-        var student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Did Not Find Student"));
-        ExaminationPaper examinationPaper = new ExaminationPaper();
-        Question question = new Question();
-        boolean flag = true;
+        var student = studentRepository.findById(new StudentId(postAnswerInfo.getStudentId())).get();
         for (ExaminationPaper s : student.getExaminationPaperSet()) {
             //TODO : 修改
-            if (s.getExam().getCourse().getId().getCourseId().equals(courseId.getCourseId())  && s.getExam().getId().getExamId().equals(examId.getExamId()) &&s.getQuestion().getId().getQuestionId().equals(questionId.getQuestionId()) ) {
-                examinationPaper = s;
-                question = s.getQuestion();
-                flag = false;
-                break;
+            if (s.getExam().getId().getCourseId().equals(postAnswerInfo.getCourseId())
+                    && s.getExam().getId().getExamId().equals(postAnswerInfo.getExamId())
+                    && s.getQuestion().getId().getQuestionId().equals(postAnswerInfo.getQuestionId())) {
+                //找到了对应的题目
+                var examinationPaper = s;
+                var question = s.getQuestion();
+                if (question.getType() == 0 || question.getType() == 1) {
+                    examinationPaper.setStuAnswer(Tools.RandOrderIndexReturn(
+                            examinationPaper.getSelfOrder(),
+                            question.getOptionSet().size(),
+                            postAnswerInfo.getStuChoiceAnswer()));
+                    //TODO: 改了
+                    studentRepository.save(student);
+                    questionRepository.save(question);
+                    examRepository.save(examinationPaper.getExam());
+                } else if (question.getType() == 2 || question.getType() == 3) {
+                    examinationPaper.setStuAnswer(postAnswerInfo.getStuFillAnswer());
+                    //TODO: 改了
+                    studentRepository.save(student);
+                    questionRepository.save(question);
+                    examRepository.save(examinationPaper.getExam());
+                } else {
+                    return ResultUtil.error(ResultEnum.ANSWER_TYPE_MISS);
+                }
+                return ResultUtil.success();
             }
         }
-        if(flag) {
-            return ResultUtil.error(ResultEnum.UNKNOWN_ERROR);
-        }
-
-        if (question.getType() == 0 || question.getType() == 1) {
-            examinationPaper.setStuAnswer(Tools.RandOrderIndexReturn(
-                    examinationPaper.getSelfOrder(),
-                    question.getOptionSet().size(),
-                    postAnswerInfo.getStuChoiceAnswer()));
-            //TODO: 改了
-            studentRepository.save(student);
-            questionRepository.save(question);
-            examRepository.save(examinationPaper.getExam());
-        } else if (question.getType() == 2 || question.getType() == 3) {
-            examinationPaper.setStuAnswer(postAnswerInfo.getStuFillAnswer());
-            //TODO: 改了
-            studentRepository.save(student);
-            questionRepository.save(question);
-            examRepository.save(examinationPaper.getExam());
-        } else {
-            return ResultUtil.error(ResultEnum.ANSWER_TYPE_MISS);
-        }
-        return ResultUtil.success();
+        return ResultUtil.error(ResultEnum.Question_MISS);
     }
 
     @Override
-    public Result<Object> DeleteSession(HttpServletRequest request, Long studentIdGet) {
-        StudentId studentId = new StudentId(studentIdGet);
-        ExamId examId = new ExamId((Long) request.getAttribute("exam_id"));
-        CourseId courseId = new CourseId((Long) request.getAttribute("course_id"));
-
-        var student = studentRepository.findById(studentId).orElseThrow(
-                () -> new IllegalStateException("Did Not Find Student"));
-        ExamInfo examInfo = new ExamInfo();
+    @Transactional
+    public Result<Object> DeleteSession(HttpServletRequest request, Long studentId, Long courseId, Long examId) {
+        if (!studentRepository.existsById(new StudentId(studentId))) {
+            return ResultUtil.error(ResultEnum.NOT_STUDENT);
+        }
+        var student = studentRepository.findById(new StudentId(studentId)).get();
         for (ExamInfo s : student.getExamInfos()) {
-            if (s.getExam().getCourse().getId() == courseId && s.getExam().getId() == examId) {
-                examInfo = s;
-                break;
+            if (s.getExam().getId().getExamId().equals(examId)
+                    && s.getExam().getId().getCourseId().equals(courseId)) {
+                s.setState(2);
+                examInfoRepository.save(s);
+                request.getSession().removeAttribute("courseId");
+                request.getSession().removeAttribute("examId");
+                return ResultUtil.success();
             }
         }
-
-//        examInfo.setState(2);
-//        examInfoRepository.save(examInfo);
-        request.getSession().removeAttribute("exam_id");
-        request.getSession().removeAttribute("course_id");
-        return ResultUtil.success();
+        return ResultUtil.error(ResultEnum.EXAM_MISS);
     }
 
     @Override
-    public Result<Object> GetExamQuestion(HttpServletRequest request, Long studentIdGet) {
-        StudentId studentId = new StudentId(studentIdGet);
-        CourseId courseId = new CourseId((Long) request.getAttribute("course_id"));
-        ExamId examId = new ExamId((Long) request.getAttribute("exam_id"), courseId);
+    @Transactional
+    public Result<Object> GetExamQuestion(Long studentId, Long courseId, Long examId) {
+//        StudentId studentId = new StudentId(studentIdGet);
+//        CourseId courseId = new CourseId((Long) request.getAttribute("course_id"));
+//        ExamId examId = new ExamId((Long) request.getAttribute("exam_id"), courseId);
 
         // 找到exam和examinationPaper
-        var student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Did Not Find Student"));
-        var exam = examRepository.findById(examId).orElseThrow(() -> new IllegalStateException("Did Not Find Exam"));
+        var studentRes = studentRepository.findById(new StudentId(studentId));
+        if (studentRes.isPresent() == false) {
+            return ResultUtil.error(ResultEnum.NOT_STUDENT);
+        }
+        var examRes = examRepository.findById(new ExamId(examId, courseId));
+        if (examRes.isPresent() == false) {
+            return ResultUtil.error(ResultEnum.EXAM_MISS);
+        }
+        var student = studentRes.get();
+        var exam = examRes.get();
         List<ExaminationPaper> examinationPaperList = new ArrayList<>();
         for (ExaminationPaper s : student.getExaminationPaperSet()) {
-            if (Objects.equals(s.getExam().getCourse().getId().getCourseId(), courseId.getCourseId()) &&
-                    Objects.equals(s.getExam().getId().getExamId(), examId.getExamId())) {
+            if (s.getExam().getId().getCourseId().equals(courseId)
+                    && s.getExam().getId().getExamId().equals(examId)) {
                 examinationPaperList.add(s);
             }
         }
 
         examinationPaperList.sort(Comparator.comparing(ExaminationPaper::getNumInPaper));
         List<QuestionInfoReturn> questionList = new ArrayList<>();
-        for (ExaminationPaper s : examinationPaperList){
+        for (ExaminationPaper s : examinationPaperList) {
             List<OptionInfo> options = new ArrayList<>();
             if (s.getQuestion().getType() == null) {
                 return ResultUtil.error(ResultEnum.ANSWER_TYPE_MISS);
@@ -388,52 +331,6 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     @Transactional
-    public Result<Object> GetExamQuestion(Long exam_id,Long course_id, Long studentIdGet) {
-        StudentId studentId = new StudentId(studentIdGet);
-        CourseId courseId = new CourseId(course_id);
-        ExamId examId = new ExamId(exam_id, courseId);
-
-
-        // 找到exam和examinationPaper
-        var student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Did Not Find Student"));
-        var exam = examRepository.findById(examId).orElseThrow(() -> new IllegalStateException("Did Not Find Exam"));
-        List<ExaminationPaper> examinationPaperList = new ArrayList<>();
-        for (ExaminationPaper s : student.getExaminationPaperSet()) {
-            if (s.getExam().getCourse().getId() == courseId && s.getExam().getId() == examId) {
-                examinationPaperList.add(s);
-            }
-        }
-
-        examinationPaperList.sort(Comparator.comparing(ExaminationPaper::getNumInPaper));
-        List<QuestionInfoReturn> questionList = new ArrayList<>();
-        for (ExaminationPaper s : examinationPaperList){
-            List<OptionInfo> options = new ArrayList<>();
-            if (s.getQuestion().getType() < 2) {
-                for (Option option : s.getQuestion().getOptionSet()) {
-                    options.add(new OptionInfo(
-                            option.getId().getOptionId(),
-                            s.getQuestion().getId().getQuestionId(),
-                            option.getContent()));
-                }
-                // 加密
-                options = Tools.rand_order(s.getSelfOrder(), options);
-            }
-
-            questionList.add(new QuestionInfoReturn(
-                    s.getQuestion().getId().getQuestionId(),
-                    s.getQuestion().getDescription(),
-                    s.getQuestion().getType(),
-                    s.getNumInPaper(),
-                    options));
-        }
-
-        ExamQuestionReturn examQuestionReturn = new ExamQuestionReturn(exam.getTitle(), exam.getStart_time(), exam.getEnd_time(), questionList);
-
-        return ResultUtil.success(examQuestionReturn);
-    }
-
-
-    @Override
     public Result<Object> CheckState(Long id) {
         //因为有拦截器 所以到了这里就一定可以
         return ResultUtil.success();

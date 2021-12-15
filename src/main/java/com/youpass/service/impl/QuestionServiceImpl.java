@@ -91,6 +91,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    @Transactional
     public Result<Object> getStudentDoingQuestion(QuestionInfo questionInfo) {
         //错误处理
         if (questionInfo.getQuestionId() == null ||

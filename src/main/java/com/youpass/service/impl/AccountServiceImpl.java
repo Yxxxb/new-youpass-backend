@@ -98,6 +98,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Result<Object> Login(HttpServletRequest request, UserInfo loginInfo) {
         if (loginInfo.getId() == null || loginInfo.getPassword() == null) {
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
@@ -128,12 +129,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Result<Object> CheckState(Long id) {
         //因为有拦截器 所以到了这里就一定可以
         return ResultUtil.success();
     }
 
     @Override
+    @Transactional
     public Result<Object> getIdentity(Long id) {
         if (teacherRepository.existsById(new TeacherId(id))) {
             return ResultUtil.success(0);
@@ -143,6 +146,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Result<Object> getUserInfo(Long id) {
         if (studentRepository.existsById(new StudentId(id))) {
             var student = studentRepository.findById(new StudentId(id)).get();
@@ -194,6 +198,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Result<Object> quitAccount(HttpServletRequest request) {
         if (request.getSession().getAttribute("id") == null) {
             return ResultUtil.error(USER_NOT_LOGIN);
@@ -204,6 +209,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Result<Object> uploadImage(Long id, MultipartFile file) {
         if (file.isEmpty()) {
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
@@ -226,6 +232,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public void getImage(Long id, HttpServletResponse response) {
         String workingDirectory = System.getProperty("user.dir");
         String imgDirectory = workingDirectory + "\\Img";

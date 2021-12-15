@@ -37,6 +37,7 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    @Transactional
     public Result<Object> getNotice(Long id) {
         if (studentRepository.existsById(new StudentId(id))) {
             var student = studentRepository.findById(new StudentId(id)).get();

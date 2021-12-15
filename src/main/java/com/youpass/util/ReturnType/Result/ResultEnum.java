@@ -21,6 +21,8 @@ public enum ResultEnum {
     NOT_TEACHER(704,"不是老师"),
     NOT_STUDENT(705,"不是学生"),
     PERMISSION_DENIED(706,"没有此权限"),
+    EXAM_MISS(707,"不存在此考试"),
+    Question_MISS(708,"不存在此题目"),
     ;
     private Integer code;
     private String msg;

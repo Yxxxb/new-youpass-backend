@@ -100,61 +100,29 @@ public class TestConfig {
 //            System.out.println(student1.getStuTakeCourses().toString());
 
 
-
-
-
-
-            添加学生
-            Integer studentNum = 10;
-            for (Integer i = 0; i < studentNum; i++) {
+            {
                 var userInfo = new UserInfo();
-                userInfo.setName("student" + i.toString());
+                userInfo.setName("student");
                 userInfo.setPassword("123");
-                userInfo.setEmail("123@123" + i.toString());
+                userInfo.setEmail("123@123");
                 userInfo.setType(1);
                 accountService.SignUp(userInfo);
-            }
-            //添加老师
-            Integer teacherNum = 10;
-            for (Integer i = 0; i < teacherNum; i++) {
-                var userInfo = new UserInfo();
-                userInfo.setName("teacher" + i.toString());
+
+                userInfo.setName("teacher");
                 userInfo.setPassword("123");
-                userInfo.setEmail("123@123" + i.toString());
+                userInfo.setEmail("123@123");
                 userInfo.setType(0);
                 accountService.SignUp(userInfo);
-            }
-            //为老师添加课程
-            Integer courseNum = 2;
-            var teacherList = teacherRepository.findAll();
-            for (var teacher : teacherList) {
-                for (Integer i = 0; i < courseNum; i++) {
-                    CourseInfo courseInfo = new CourseInfo();
-                    courseInfo.setTitle("course" + i.toString());
-                    courseInfo.setPassword("123");
-                    courseService.createCourse(teacher.getId().getTeacherId(), courseInfo);
-                }
-            }
 
+                CourseInfo courseInfo = new CourseInfo();
+                courseInfo.setTitle("course");
+                courseInfo.setPassword("123");
+                courseService.createCourse(10500L, courseInfo);
 
-            {
-                //学生加入课程
-                var courseList = courseRepository.findAll();
-                var studentList = studentRepository.findAll();
-                int a = 0;
-                for (var course : courseList) {
-                    for (var student : studentList) {
-                        CourseInfo courseInfo = new CourseInfo();
-                        courseInfo.setCourseId(course.getId().getCourseId());
-                        courseInfo.setPassword(course.getPassword());
-                        courseService.joinCourse(student.getId().getStudentId(), courseInfo);
-                        System.out.println(a);
-                    }
-                    a++;
-                }
-            }
-            //添加题目
-            {
+                courseInfo.setCourseId(1000L);
+                courseInfo.setPassword("123");
+                courseService.joinCourse(1950000L, courseInfo);
+
                 Integer choiceNum = 5;
                 Integer multiNum = 5;
                 Integer FilledNum = 5;
@@ -213,11 +181,6 @@ public class TestConfig {
                 }
                 questionService.uploadQuestion(questionInfoList);
 
-            }
-
-            //考试
-            {
-                var courseList = courseRepository.findAll();
                 var releaseExamInfo = new ReleaseExamInfo();
                 releaseExamInfo.setCourseId(1000L);
                 releaseExamInfo.setTitle("exam");
@@ -232,55 +195,184 @@ public class TestConfig {
                 examService.ReleaseTest(1000L, releaseExamInfo);
             }
 
-            //上传答案
-            {
-                var studentList = studentRepository.findAll();
-                for (var student : studentList) {
-                    for (Long i = 1L; i <= 20; i++) {
-                        PostAnswerInfo postAnswerInfo = new PostAnswerInfo();
-                        postAnswerInfo.setQuestionId(i);
-                        postAnswerInfo.setStuFillAnswer("0");
-                        List<Character> stuChoiceAnswer = new ArrayList<Character>();
-                        stuChoiceAnswer.add('C');
-                        postAnswerInfo.setStuChoiceAnswer(stuChoiceAnswer);
-                        System.out.println("@@@");
-                        examService.PostAnswer(1L, 1000L, student.getId().getStudentId(), postAnswerInfo);
-                    }
 
-                }
-            }
+//            //添加学生
+//            Integer studentNum = 10;
+//            for (Integer i = 0; i < studentNum; i++) {
+//                var userInfo = new UserInfo();
+//                userInfo.setName("student" + i.toString());
+//                userInfo.setPassword("123");
+//                userInfo.setEmail("123@123" + i.toString());
+//                userInfo.setType(1);
+//                accountService.SignUp(userInfo);
+//            }
+//            //添加老师
+//            Integer teacherNum = 10;
+//            for (Integer i = 0; i < teacherNum; i++) {
+//                var userInfo = new UserInfo();
+//                userInfo.setName("teacher" + i.toString());
+//                userInfo.setPassword("123");
+//                userInfo.setEmail("123@123" + i.toString());
+//                userInfo.setType(0);
+//                accountService.SignUp(userInfo);
+//            }
+//            //为老师添加课程
+//            Integer courseNum = 2;
+//            var teacherList = teacherRepository.findAll();
+//            for (var teacher : teacherList) {
+//                for (Integer i = 0; i < courseNum; i++) {
+//                    CourseInfo courseInfo = new CourseInfo();
+//                    courseInfo.setTitle("course" + i.toString());
+//                    courseInfo.setPassword("123");
+//                    courseService.createCourse(teacher.getId().getTeacherId(), courseInfo);
+//                }
+//            }
+//
+//
+//            {
+//                //学生加入课程
+//                var courseList = courseRepository.findAll();
+//                var studentList = studentRepository.findAll();
+//                int a = 0;
+//                for (var course : courseList) {
+//                    for (var student : studentList) {
+//                        CourseInfo courseInfo = new CourseInfo();
+//                        courseInfo.setCourseId(course.getId().getCourseId());
+//                        courseInfo.setPassword(course.getPassword());
+//                        courseService.joinCourse(student.getId().getStudentId(), courseInfo);
+//                        System.out.println(a);
+//                    }
+//                    a++;
+//                }
+//            }
+//            //添加题目
+//            {
+//                Integer choiceNum = 5;
+//                Integer multiNum = 5;
+//                Integer FilledNum = 5;
+//                Integer Completion = 5;
+//
+//                List<QuestionInfo> questionInfoList = new ArrayList<>();
+//                for (Integer i = 0; i < choiceNum; i++) {
+//                    QuestionInfo questionInfo = new QuestionInfo();
+//                    questionInfo.setDescription("des" + i.toString());
+//                    questionInfo.setCreateTime(new Date());
+//                    questionInfo.setType(0);
+//                    questionInfo.setCourseId(1000L);
+//                    questionInfo.setSubject("123");
+//                    questionInfo.setStandardAnswer("0");
+//                    List<OptionInfo> optionList = new ArrayList<>();
+//                    for (Long j = 1L; j < 4L; j++) {
+//                        optionList.add(new OptionInfo(j, 0L, "123"));
+//                    }
+//                    questionInfo.setOptionInfoList(optionList);
+//                    questionInfoList.add(questionInfo);
+//                }
+//                for (Integer i = 0; i < multiNum; i++) {
+//                    QuestionInfo questionInfo = new QuestionInfo();
+//                    questionInfo.setDescription("des" + i.toString());
+//                    questionInfo.setCreateTime(new Date());
+//                    questionInfo.setType(1);
+//                    questionInfo.setCourseId(1000L);
+//                    questionInfo.setSubject("123");
+//                    questionInfo.setStandardAnswer("0");
+//                    List<OptionInfo> optionList = new ArrayList<>();
+//                    for (Long j = 1L; j < 4L; j++) {
+//                        optionList.add(new OptionInfo(j, 0L, "123"));
+//                    }
+//                    questionInfo.setOptionInfoList(optionList);
+//                    questionInfoList.add(questionInfo);
+//                }
+//                for (Integer i = 0; i < multiNum; i++) {
+//                    QuestionInfo questionInfo = new QuestionInfo();
+//                    questionInfo.setDescription("des" + i.toString());
+//                    questionInfo.setCreateTime(new Date());
+//                    questionInfo.setType(2);
+//                    questionInfo.setCourseId(1000L);
+//                    questionInfo.setSubject("123");
+//                    questionInfo.setStandardAnswer("0");
+//                    questionInfoList.add(questionInfo);
+//                }
+//                for (Integer i = 0; i < multiNum; i++) {
+//                    QuestionInfo questionInfo = new QuestionInfo();
+//                    questionInfo.setDescription("des" + i.toString());
+//                    questionInfo.setCreateTime(new Date());
+//                    questionInfo.setType(3);
+//                    questionInfo.setCourseId(1000L);
+//                    questionInfo.setSubject("123");
+//                    questionInfo.setStandardAnswer("0");
+//                    questionInfoList.add(questionInfo);
+//                }
+//                questionService.uploadQuestion(questionInfoList);
+//
+//            }
 
-            //批卷
-            {
-                //自动批改
-
-//                for(Long i =1L;i<=20;i++){
+////            考试
+//            {
+//                var courseList = courseRepository.findAll();
+//                var releaseExamInfo = new ReleaseExamInfo();
+//                releaseExamInfo.setCourseId(1000L);
+//                releaseExamInfo.setTitle("exam");
+//                releaseExamInfo.setChoice_num(2);
+//                releaseExamInfo.setMulti_choice_num(2);
+//                releaseExamInfo.setFilled_num(2);
+//                releaseExamInfo.setCompletion_num(2);
+//                releaseExamInfo.setChoice_value(2);
+//                releaseExamInfo.setMulti_choice_value(2);
+//                releaseExamInfo.setFilled_value(2);
+//                releaseExamInfo.setCompletion_value(2);
+//                examService.ReleaseTest(1000L, releaseExamInfo);
+//            }
+//
+//            //上传答案
+//            {
+//                var studentList = studentRepository.findAll();
+//                for (var student : studentList) {
+//                    for (Long i = 1L; i <= 20; i++) {
+//                        PostAnswerInfo postAnswerInfo = new PostAnswerInfo();
+//                        postAnswerInfo.setQuestionId(i);
+//                        postAnswerInfo.setStuFillAnswer("0");
+//                        List<Character> stuChoiceAnswer = new ArrayList<Character>();
+//                        stuChoiceAnswer.add('C');
+//                        postAnswerInfo.setStuChoiceAnswer(stuChoiceAnswer);
+//                        System.out.println("@@@");
+//                        examService.PostAnswer(1L, 1000L, student.getId().getStudentId(), postAnswerInfo);
+//                    }
+//
+//                }
+//            }
+//
+//            //批卷
+//            {
+//                //自动批改
+//
+////                for(Long i =1L;i<=20;i++){
+////                    QuestionInfo questionInfo = new QuestionInfo();
+////                    questionInfo.setExamId(1L);
+////                    questionInfo.setQuestionId(i);
+////                    questionInfo.setCourseId(1000L);
+////                    scoreService.autoCorrect(questionInfo);
+////                }
+//
+//                var studentList = studentRepository.findAll();
+//                //手动批改
+//                for(Long i=1L;i<20;i++){
+//                    List<ScoreInfo> scoreInfoList = new ArrayList<>();
+//                    for(var student : studentList){
+//                        ScoreInfo scoreInfo = new ScoreInfo();
+//                        scoreInfo.setStudentId(student.getId().getStudentId());
+//                        scoreInfo.setScore((int)(Math.random()*100));
+//                        scoreInfoList.add(scoreInfo);
+//                    }
 //                    QuestionInfo questionInfo = new QuestionInfo();
 //                    questionInfo.setExamId(1L);
 //                    questionInfo.setQuestionId(i);
 //                    questionInfo.setCourseId(1000L);
-//                    scoreService.autoCorrect(questionInfo);
+//                    questionInfo.setScoreInfoList(scoreInfoList);
+//                    System.out.println("***");
+//                    scoreService.manualCorrect(questionInfo);
 //                }
-
-                var studentList = studentRepository.findAll();
-                //手动批改
-                for(Long i=1L;i<20;i++){
-                    List<ScoreInfo> scoreInfoList = new ArrayList<>();
-                    for(var student : studentList){
-                        ScoreInfo scoreInfo = new ScoreInfo();
-                        scoreInfo.setStudentId(student.getId().getStudentId());
-                        scoreInfo.setScore((int)(Math.random()*100));
-                        scoreInfoList.add(scoreInfo);
-                    }
-                    QuestionInfo questionInfo = new QuestionInfo();
-                    questionInfo.setExamId(1L);
-                    questionInfo.setQuestionId(i);
-                    questionInfo.setCourseId(1000L);
-                    questionInfo.setScoreInfoList(scoreInfoList);
-                    System.out.println("***");
-                    scoreService.manualCorrect(questionInfo);
-                }
-            }
+//            }
 
 
         };

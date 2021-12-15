@@ -37,6 +37,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public Result<Object> getStuInfoOfCourse(Long id, Long courseId) {
         if (courseRepository.existsById(new CourseId(courseId))) {
             var course = courseRepository.findById(new CourseId(courseId)).get();
