@@ -152,7 +152,7 @@ public class CourseController {
     }
 
 
-     * 老师创建课程
+     /* 老师创建课程
      * @param teacherId 老师的id
      * @param courseInfo 要创建的课程的相关信息
      *     class CourseInfo{
