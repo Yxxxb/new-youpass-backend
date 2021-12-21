@@ -19,6 +19,7 @@ import com.youpass.util.ReturnType.Result.ResultEnum;
 import com.youpass.util.ReturnType.Result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class CourseServiceImpl implements CourseService {
     private final StudentRepository studentRepository;
 
     private final StuTakeCourseRepository stuTakeCourseRepository;
+
     @Autowired
     public CourseServiceImpl(CourseRepository courseRepository,
                              TeacherRepository teacherRepository,
@@ -50,6 +52,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public Result<Object> deleteCourse(Long teacherId, Long courseId) {
         if (courseRepository.existsById(new CourseId(courseId))) {
             var course = courseRepository.findById(new CourseId(courseId)).get();
@@ -59,7 +62,7 @@ public class CourseServiceImpl implements CourseService {
                 courseRepository.delete(course);
                 teacherRepository.save(teacher);
                 return ResultUtil.success();
-            }else{
+            } else {
                 return ResultUtil.error(ResultEnum.PERMISSION_DENIED);
             }
         } else {
@@ -68,45 +71,50 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public Result<Object> getCourseById(Long courseId) {
-        if(courseRepository.existsById(new CourseId(courseId))){
+        if (courseRepository.existsById(new CourseId(courseId))) {
             var course = courseRepository.findById(new CourseId(courseId)).get();
             return ResultUtil.success(course);
-        }else{
+        } else {
             return ResultUtil.error(ResultEnum.COURSE_MISS);
         }
     }
 
     @Override
+    @Transactional
     public Result<Object> getCourseByTitle(String title) {
         return ResultUtil.success(courseRepository.findCourseByTitle(title));
     }
 
     @Override
+    @Transactional
     public Result<Object> getCourseByTName(String teacherName) {
         return ResultUtil.success(teacherRepository.findTeacherByName(teacherName));
     }
 
     @Override
+    @Transactional
     public Result<Object> getCourseOfUser(Long id) {
-        if(teacherRepository.existsById(new TeacherId(id))){
+        if (teacherRepository.existsById(new TeacherId(id))) {
             System.out.println("老师");
             var teacher = teacherRepository.findById(new TeacherId(id)).get();
             return ResultUtil.success(teacher.getCourseSet());
-        }else if(studentRepository.existsById(new StudentId(id))){
+        } else if (studentRepository.existsById(new StudentId(id))) {
             System.out.println("学生");
             var student = studentRepository.findById(new StudentId(id)).get();
             List<Course> courseList = new ArrayList<>();
-            for(var stuCourse:student.getStuTakeCourses()){
+            for (var stuCourse : student.getStuTakeCourses()) {
                 courseList.add(stuCourse.getCourse());
             }
             return ResultUtil.success(courseList);
-        }else {
+        } else {
             return ResultUtil.error(ResultEnum.USER_MISS);
         }
     }
 
     @Override
+    @Transactional
     public Result<Object> createCourse(Long teacherId, CourseInfo courseInfo) {
         if (teacherId == null ||
                 courseInfo.getTitle() == null ||
@@ -143,38 +151,46 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public Result<Object> joinCourse(Long studentId, CourseInfo courseInfo) {
-        if(studentId==null||
-        courseInfo.getCourseId()==null||
-        courseInfo.getPassword()==null){
+        if (studentId == null ||
+                courseInfo.getCourseId() == null ||
+                courseInfo.getPassword() == null) {
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
         }
         //查询该studentId是否已经在课程列表中
         Optional<Student> studentOptional = studentRepository.findById(new StudentId(studentId));
-        if(studentOptional.isEmpty()){
+        if (studentOptional.isEmpty()) {
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
         }
-        Set<StuTakeCourse> stuTakeCourseSet= studentOptional.get().getStuTakeCourses();
-        for(StuTakeCourse stuTakeCourse:stuTakeCourseSet){
-            if(stuTakeCourse.getCourse().getId().getCourseId().equals(courseInfo.getCourseId())){
+        Set<StuTakeCourse> stuTakeCourseSet = studentOptional.get().getStuTakeCourses();
+        for (StuTakeCourse stuTakeCourse : stuTakeCourseSet) {
+            if (stuTakeCourse.getCourse().getId().getCourseId().equals(courseInfo.getCourseId())) {
                 return ResultUtil.error(ResultEnum.ALREADY_EXISTS);
             }
         }
         Optional<Course> courseOptional = courseRepository.findById(new CourseId(courseInfo.getCourseId()));
-        if(courseOptional.isEmpty()){
+        if (courseOptional.isEmpty()) {
             return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
         }
         //密码错误的情况
-        if(!courseOptional.get().getPassword().equals(courseInfo.getPassword())){
+        if (!courseOptional.get().getPassword().equals(courseInfo.getPassword())) {
             return ResultUtil.error(ResultEnum.PASSWORD_ERROR);
         }
         //将数据插入到StuTakeCourse表中
-        StuTakeCourse stuTakeCourse=StuTakeCourse.Builder()
+        StuTakeCourse stuTakeCourse = StuTakeCourse.Builder()
                 .setStudent(studentOptional.get())
                 .setCourse(courseOptional.get())
-                .setId(new StuTakeCourseId(studentId,courseInfo.getCourseId()))
+                .setId(new StuTakeCourseId(studentId, courseInfo.getCourseId()))
                 .build();
-        stuTakeCourseRepository.save(stuTakeCourse);
+        Student student = studentOptional.get();
+        Course course = courseOptional.get();
+
+        student.getStuTakeCourses().add(stuTakeCourse);
+        course.getStuTakeCourses().add(stuTakeCourse);
+
+        studentRepository.save(student);
+        courseRepository.save(course);
         //因为已经发布的考试每位学生已经有题了，所以对于后加进来的学生，是没有对应的题的，因此也没有必要将他们加入到学生考试的表中
         return ResultUtil.success("加入课程成功");
     }

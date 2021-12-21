@@ -12,11 +12,18 @@ import java.text.ParseException;
 @Service
 public interface ExamService {
     public Result<Object> CheckState(Long id);
+
     public Result<Object> GetExamsByCourseId(Long courseId);
+
     public Result<Object> GetExamByStudentId(Long courseId);
+
     public Result<Object> ReleaseTest(Long id, ReleaseExamInfo releaseExamInfo);
-    public Result<Object> SetSession(HttpServletRequest request, Long id, SetSessionInfo setSessionInfo) throws ParseException;
-    public Result<Object> PostAnswer(HttpServletRequest request, Long id, PostAnswerInfo postAnswerInfo);
-    public Result<Object> DeleteSession(HttpServletRequest request, Long id);
-    public Result<Object> GetExamQuestion(HttpServletRequest request, Long id);
+
+    public Result<Object> SetSession(HttpServletRequest request, Long id, SetSessionInfo setSessionInfo);
+
+    public Result<Object> PostAnswer(PostAnswerInfo postAnswerInfo);
+
+    public Result<Object> DeleteSession(HttpServletRequest request,Long id,Long courseId,Long examId);
+
+    public Result<Object> GetExamQuestion(Long id,Long courseId,Long examId);
 }

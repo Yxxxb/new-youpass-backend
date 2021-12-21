@@ -8,6 +8,9 @@ import java.util.List;
  * @indicate: JDK 11.0.12
  */
 public class PostAnswerInfo {
+    private Long StudentId;
+    private Long CourseId;
+    private Long ExamId;
     private Long questionId;
     private String stuFillAnswer;
     private List<Character> stuChoiceAnswer;
@@ -16,10 +19,28 @@ public class PostAnswerInfo {
     public PostAnswerInfo() {
     }
 
-    public PostAnswerInfo(Long questionId, String stuFillAnswer, List<Character> stuChoiceAnswer) {
-        this.questionId = questionId;
-        this.stuFillAnswer = stuFillAnswer;
-        this.stuChoiceAnswer = stuChoiceAnswer;
+    public Long getStudentId() {
+        return StudentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        StudentId = studentId;
+    }
+
+    public Long getCourseId() {
+        return CourseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        CourseId = courseId;
+    }
+
+    public Long getExamId() {
+        return ExamId;
+    }
+
+    public void setExamId(Long examId) {
+        ExamId = examId;
     }
 
     public Long getQuestionId() {

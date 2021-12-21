@@ -5,11 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.xml.txw2.annotation.XmlCDATA;
 import com.youpass.pojo.pk.CourseId;
 import org.aspectj.weaver.ast.Not;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.data.util.Lazy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -24,26 +28,29 @@ public class Course implements Serializable {
     @Column(length = 32, name = "password")
     private String password;
 
-    //删除课程不能删除老师，所以不能加cascade
     @JsonIgnoreProperties(value = {"email", "location"})
     @ManyToOne
     @JoinColumn(name = "Teacher_id", referencedColumnName = "teacher_id")
     private Teacher teacher;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Notice> noticeSet = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Exam> examSet = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Question> questionSet = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<StuTakeCourse> stuTakeCourses = new HashSet<>();
 
     public Course() {
@@ -161,4 +168,14 @@ public class Course implements Serializable {
     public void setStuTakeCourses(Set<StuTakeCourse> stuTakeCourses) {
         this.stuTakeCourses = stuTakeCourses;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
 }

@@ -19,7 +19,7 @@ import java.text.ParseException;
  */
 
 @RestController
-@RequestMapping(path = "api")
+@RequestMapping(path = "api/exam")
 public class ExamController {
     private final ExamService examService;
 
@@ -104,7 +104,7 @@ public class ExamController {
     }
 
     @PostMapping(path = "setSession")
-    public Result<Object> SetSession(HttpServletRequest request, @RequestAttribute(name = "id") Long id, @RequestBody SetSessionInfo setSessionInfo) throws ParseException {
+    public Result<Object> SetSession(HttpServletRequest request, @RequestAttribute(name = "id") Long id, @RequestBody SetSessionInfo setSessionInfo) {
         return examService.SetSession(request, id, setSessionInfo);
     }
 
@@ -113,19 +113,30 @@ public class ExamController {
         return examService.ReleaseTest(id, releaseExamInfo);
     }
 
-    @PostMapping(path = "takeexam/studentPostAnswer")
-    public Result<Object> PostAnswer(HttpServletRequest request, @RequestAttribute(name = "id") Long id, @RequestBody PostAnswerInfo postAnswerInfo) {
-        return examService.PostAnswer(request, id, postAnswerInfo);
+    @PostMapping(path = "takeExam/studentPostAnswer")
+    public Result<Object> PostAnswer(@RequestAttribute(name = "id") Long id,
+                                     @RequestAttribute("courseId") Long courseId,
+                                     @RequestAttribute("examId") Long examId,
+                                     @RequestBody PostAnswerInfo postAnswerInfo) {
+        postAnswerInfo.setStudentId(id);
+        postAnswerInfo.setCourseId(courseId);
+        postAnswerInfo.setExamId(examId);
+        return examService.PostAnswer(postAnswerInfo);
     }
 
-    @DeleteMapping(path = "takeexam/deleteSession")
-    public Result<Object> DeleteSession(HttpServletRequest request, @RequestAttribute(name = "id") Long id) {
-        return examService.DeleteSession(request, id);
+    @DeleteMapping(path = "takeExam/deleteSession")
+    public Result<Object> DeleteSession(HttpServletRequest request,
+                                        @RequestAttribute(name = "id") Long id,
+                                        @RequestAttribute("courseId") Long courseId,
+                                        @RequestAttribute("examId") Long examId) {
+        return examService.DeleteSession(request,id, courseId, examId);
     }
 
-    @GetMapping(path = "takeexam/getExamQuestion")
-    public Result<Object> GetExamQuestion(HttpServletRequest request, @RequestAttribute(name = "id") Long id) {
-        return examService.GetExamQuestion(request, id);
+    @GetMapping(path = "takeExam/getExamQuestion")
+    public Result<Object> GetExamQuestion(@RequestAttribute(name = "id") Long id,
+                                          @RequestAttribute("courseId") Long courseId,
+                                          @RequestAttribute("examId") Long examId) {
+        return examService.GetExamQuestion(id, courseId, examId);
     }
 }
 

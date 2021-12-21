@@ -2,6 +2,8 @@ package com.youpass.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.youpass.pojo.pk.TeacherId;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.repository.cdi.Eager;
 import org.springframework.jdbc.core.SqlReturnType;
@@ -37,6 +39,7 @@ public class Teacher implements Serializable {
 
     //放弃关系的维护
     @JsonIgnore
+    @Fetch(FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "teacher",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Course> courseSet = new HashSet<>();
 

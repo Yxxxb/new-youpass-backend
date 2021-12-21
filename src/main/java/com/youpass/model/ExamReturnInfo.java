@@ -4,6 +4,7 @@ import com.youpass.pojo.pk.CourseId;
 import com.youpass.pojo.pk.ExamId;
 
 import javax.persistence.Column;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,8 +12,9 @@ import java.util.Date;
  * @number: 1953348
  * @indicate: JDK 11.0.12
  */
-public class ExamReturnInfo {
-    private ExamId exam_id;
+public class ExamReturnInfo implements Serializable {
+    private Long courseId;
+    private Long exam_id;
     private Date start_time;
     private Date end_time;
     private String title;
@@ -20,18 +22,27 @@ public class ExamReturnInfo {
     public ExamReturnInfo() {
     }
 
-    public ExamReturnInfo(ExamId exam_id, Date start_time, Date end_time, String title) {
+    public ExamReturnInfo(Long courseId, Long exam_id, Date start_time, Date end_time, String title) {
+        this.courseId = courseId;
         this.exam_id = exam_id;
         this.start_time = start_time;
         this.end_time = end_time;
         this.title = title;
     }
 
-    public ExamId getExam_id() {
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
+    public Long getExam_id() {
         return exam_id;
     }
 
-    public void setExam_id(ExamId exam_id) {
+    public void setExam_id(Long exam_id) {
         this.exam_id = exam_id;
     }
 

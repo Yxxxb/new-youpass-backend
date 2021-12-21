@@ -49,15 +49,22 @@ public class TestController {
     }
 
     @GetMapping("api/test")
-    public Result<Object> test() {
-        var teacher = teacherRepository.findTeacherByName("danny");
-        return ResultUtil.success(teacher);
+    public Result<Object> test(HttpServletRequest request) {
+        request.getSession().setAttribute("a",213);
+        return ResultUtil.success();
     }
 
     @GetMapping("api/test2")
-    public Result<Object> test2() {
-        var course = courseRepository.findCourseByTitle("c1");
-        return ResultUtil.success(course);
+    public Result<Object> test2(HttpServletRequest request) {
+        request.getSession().removeAttribute("courseId");
+        request.getSession().removeAttribute("examId");
+        return ResultUtil.success();
     }
 
+    @GetMapping("api/test3")
+    public Result<Object> test3(HttpServletRequest request,HttpServletResponse response) {
+        System.out.println(request.getSession().getAttribute("courseId"));
+        System.out.println(request.getSession().getAttribute("examId"));
+        return ResultUtil.success();
+    }
 }

@@ -15,6 +15,7 @@ import com.youpass.util.ReturnType.Result.Result;
 import com.youpass.util.ReturnType.Result.ResultEnum;
 import com.youpass.util.ReturnType.Result.ResultUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -33,6 +34,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
+    @Transactional
     public Result<Object> uploadQuestion(List<QuestionInfo> questionInfoList) {
 
         //错误处理
@@ -46,11 +48,10 @@ public class QuestionServiceImpl implements QuestionService {
                 return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
             }
             //如果上传选择题但是没有上传选项，视为错误
-            if ((item.getType() == 0 || item.getType() == 1) && item.getOptionInfoList().size() == 0) {
+            if ((item.getType() == 0 || item.getType() == 1) && (item.getOptionInfoList() == null || item.getOptionInfoList().size() == 0)) {
                 return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
             }
-            //将传来的standard转换编码存入
-            
+            //TODO:将传来的standard转换编码存入
             //获取下一个questionId
             var questionId = questionRepository.getNextId().orElse(questionRepository.minId);
             //将题目信息上传到数据库中
@@ -90,6 +91,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    @Transactional
     public Result<Object> getStudentDoingQuestion(QuestionInfo questionInfo) {
         //错误处理
         if (questionInfo.getQuestionId() == null ||
@@ -144,7 +146,7 @@ public class QuestionServiceImpl implements QuestionService {
                 question.getSubject(),
                 optionInfoList);
 
-        return ResultUtil.success(new QuestionStuReturn(studentReturnSet,questionInfoReturn));
+        return ResultUtil.success(new QuestionStuReturn(studentReturnSet, questionInfoReturn));
 
     }
 }
