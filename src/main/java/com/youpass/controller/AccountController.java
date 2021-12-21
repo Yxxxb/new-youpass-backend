@@ -183,5 +183,14 @@ public class AccountController {
         accountService.getImage(id, response);
     }
 
+    /**
+     * 获得全部信息
+     * @param id
+     */
+    @GetMapping(path = "getAllInfo")
+    public Result<Object> getAllInfo(@RequestAttribute(name = "id") Long id) {
+        return accountService.getAllInfo(id);
+    }
+
 
 }

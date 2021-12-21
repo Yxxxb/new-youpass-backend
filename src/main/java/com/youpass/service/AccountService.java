@@ -29,4 +29,6 @@ public interface AccountService {
     public Result<Object> uploadImage(Long id, MultipartFile file);
 
     public void getImage(Long id, HttpServletResponse response);
+
+    public Result<Object> getAllInfo(Long id);
 }

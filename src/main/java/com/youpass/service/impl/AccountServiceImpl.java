@@ -2,7 +2,11 @@ package com.youpass.service.impl;
 
 import com.youpass.dao.StudentRepository;
 import com.youpass.dao.TeacherRepository;
+import com.youpass.model.ExamReturnInfo;
+import com.youpass.model.AllInfo;
 import com.youpass.model.UserInfo;
+import com.youpass.pojo.Course;
+import com.youpass.pojo.ExamInfo;
 import com.youpass.pojo.Student;
 import com.youpass.pojo.Teacher;
 import com.youpass.pojo.pk.StudentId;
@@ -12,11 +16,7 @@ import com.youpass.util.ReturnType.Result.Result;
 import com.youpass.util.ReturnType.Result.ResultEnum;
 import com.youpass.util.ReturnType.Result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StreamUtils;
@@ -32,9 +32,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static com.youpass.util.ReturnType.Result.ResultEnum.File_ERROR;
 import static com.youpass.util.ReturnType.Result.ResultEnum.USER_NOT_LOGIN;
@@ -249,6 +247,60 @@ public class AccountServiceImpl implements AccountService {
         }
         catch (IOException e){
             System.out.println("文件出现问题");
+        }
+    }
+
+    @Override
+    @Transactional
+    public  Result<Object> getAllInfo(Long id) {
+        if (studentRepository.existsById(new StudentId(id))) {
+            var allInfo = new AllInfo();
+            // 基本信息
+            var student = studentRepository.findById(new StudentId(id)).get();
+            var userInfo = new UserInfo();
+            userInfo.setEmail(student.getEmail());
+            userInfo.setName(student.getName());
+            userInfo.setLocation(student.getLocation());
+            userInfo.setType(1);
+            userInfo.setId(id);
+            // 课程列表
+            Set<Course> courses = new HashSet<>();
+            for (var stuCourse : student.getStuTakeCourses()) {
+                courses.add(stuCourse.getCourse());
+            }
+            // 考试列表
+            List<ExamReturnInfo> exams = new ArrayList<>();
+            for (ExamInfo s : student.getExamInfos()) {
+                exams.add(new ExamReturnInfo(
+                        s.getExam().getId().getCourseId(),
+                        s.getExam().getId().getExamId(),
+                        s.getExam().getStart_time(),
+                        s.getExam().getEnd_time(),
+                        s.getExam().getTitle()));
+            }
+            allInfo.setUserInfo(userInfo);
+            allInfo.setCourseList(courses);
+            allInfo.setExamList(exams);
+            System.out.println(courses);
+            System.out.println(allInfo);
+            return ResultUtil.success(allInfo);
+        }
+        else if (teacherRepository.existsById(new TeacherId(id))) {
+            var allInfo = new AllInfo();
+            var teacher = teacherRepository.findById(new TeacherId(id)).get();
+            var userInfo = new UserInfo();
+            userInfo.setEmail(teacher.getEmail());
+            userInfo.setName(teacher.getName());
+            userInfo.setLocation(teacher.getLocation());
+            userInfo.setType(0);
+            userInfo.setId(id);
+            Set<Course> courses = teacher.getCourseSet();
+            allInfo.setUserInfo(userInfo);
+            allInfo.setCourseList(courses);
+            return ResultUtil.success(allInfo);
+        }
+        else {
+            return ResultUtil.error(ResultEnum.USER_MISS);
         }
     }
 }

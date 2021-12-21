@@ -51,7 +51,7 @@ public class ExamServiceImpl implements ExamService {
             var course = courseRepository.findById(courseId).get();
             List<ExamReturnInfo> exams = new ArrayList<>();
             for (Exam e : course.getExamSet()) {
-                exams.add(new ExamReturnInfo(e.getId(), e.getStart_time(), e.getEnd_time(), e.getTitle()));
+                exams.add(new ExamReturnInfo(e.getId().getCourseId(), e.getId().getExamId(), e.getStart_time(), e.getEnd_time(), e.getTitle()));
             }
             return ResultUtil.success(exams);
         } else {
@@ -67,7 +67,8 @@ public class ExamServiceImpl implements ExamService {
         List<ExamReturnInfo> exams = new ArrayList<>();
         for (ExamInfo s : student.getExamInfos()) {
             exams.add(new ExamReturnInfo(
-                    s.getExam().getId(),
+                    s.getExam().getId().getCourseId(),
+                    s.getExam().getId().getExamId(),
                     s.getExam().getStart_time(),
                     s.getExam().getEnd_time(),
                     s.getExam().getTitle()));
