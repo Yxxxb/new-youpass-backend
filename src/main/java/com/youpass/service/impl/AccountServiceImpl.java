@@ -2,6 +2,7 @@ package com.youpass.service.impl;
 
 import com.youpass.dao.StudentRepository;
 import com.youpass.dao.TeacherRepository;
+import com.youpass.model.CourseInfo;
 import com.youpass.model.ExamReturnInfo;
 import com.youpass.model.AllInfo;
 import com.youpass.model.UserInfo;
@@ -264,9 +265,11 @@ public class AccountServiceImpl implements AccountService {
             userInfo.setType(1);
             userInfo.setId(id);
             // 课程列表
-            Set<Course> courses = new HashSet<>();
+            Set<CourseInfo> courses = new HashSet<>();
             for (var stuCourse : student.getStuTakeCourses()) {
-                courses.add(stuCourse.getCourse());
+                CourseInfo courseInfo = new CourseInfo();
+                courseInfo.setCourse(stuCourse.getCourse());
+                courses.add(courseInfo);
             }
             // 考试列表
             List<ExamReturnInfo> exams = new ArrayList<>();
@@ -281,7 +284,9 @@ public class AccountServiceImpl implements AccountService {
             allInfo.setUserInfo(userInfo);
             allInfo.setCourseList(courses);
             allInfo.setExamList(exams);
-            System.out.println(courses);
+            for(var course : allInfo.getCourseList()){
+                System.out.println(course.toString());
+            }
             System.out.println(allInfo);
             return ResultUtil.success(allInfo);
         }
@@ -294,7 +299,12 @@ public class AccountServiceImpl implements AccountService {
             userInfo.setLocation(teacher.getLocation());
             userInfo.setType(0);
             userInfo.setId(id);
-            Set<Course> courses = teacher.getCourseSet();
+
+            Set<CourseInfo> courses = new HashSet<>();
+            for(var course :teacher.getCourseSet()){
+                CourseInfo courseInfo = new CourseInfo();
+                courseInfo.setCourse(course);
+            }
             allInfo.setUserInfo(userInfo);
             allInfo.setCourseList(courses);
             return ResultUtil.success(allInfo);

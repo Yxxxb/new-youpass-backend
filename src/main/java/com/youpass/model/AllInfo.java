@@ -15,11 +15,11 @@ import java.util.Set;
  */
 public class AllInfo implements Serializable {
     private UserInfo userInfo;
-    private Set<Course> courseList;
+    private Set<CourseInfo> courseList;
     private List<ExamReturnInfo> examList;
 //    private List<List<ExamReturnInfo>> courseExamList;
 
-    public AllInfo(UserInfo userInfo, Set<Course> courseList) {
+    public AllInfo(UserInfo userInfo, Set<CourseInfo> courseList) {
         this.userInfo = userInfo;
         this.courseList = courseList;
     }
@@ -27,7 +27,7 @@ public class AllInfo implements Serializable {
     public AllInfo() {
     }
 
-    public AllInfo(UserInfo userInfo, Set<Course> courseList, List<ExamReturnInfo> examList) {
+    public AllInfo(UserInfo userInfo, Set<CourseInfo> courseList, List<ExamReturnInfo> examList) {
         this.userInfo = userInfo;
         this.courseList = courseList;
         this.examList = examList;
@@ -41,11 +41,11 @@ public class AllInfo implements Serializable {
         this.userInfo = userInfo;
     }
 
-    public Set<Course> getCourseList() {
+    public Set<CourseInfo> getCourseList() {
         return courseList;
     }
 
-    public void setCourseList(Set<Course> courseList) {
+    public void setCourseList(Set<CourseInfo> courseList) {
         this.courseList = courseList;
     }
 

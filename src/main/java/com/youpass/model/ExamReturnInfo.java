@@ -1,5 +1,6 @@
 package com.youpass.model;
 
+import com.youpass.pojo.Exam;
 import com.youpass.pojo.pk.CourseId;
 import com.youpass.pojo.pk.ExamId;
 
@@ -68,5 +69,13 @@ public class ExamReturnInfo implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam_id = exam.getId().getExamId();
+        this.courseId = exam.getId().getCourseId();
+        this.start_time = exam.getStart_time();
+        this.end_time = exam.getEnd_time();
+        this.title = exam.getTitle();
     }
 }

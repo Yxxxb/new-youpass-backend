@@ -2,6 +2,7 @@ package com.youpass.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sun.xml.txw2.annotation.XmlCDATA;
 import com.youpass.pojo.pk.CourseId;
 import org.aspectj.weaver.ast.Not;
@@ -18,6 +19,7 @@ import java.util.Set;
 
 @Entity
 @Table
+@JsonSerialize
 public class Course implements Serializable {
     @EmbeddedId
     private CourseId id;
