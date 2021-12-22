@@ -263,10 +263,22 @@ public class AccountServiceImpl implements AccountService {
             userInfo.setType(1);
             userInfo.setId(id);
             // 课程列表
+            Set <NoticeInfo> noticeInfoSet=new HashSet<>();
             Set<CourseDetail> courseDetails = new HashSet<>();
             for (var stuCourse : student.getStuTakeCourses()) {
                 CourseInfo courseInfo = new CourseInfo();
                 courseInfo.setCourse(stuCourse.getCourse());
+
+                for(var notice : stuCourse.getCourse().getNoticeSet()){
+                    NoticeInfo noticeInfo =new NoticeInfo();
+                    noticeInfo.setNoticeId(notice.getId().getNoticeId());
+                    noticeInfo.setContent(notice.getContent());
+                    noticeInfo.setCourseId(notice.getId().getCourseId());
+                    noticeInfo.setTime(notice.getTime());
+                    noticeInfoSet.add(noticeInfo);
+                }
+
+
 
                 var teacherId = stuCourse.getCourse().getTeacher().getId().getTeacherId();
                 var teacherName = stuCourse.getCourse().getTeacher().getName();
@@ -294,6 +306,7 @@ public class AccountServiceImpl implements AccountService {
             allInfo.setUserInfo(userInfo);
             allInfo.setCourseListStu(courseDetails);
             allInfo.setExamList(exams);
+            allInfo.setNoticeInfoSet(noticeInfoSet);
             for(var course : allInfo.getCourseList()){
                 System.out.println(course.toString());
             }

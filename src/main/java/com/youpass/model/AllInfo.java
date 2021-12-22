@@ -20,6 +20,7 @@ public class AllInfo implements Serializable {
     private Set<CourseInfo> courseList = new HashSet<>();
     private Set<CourseDetail> courseListStu = new HashSet<>();
     private List<ExamReturnInfo> examList = new ArrayList<>();
+    private Set<NoticeInfo> noticeInfoSet = new HashSet<>();
 //    private List<List<ExamReturnInfo>> courseExamList;
 
     public AllInfo() {
@@ -29,6 +30,7 @@ public class AllInfo implements Serializable {
         this.userInfo = userInfo;
         this.courseList = courseList;
     }
+
 
     public AllInfo(UserInfo userInfo, Set<CourseDetail> courseListStu, List<ExamReturnInfo> examList) {
         this.userInfo = userInfo;
@@ -73,5 +75,13 @@ public class AllInfo implements Serializable {
 
     public void setExamList(List<ExamReturnInfo> examList) {
         this.examList = examList;
+    }
+
+    public Set<NoticeInfo> getNoticeInfoSet() {
+        return noticeInfoSet;
+    }
+
+    public void setNoticeInfoSet(Set<NoticeInfo> noticeInfoSet) {
+        this.noticeInfoSet = noticeInfoSet;
     }
 }
