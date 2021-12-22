@@ -17,15 +17,15 @@ import java.util.List;
  */
 public class Tools {
 
-//    public static void main(String[] args) {
-//        List<Integer> givenList = Arrays.asList(1, 2, 3,4,5,6);
+    public static void main(String[] args) {
+        List<Integer> givenList = Arrays.asList(1, 2, 3,4,5,6);
 //        Collections.shuffle(givenList);
-//
-//        int randomSeriesLength = 6;
-//
-//        List<Integer> randomSeries = givenList.subList(0, randomSeriesLength);
-//        System.out.println(randomSeries);
-//    }
+
+        int randomSeriesLength = 6;
+
+        List<Integer> randomSeries = rand_order_index(0, "10010");
+        System.out.println(randomSeries);
+    }
 
     //传入答案 进行编码
     public static List<Integer> rand_order_index(Integer order, String stu_answer) {

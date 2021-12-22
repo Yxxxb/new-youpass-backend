@@ -13,11 +13,29 @@ public class QuestionInfo {
     private String subject;
     private Date createTime;
     private Integer questionValue;
+    private Integer value;
+    private Integer studentPoint;
 
     private List<ScoreInfo> scoreInfoList;
     private List<OptionInfo> optionInfoList;
 
-    public QuestionInfo(Long questionId, Long courseId, Long examId, String description, Integer type, String standardAnswer, String subject, Date createTime, Integer questionValue, List<OptionInfo> optionInfoList) {
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
+    public Integer getStudentPoint() {
+        return studentPoint;
+    }
+
+    public void setStudentPoint(Integer studentPoint) {
+        this.studentPoint = studentPoint;
+    }
+
+    public QuestionInfo(Long questionId, Long courseId, Long examId, String description, Integer type, String standardAnswer, String subject, Date createTime,Integer studentPoint,Integer value, Integer questionValue, List<OptionInfo> optionInfoList) {
         this.questionId = questionId;
         this.courseId = courseId;
         this.examId = examId;
@@ -26,6 +44,8 @@ public class QuestionInfo {
         this.standardAnswer = standardAnswer;
         this.subject = subject;
         this.createTime = createTime;
+        this.value=value;
+        this.studentPoint=studentPoint;
         this.questionValue = questionValue;
         this.optionInfoList = optionInfoList;
     }
