@@ -21,11 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -75,7 +71,9 @@ public class CourseServiceImpl implements CourseService {
     public Result<Object> getCourseById(Long courseId) {
         if (courseRepository.existsById(new CourseId(courseId))) {
             var course = courseRepository.findById(new CourseId(courseId)).get();
-            return ResultUtil.success(course);
+            Set<Course> courses = new HashSet<>();
+            courses.add(course);
+            return ResultUtil.success(courses);
         } else {
             return ResultUtil.error(ResultEnum.COURSE_MISS);
         }
@@ -90,7 +88,12 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public Result<Object> getCourseByTName(String teacherName) {
-        return ResultUtil.success(teacherRepository.findTeacherByName(teacherName));
+        var teacher = teacherRepository.findTeacherByName(teacherName);
+        Set<Course> courses = new HashSet<>();
+        for(Teacher t : teacher){
+            courses.addAll(t.getCourseSet());
+        }
+        return ResultUtil.success(courses);
     }
 
     @Override
