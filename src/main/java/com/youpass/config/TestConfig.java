@@ -136,7 +136,7 @@ public class TestConfig {
                     questionInfo.setType(0);
                     questionInfo.setCourseId(1000L);
                     questionInfo.setSubject("123");
-                    questionInfo.setStandardAnswer("0");
+                    questionInfo.setStandardAnswer("1");
                     List<OptionInfo> optionList = new ArrayList<>();
                     for (Long j = 1L; j < 4L; j++) {
                         optionList.add(new OptionInfo(j, 0L, "123"));
@@ -151,7 +151,7 @@ public class TestConfig {
                     questionInfo.setType(1);
                     questionInfo.setCourseId(1000L);
                     questionInfo.setSubject("123");
-                    questionInfo.setStandardAnswer("0");
+                    questionInfo.setStandardAnswer("1");
                     List<OptionInfo> optionList = new ArrayList<>();
                     for (Long j = 1L; j < 4L; j++) {
                         optionList.add(new OptionInfo(j, 0L, "123"));
@@ -166,7 +166,7 @@ public class TestConfig {
                     questionInfo.setType(2);
                     questionInfo.setCourseId(1000L);
                     questionInfo.setSubject("123");
-                    questionInfo.setStandardAnswer("0");
+                    questionInfo.setStandardAnswer("1");
                     questionInfoList.add(questionInfo);
                 }
                 for (Integer i = 0; i < multiNum; i++) {
@@ -176,7 +176,7 @@ public class TestConfig {
                     questionInfo.setType(3);
                     questionInfo.setCourseId(1000L);
                     questionInfo.setSubject("123");
-                    questionInfo.setStandardAnswer("0");
+                    questionInfo.setStandardAnswer("1");
                     questionInfoList.add(questionInfo);
                 }
                 questionService.uploadQuestion(questionInfoList);
