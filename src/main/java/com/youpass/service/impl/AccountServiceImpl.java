@@ -1,15 +1,11 @@
 package com.youpass.service.impl;
 
+import com.youpass.dao.CourseRepository;
 import com.youpass.dao.StudentRepository;
 import com.youpass.dao.TeacherRepository;
-import com.youpass.model.CourseInfo;
-import com.youpass.model.ExamReturnInfo;
-import com.youpass.model.AllInfo;
-import com.youpass.model.UserInfo;
-import com.youpass.pojo.Course;
-import com.youpass.pojo.ExamInfo;
-import com.youpass.pojo.Student;
-import com.youpass.pojo.Teacher;
+import com.youpass.model.*;
+import com.youpass.pojo.*;
+import com.youpass.pojo.pk.CourseId;
 import com.youpass.pojo.pk.StudentId;
 import com.youpass.pojo.pk.TeacherId;
 import com.youpass.service.AccountService;
@@ -43,11 +39,13 @@ public class AccountServiceImpl implements AccountService {
 
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
+    private final CourseRepository courseRepository;
 
     @Autowired
-    public AccountServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository) {
+    public AccountServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository, CourseRepository courseRepository) {
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -265,11 +263,23 @@ public class AccountServiceImpl implements AccountService {
             userInfo.setType(1);
             userInfo.setId(id);
             // 课程列表
-            Set<CourseInfo> courses = new HashSet<>();
+            Set<CourseDetail> courseDetails = new HashSet<>();
             for (var stuCourse : student.getStuTakeCourses()) {
                 CourseInfo courseInfo = new CourseInfo();
                 courseInfo.setCourse(stuCourse.getCourse());
-                courses.add(courseInfo);
+
+                var teacherId = stuCourse.getCourse().getTeacher().getId().getTeacherId();
+                var teacherName = stuCourse.getCourse().getTeacher().getName();
+                CourseId courseId = new CourseId(courseInfo.getCourseId());
+                var course = courseRepository.findById(courseId).get();
+                List<ExamReturnInfo> exams = new ArrayList<>();
+                for (Exam e : course.getExamSet()) {
+                    exams.add(new ExamReturnInfo(e.getId().getCourseId(), e.getId().getExamId(), e.getStart_time(), e.getEnd_time(), e.getTitle()));
+                }
+
+                CourseDetail courseDetail = new CourseDetail(courseInfo, teacherId, teacherName, exams);
+
+                courseDetails.add(courseDetail);
             }
             // 考试列表
             List<ExamReturnInfo> exams = new ArrayList<>();
@@ -282,12 +292,13 @@ public class AccountServiceImpl implements AccountService {
                         s.getExam().getTitle()));
             }
             allInfo.setUserInfo(userInfo);
-            allInfo.setCourseList(courses);
+            allInfo.setCourseListStu(courseDetails);
             allInfo.setExamList(exams);
             for(var course : allInfo.getCourseList()){
                 System.out.println(course.toString());
             }
-            System.out.println(allInfo);
+            // 每门课信息
+
             return ResultUtil.success(allInfo);
         }
         else if (teacherRepository.existsById(new TeacherId(id))) {
@@ -304,6 +315,7 @@ public class AccountServiceImpl implements AccountService {
             for(var course :teacher.getCourseSet()){
                 CourseInfo courseInfo = new CourseInfo();
                 courseInfo.setCourse(course);
+                courses.add(courseInfo);
             }
             allInfo.setUserInfo(userInfo);
             allInfo.setCourseList(courses);

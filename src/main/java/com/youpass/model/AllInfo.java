@@ -5,6 +5,8 @@ import com.youpass.model.UserInfo;
 import com.youpass.pojo.Course;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,21 +17,29 @@ import java.util.Set;
  */
 public class AllInfo implements Serializable {
     private UserInfo userInfo;
-    private Set<CourseInfo> courseList;
-    private List<ExamReturnInfo> examList;
+    private Set<CourseInfo> courseList = new HashSet<>();
+    private Set<CourseDetail> courseListStu = new HashSet<>();
+    private List<ExamReturnInfo> examList = new ArrayList<>();
 //    private List<List<ExamReturnInfo>> courseExamList;
+
+    public AllInfo() {
+    }
 
     public AllInfo(UserInfo userInfo, Set<CourseInfo> courseList) {
         this.userInfo = userInfo;
         this.courseList = courseList;
     }
 
-    public AllInfo() {
+    public AllInfo(UserInfo userInfo, Set<CourseDetail> courseListStu, List<ExamReturnInfo> examList) {
+        this.userInfo = userInfo;
+        this.courseListStu = courseListStu;
+        this.examList = examList;
     }
 
-    public AllInfo(UserInfo userInfo, Set<CourseInfo> courseList, List<ExamReturnInfo> examList) {
+    public AllInfo(UserInfo userInfo, Set<CourseInfo> courseList, Set<CourseDetail> courseListStu, List<ExamReturnInfo> examList) {
         this.userInfo = userInfo;
         this.courseList = courseList;
+        this.courseListStu = courseListStu;
         this.examList = examList;
     }
 
@@ -49,20 +59,19 @@ public class AllInfo implements Serializable {
         this.courseList = courseList;
     }
 
+    public Set<CourseDetail> getCourseListStu() {
+        return courseListStu;
+    }
+
+    public void setCourseListStu(Set<CourseDetail> courseListStu) {
+        this.courseListStu = courseListStu;
+    }
+
     public List<ExamReturnInfo> getExamList() {
         return examList;
     }
 
     public void setExamList(List<ExamReturnInfo> examList) {
         this.examList = examList;
-    }
-
-    @Override
-    public String toString() {
-        return "AllInfo{" +
-                "userInfo=" + userInfo +
-                ", courseList=" + courseList +
-                ", examList=" + examList +
-                '}';
     }
 }
