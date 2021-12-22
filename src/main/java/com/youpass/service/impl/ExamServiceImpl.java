@@ -345,16 +345,16 @@ public class ExamServiceImpl implements ExamService {
                         if (ansList.get(i) == 1) {
                             multiList.add(i);
                         }
-                        questionList.add(new QuestionInfoReturn(
-                                s.getQuestion().getId().getQuestionId(),
-                                s.getQuestion().getDescription(),
-                                s.getQuestion().getType(),
-                                s.getNumInPaper(),
-                                options,
-                                done,
-                                null,
-                                multiList));
                     }
+                    questionList.add(new QuestionInfoReturn(
+                            s.getQuestion().getId().getQuestionId(),
+                            s.getQuestion().getDescription(),
+                            s.getQuestion().getType(),
+                            s.getNumInPaper(),
+                            options,
+                            done,
+                            null,
+                            multiList));
                 }
 
             }
