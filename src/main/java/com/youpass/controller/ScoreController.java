@@ -80,7 +80,7 @@ public class ScoreController {
     }
 
     /**
-     * 自动批改某门课程某场考试某道题的所有解答
+     * 手动批改某门课程某场考试某道题的所有解答
      * @param questionInfo
      *     private Long questionId;
      *     private Long courseId;
