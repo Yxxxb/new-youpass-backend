@@ -192,6 +192,8 @@ public class TestConfig {
                 releaseExamInfo.setMulti_choice_value(2);
                 releaseExamInfo.setFilled_value(2);
                 releaseExamInfo.setCompletion_value(2);
+                releaseExamInfo.setStart_time(new Date());
+                releaseExamInfo.setEnd_time(new Date());
                 examService.ReleaseTest(1000L, releaseExamInfo);
             }
 

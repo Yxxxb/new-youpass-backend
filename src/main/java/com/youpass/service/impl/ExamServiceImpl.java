@@ -106,6 +106,8 @@ public class ExamServiceImpl implements ExamService {
                 .setMultiChoiceNum(releaseExamInfo.getMulti_choice_num())
                 .setFilledNum(releaseExamInfo.getFilled_num())
                 .setCompletionNum(releaseExamInfo.getCompletion_num())
+                .setStart_time(releaseExamInfo.getStart_time())
+                .setEnd_time((releaseExamInfo.getEnd_time()))
                 .setCourse(course)
                 .build();
 
