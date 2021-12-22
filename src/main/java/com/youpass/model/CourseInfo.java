@@ -59,6 +59,7 @@ public class CourseInfo {
         for(var exam:course.getExamSet()){
             ExamReturnInfo examReturnInfo = new ExamReturnInfo();
             examReturnInfo.setExam(exam);
+            this.examReturnInfoSet.add(examReturnInfo);
         }
     }
 }
