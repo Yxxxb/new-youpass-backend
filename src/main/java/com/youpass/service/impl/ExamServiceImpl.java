@@ -319,12 +319,47 @@ public class ExamServiceImpl implements ExamService {
                 options = Tools.rand_order(s.getSelfOrder(), options);
             }
 
-            questionList.add(new QuestionInfoReturn(
-                    s.getQuestion().getId().getQuestionId(),
-                    s.getQuestion().getDescription(),
-                    s.getQuestion().getType(),
-                    s.getNumInPaper(),
-                    options));
+            if (s.getStuAnswer() == null || Objects.equals(s.getStuAnswer(), "")) {
+                questionList.add(new QuestionInfoReturn(
+                        s.getQuestion().getId().getQuestionId(),
+                        s.getQuestion().getDescription(),
+                        s.getQuestion().getType(),
+                        s.getNumInPaper(),
+                        options));
+            } else {
+                Boolean done = true;
+                if (s.getQuestion().getType() >= 2) {
+                    questionList.add(new QuestionInfoReturn(
+                            s.getQuestion().getId().getQuestionId(),
+                            s.getQuestion().getDescription(),
+                            s.getQuestion().getType(),
+                            s.getNumInPaper(),
+                            options,
+                            done,
+                            s.getStuAnswer(),
+                            null));
+                } else {
+                    List<Integer> ansList = Tools.rand_order_index(s.getSelfOrder(), s.getStuAnswer());
+                    List<Integer> multiList = new ArrayList<>();
+                    for (int i = 0; i < Objects.requireNonNull(ansList).size(); i++) {
+                        if (ansList.get(i) == 1) {
+                            multiList.add(i);
+                        }
+                        questionList.add(new QuestionInfoReturn(
+                                s.getQuestion().getId().getQuestionId(),
+                                s.getQuestion().getDescription(),
+                                s.getQuestion().getType(),
+                                s.getNumInPaper(),
+                                options,
+                                done,
+                                null,
+                                multiList));
+                    }
+                }
+
+            }
+
+
         }
 
         ExamQuestionReturn examQuestionReturn = new ExamQuestionReturn(exam.getTitle(), exam.getStart_time(), exam.getEnd_time(), questionList);

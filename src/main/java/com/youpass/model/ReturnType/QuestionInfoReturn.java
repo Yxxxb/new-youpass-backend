@@ -16,12 +16,46 @@ public class QuestionInfoReturn {
     private Integer numInPaper;
     private List<OptionInfo> options;
 
-//    private boolean done;
-//    private List<Character> singleList;
-//    private List<Character> multiList;
+    private boolean done = false;
+    private String fill_content;
+    private List<Integer> multiList;
 
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public String getFill_content() {
+        return fill_content;
+    }
+
+    public void setFill_content(String fill_content) {
+        this.fill_content = fill_content;
+    }
+
+    public List<Integer> getMultiList() {
+        return multiList;
+    }
+
+    public void setMultiList(List<Integer> multiList) {
+        this.multiList = multiList;
+    }
 
     public QuestionInfoReturn() {
+    }
+
+    public QuestionInfoReturn(Long questionId, String description, Integer type, Integer numInPaper, List<OptionInfo> options, boolean done, String fill_cotent, List<Integer> multiList) {
+        this.questionId = questionId;
+        this.description = description;
+        this.type = type;
+        this.numInPaper = numInPaper;
+        this.options = options;
+        this.done = done;
+        this.fill_content = fill_cotent;
+        this.multiList = multiList;
     }
 
     public QuestionInfoReturn(Long questionId, String description, Integer type, Integer numInPaper, List<OptionInfo> options) {
