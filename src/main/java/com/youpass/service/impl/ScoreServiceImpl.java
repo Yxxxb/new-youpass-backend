@@ -128,7 +128,7 @@ public class ScoreServiceImpl implements ScoreService {
 
         //遍历：比较分数然后给分,并存入数据库
         for (ExaminationPaper examinationPaper : examinationPaperSetInNeed) {
-            if (examinationPaper.getStuAnswer().equals(standard_answer)) {
+            if (standard_answer.equals(examinationPaper.getStuAnswer())) {
                 examinationPaper.setStuPoint(examinationPaper.getValue());
             } else {
                 examinationPaper.setStuPoint(0);
