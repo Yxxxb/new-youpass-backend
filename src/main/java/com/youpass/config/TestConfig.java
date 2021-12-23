@@ -100,102 +100,102 @@ public class TestConfig {
 //            System.out.println(student1.getStuTakeCourses().toString());
 
 
-            {
-                var userInfo = new UserInfo();
-                userInfo.setName("student");
-                userInfo.setPassword("123");
-                userInfo.setEmail("123@123");
-                userInfo.setType(1);
-                accountService.SignUp(userInfo);
-
-                userInfo.setName("teacher");
-                userInfo.setPassword("123");
-                userInfo.setEmail("123@123");
-                userInfo.setType(0);
-                accountService.SignUp(userInfo);
-
-                CourseInfo courseInfo = new CourseInfo();
-                courseInfo.setTitle("course");
-                courseInfo.setPassword("123");
-                courseService.createCourse(10500L, courseInfo);
-
-                courseInfo.setCourseId(1000L);
-                courseInfo.setPassword("123");
-                courseService.joinCourse(1950000L, courseInfo);
-
-                Integer choiceNum = 5;
-                Integer multiNum = 5;
-                Integer FilledNum = 5;
-                Integer Completion = 5;
-
-                List<QuestionInfo> questionInfoList = new ArrayList<>();
-                for (Integer i = 0; i < choiceNum; i++) {
-                    QuestionInfo questionInfo = new QuestionInfo();
-                    questionInfo.setDescription("des" + i.toString());
-                    questionInfo.setCreateTime(new Date());
-                    questionInfo.setType(0);
-                    questionInfo.setCourseId(1000L);
-                    questionInfo.setSubject("123");
-                    questionInfo.setStandardAnswer("1");
-                    List<OptionInfo> optionList = new ArrayList<>();
-                    for (Long j = 1L; j < 4L; j++) {
-                        optionList.add(new OptionInfo(j, 0L, "123"));
-                    }
-                    questionInfo.setOptionInfoList(optionList);
-                    questionInfoList.add(questionInfo);
-                }
-                for (Integer i = 0; i < multiNum; i++) {
-                    QuestionInfo questionInfo = new QuestionInfo();
-                    questionInfo.setDescription("des" + i.toString());
-                    questionInfo.setCreateTime(new Date());
-                    questionInfo.setType(1);
-                    questionInfo.setCourseId(1000L);
-                    questionInfo.setSubject("123");
-                    questionInfo.setStandardAnswer("1");
-                    List<OptionInfo> optionList = new ArrayList<>();
-                    for (Long j = 1L; j < 4L; j++) {
-                        optionList.add(new OptionInfo(j, 0L, "123"));
-                    }
-                    questionInfo.setOptionInfoList(optionList);
-                    questionInfoList.add(questionInfo);
-                }
-                for (Integer i = 0; i < multiNum; i++) {
-                    QuestionInfo questionInfo = new QuestionInfo();
-                    questionInfo.setDescription("des" + i.toString());
-                    questionInfo.setCreateTime(new Date());
-                    questionInfo.setType(2);
-                    questionInfo.setCourseId(1000L);
-                    questionInfo.setSubject("123");
-                    questionInfo.setStandardAnswer("1");
-                    questionInfoList.add(questionInfo);
-                }
-                for (Integer i = 0; i < multiNum; i++) {
-                    QuestionInfo questionInfo = new QuestionInfo();
-                    questionInfo.setDescription("des" + i.toString());
-                    questionInfo.setCreateTime(new Date());
-                    questionInfo.setType(3);
-                    questionInfo.setCourseId(1000L);
-                    questionInfo.setSubject("123");
-                    questionInfo.setStandardAnswer("1");
-                    questionInfoList.add(questionInfo);
-                }
-                questionService.uploadQuestion(questionInfoList);
-
-                var releaseExamInfo = new ReleaseExamInfo();
-                releaseExamInfo.setCourseId(1000L);
-                releaseExamInfo.setTitle("exam");
-                releaseExamInfo.setChoice_num(2);
-                releaseExamInfo.setMulti_choice_num(2);
-                releaseExamInfo.setFilled_num(2);
-                releaseExamInfo.setCompletion_num(2);
-                releaseExamInfo.setChoice_value(2);
-                releaseExamInfo.setMulti_choice_value(2);
-                releaseExamInfo.setFilled_value(2);
-                releaseExamInfo.setCompletion_value(2);
-                releaseExamInfo.setStart_time("2021-12-16 12:12:15");
-                releaseExamInfo.setEnd_time(new Date());
-                examService.ReleaseTest(1000L, releaseExamInfo);
-            }
+//            {
+//                var userInfo = new UserInfo();
+//                userInfo.setName("student");
+//                userInfo.setPassword("123");
+//                userInfo.setEmail("123@123");
+//                userInfo.setType(1);
+//                accountService.SignUp(userInfo);
+//
+//                userInfo.setName("teacher");
+//                userInfo.setPassword("123");
+//                userInfo.setEmail("123@123");
+//                userInfo.setType(0);
+//                accountService.SignUp(userInfo);
+//
+//                CourseInfo courseInfo = new CourseInfo();
+//                courseInfo.setTitle("course");
+//                courseInfo.setPassword("123");
+//                courseService.createCourse(10500L, courseInfo);
+//
+//                courseInfo.setCourseId(1000L);
+//                courseInfo.setPassword("123");
+//                courseService.joinCourse(1950000L, courseInfo);
+//
+//                Integer choiceNum = 5;
+//                Integer multiNum = 5;
+//                Integer FilledNum = 5;
+//                Integer Completion = 5;
+//
+//                List<QuestionInfo> questionInfoList = new ArrayList<>();
+//                for (Integer i = 0; i < choiceNum; i++) {
+//                    QuestionInfo questionInfo = new QuestionInfo();
+//                    questionInfo.setDescription("des" + i.toString());
+//                    questionInfo.setCreateTime(new Date());
+//                    questionInfo.setType(0);
+//                    questionInfo.setCourseId(1000L);
+//                    questionInfo.setSubject("123");
+//                    questionInfo.setStandardAnswer("1");
+//                    List<OptionInfo> optionList = new ArrayList<>();
+//                    for (Long j = 1L; j < 4L; j++) {
+//                        optionList.add(new OptionInfo(j, 0L, "123"));
+//                    }
+//                    questionInfo.setOptionInfoList(optionList);
+//                    questionInfoList.add(questionInfo);
+//                }
+//                for (Integer i = 0; i < multiNum; i++) {
+//                    QuestionInfo questionInfo = new QuestionInfo();
+//                    questionInfo.setDescription("des" + i.toString());
+//                    questionInfo.setCreateTime(new Date());
+//                    questionInfo.setType(1);
+//                    questionInfo.setCourseId(1000L);
+//                    questionInfo.setSubject("123");
+//                    questionInfo.setStandardAnswer("1");
+//                    List<OptionInfo> optionList = new ArrayList<>();
+//                    for (Long j = 1L; j < 4L; j++) {
+//                        optionList.add(new OptionInfo(j, 0L, "123"));
+//                    }
+//                    questionInfo.setOptionInfoList(optionList);
+//                    questionInfoList.add(questionInfo);
+//                }
+//                for (Integer i = 0; i < multiNum; i++) {
+//                    QuestionInfo questionInfo = new QuestionInfo();
+//                    questionInfo.setDescription("des" + i.toString());
+//                    questionInfo.setCreateTime(new Date());
+//                    questionInfo.setType(2);
+//                    questionInfo.setCourseId(1000L);
+//                    questionInfo.setSubject("123");
+//                    questionInfo.setStandardAnswer("1");
+//                    questionInfoList.add(questionInfo);
+//                }
+//                for (Integer i = 0; i < multiNum; i++) {
+//                    QuestionInfo questionInfo = new QuestionInfo();
+//                    questionInfo.setDescription("des" + i.toString());
+//                    questionInfo.setCreateTime(new Date());
+//                    questionInfo.setType(3);
+//                    questionInfo.setCourseId(1000L);
+//                    questionInfo.setSubject("123");
+//                    questionInfo.setStandardAnswer("1");
+//                    questionInfoList.add(questionInfo);
+//                }
+//                questionService.uploadQuestion(questionInfoList);
+//
+//                var releaseExamInfo = new ReleaseExamInfo();
+//                releaseExamInfo.setCourseId(1000L);
+//                releaseExamInfo.setTitle("exam");
+//                releaseExamInfo.setChoice_num(2);
+//                releaseExamInfo.setMulti_choice_num(2);
+//                releaseExamInfo.setFilled_num(2);
+//                releaseExamInfo.setCompletion_num(2);
+//                releaseExamInfo.setChoice_value(2);
+//                releaseExamInfo.setMulti_choice_value(2);
+//                releaseExamInfo.setFilled_value(2);
+//                releaseExamInfo.setCompletion_value(2);
+//                releaseExamInfo.setStart_time("2021-12-16 12:12:15");
+//                releaseExamInfo.setEnd_time(new Date());
+//                examService.ReleaseTest(1000L, releaseExamInfo);
+//            }
 
 
 

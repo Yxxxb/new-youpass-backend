@@ -4,6 +4,7 @@ import com.youpass.dao.CourseRepository;
 import com.youpass.dao.StuTakeCourseRepository;
 import com.youpass.dao.StudentRepository;
 import com.youpass.dao.TeacherRepository;
+import com.youpass.model.CourseInfo2;
 import com.youpass.pojo.Course;
 import com.youpass.pojo.pk.CourseId;
 import com.youpass.dao.*;
@@ -118,7 +119,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public Result<Object> createCourse(Long teacherId, CourseInfo courseInfo) {
+    public Result<Object> createCourse(Long teacherId, CourseInfo2 courseInfo) {
         if (teacherId == null ||
                 courseInfo.getTitle() == null ||
                 courseInfo.getPassword() == null) {
