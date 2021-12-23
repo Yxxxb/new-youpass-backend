@@ -68,5 +68,10 @@ public class QuestionController {
         return questionService.getStudentDoingQuestion(questionInfo);
     }
 
+    @GetMapping(path="getUnmarkedQuestion")
+    public Result<Object> getUnmarkedQuestion(@RequestParam(name = "courseId")Long courseId,@RequestParam(name = "examId")Long examId){
+        return questionService.getUnmarkedQuestion(courseId,examId);
+    }
+
 
 }

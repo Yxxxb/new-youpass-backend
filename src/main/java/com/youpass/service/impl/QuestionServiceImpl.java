@@ -8,6 +8,7 @@ import com.youpass.model.OptionInfo;
 import com.youpass.model.QuestionInfo;
 import com.youpass.model.ReturnType.QuestionStuReturn;
 import com.youpass.model.StudentExamPaperInfo;
+import com.youpass.model.UnmarkedQuestionInfo;
 import com.youpass.pojo.*;
 import com.youpass.pojo.pk.*;
 import com.youpass.service.QuestionService;
@@ -147,6 +148,71 @@ public class QuestionServiceImpl implements QuestionService {
                 optionInfoList);
 
         return ResultUtil.success(new QuestionStuReturn(studentReturnSet, questionInfoReturn));
+
+    }
+
+    @Override
+    public Result<Object> getUnmarkedQuestion(Long courseId, Long examId) {
+        var res = examRepository.findById(new ExamId(examId,courseId));
+        if(res.isPresent()==false){
+            return ResultUtil.error(ResultEnum.EXAM_MISS);
+        }
+        List<UnmarkedQuestionInfo> infoList = new ArrayList<>();
+        Map<Long,Integer> unmarkedQuestionNumber = new HashMap<>();
+        var examT = res.get();
+        for(var paper:examT.getExaminationPaperSet()){
+            if(paper.getStuPoint()==null){
+                var questionId = paper.getQuestion().getId().getQuestionId();
+                if(unmarkedQuestionNumber.get(questionId)==null){
+                    unmarkedQuestionNumber.put(questionId,1);
+                }else{
+                    unmarkedQuestionNumber.put(questionId,unmarkedQuestionNumber.get(questionId)+1);
+                }
+            }
+        }
+        if(unmarkedQuestionNumber.size()>0){
+            for(var entry:unmarkedQuestionNumber.entrySet()){
+                UnmarkedQuestionInfo unmarkedQuestionInfo = new UnmarkedQuestionInfo();
+                unmarkedQuestionInfo.setQuestionId(entry.getKey());
+                unmarkedQuestionInfo.setRestNumber(entry.getValue());
+                var question = questionRepository.findById(new QuestionId(entry.getKey())).get();
+                unmarkedQuestionInfo.setDescription(question.getDescription());
+                infoList.add(unmarkedQuestionInfo);
+            }
+
+            return ResultUtil.success(infoList);
+        }else{
+            //已经完成了批改
+            //找到这门课这场考试的所有学生
+            Set<Student> studentSet = new HashSet<>();
+            Optional<Exam> optionalExam = examRepository.findById(new ExamId(examId, courseId));
+            if (optionalExam.isEmpty()) {
+                return ResultUtil.error(ResultEnum.INFO_DEFICIENCY);
+            }
+            Exam exam = optionalExam.get();
+            Set<ExamInfo> examInfoSet = exam.getExamInfoSet();
+            Set<ExaminationPaper> examinationPaperSet = exam.getExaminationPaperSet();
+            for (ExamInfo item : examInfoSet) {
+                studentSet.add(item.getStudent());
+            }
+            //对该场考试的每一个学生，计算其总分数
+            for (Student student : studentSet) {
+                Integer sumScore = 0;
+                for (ExaminationPaper examinationPaper : examinationPaperSet) {
+                    if (examinationPaper.getId().getStudentId().equals(student.getId().getStudentId())) {
+                        sumScore += examinationPaper.getStuPoint();
+                    }
+                }
+                for (ExamInfo examInfo : examInfoSet) {
+                    if (examInfo.getStudent().getId().getStudentId().equals(student.getId().getStudentId())) {
+                        examInfo.setScore(sumScore);
+                        examRepository.save(exam);
+                        break;
+                    }
+                }
+            }
+            return ResultUtil.success("该门考试成绩录入成功！");
+        }
 
     }
 }
