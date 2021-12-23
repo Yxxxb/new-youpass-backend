@@ -2,6 +2,7 @@ package com.youpass.controller;
 
 import com.youpass.model.CourseInfo;
 import com.youpass.model.CourseInfo2;
+import com.youpass.model.CourseInfo3;
 import com.youpass.service.CourseService;
 import com.youpass.util.ReturnType.Result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -192,7 +193,7 @@ public class CourseController {
      *        }     * @return
      */
     @PostMapping(path = "joinCourse")
-    public Result<Object> joinCourse(@RequestAttribute(name ="id") Long studentId,@RequestBody CourseInfo courseInfo){
+    public Result<Object> joinCourse(@RequestAttribute(name ="id") Long studentId,@RequestBody CourseInfo3 courseInfo){
         return courseService.joinCourse(studentId,courseInfo);
 
     }
