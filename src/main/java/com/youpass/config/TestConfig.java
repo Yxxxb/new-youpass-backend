@@ -192,7 +192,7 @@ public class TestConfig {
                 releaseExamInfo.setMulti_choice_value(2);
                 releaseExamInfo.setFilled_value(2);
                 releaseExamInfo.setCompletion_value(2);
-                releaseExamInfo.setStart_time(new Date());
+                releaseExamInfo.setStart_time("2021-12-16 12:12:15");
                 releaseExamInfo.setEnd_time(new Date());
                 examService.ReleaseTest(1000L, releaseExamInfo);
             }

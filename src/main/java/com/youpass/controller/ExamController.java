@@ -109,7 +109,8 @@ public class ExamController {
     }
 
     @PostMapping(path = "releasetest")
-    public Result<Object> ReleaseTest(@RequestAttribute(name = "id") Long id, ReleaseExamInfo releaseExamInfo) {
+    public Result<Object> ReleaseTest(@RequestAttribute(name = "id") Long id,@RequestBody ReleaseExamInfo releaseExamInfo) {
+        System.out.println(releaseExamInfo.toString());
         return examService.ReleaseTest(id, releaseExamInfo);
     }
 

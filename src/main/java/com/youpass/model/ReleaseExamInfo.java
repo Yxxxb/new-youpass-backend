@@ -1,8 +1,12 @@
 package com.youpass.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.youpass.pojo.pk.CourseId;
 import com.youpass.pojo.pk.ExamId;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -13,7 +17,9 @@ import java.util.Date;
 public class ReleaseExamInfo {
     private Long courseId;
     private String title;
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date start_time;
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date end_time;
 
     private Integer choice_num;
@@ -64,8 +70,9 @@ public class ReleaseExamInfo {
         return start_time;
     }
 
-    public void setStart_time(Date start_time) {
-        this.start_time = start_time;
+    public void setStart_time(String start_time) throws ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.start_time = format.parse(start_time);
     }
 
     public Date getEnd_time() {
@@ -138,5 +145,23 @@ public class ReleaseExamInfo {
 
     public void setFilled_value(Integer filled_value) {
         this.filled_value = filled_value;
+    }
+
+    @Override
+    public String toString() {
+        return "ReleaseExamInfo{" +
+                "courseId=" + courseId +
+                ", title='" + title + '\'' +
+                ", start_time=" + start_time +
+                ", end_time=" + end_time +
+                ", choice_num=" + choice_num +
+                ", multi_choice_num=" + multi_choice_num +
+                ", completion_num=" + completion_num +
+                ", filled_num=" + filled_num +
+                ", choice_value=" + choice_value +
+                ", multi_choice_value=" + multi_choice_value +
+                ", completion_value=" + completion_value +
+                ", filled_value=" + filled_value +
+                '}';
     }
 }

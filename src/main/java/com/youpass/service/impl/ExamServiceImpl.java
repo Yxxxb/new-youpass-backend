@@ -79,6 +79,7 @@ public class ExamServiceImpl implements ExamService {
     @Override
     @Transactional
     public Result<Object> ReleaseTest(Long teacherIdGet, ReleaseExamInfo releaseExamInfo) {
+        System.out.println(releaseExamInfo.getCourseId());
 
         TeacherId teacherId = new TeacherId(teacherIdGet);
         CourseId courseId = new CourseId(releaseExamInfo.getCourseId());
@@ -89,7 +90,6 @@ public class ExamServiceImpl implements ExamService {
         } else {
             return ResultUtil.error(ResultEnum.COURSE_MISS);
         }
-
 
         // 判断老师和课程匹配
 
@@ -345,16 +345,16 @@ public class ExamServiceImpl implements ExamService {
                         if (ansList.get(i) == 1) {
                             multiList.add(i);
                         }
-                        questionList.add(new QuestionInfoReturn(
-                                s.getQuestion().getId().getQuestionId(),
-                                s.getQuestion().getDescription(),
-                                s.getQuestion().getType(),
-                                s.getNumInPaper(),
-                                options,
-                                done,
-                                null,
-                                multiList));
                     }
+                    questionList.add(new QuestionInfoReturn(
+                            s.getQuestion().getId().getQuestionId(),
+                            s.getQuestion().getDescription(),
+                            s.getQuestion().getType(),
+                            s.getNumInPaper(),
+                            options,
+                            done,
+                            null,
+                            multiList));
                 }
 
             }
