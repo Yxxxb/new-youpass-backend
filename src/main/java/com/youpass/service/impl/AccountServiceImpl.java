@@ -278,8 +278,6 @@ public class AccountServiceImpl implements AccountService {
                     noticeInfoSet.add(noticeInfo);
                 }
 
-
-
                 var teacherId = stuCourse.getCourse().getTeacher().getId().getTeacherId();
                 var teacherName = stuCourse.getCourse().getTeacher().getName();
                 CourseId courseId = new CourseId(courseInfo.getCourseId());
