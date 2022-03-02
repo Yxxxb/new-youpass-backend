@@ -1,5 +1,5 @@
 # New-youpass-backend
-Project backend for JavaEE Course Design 2021 Autumn | TJU
+Project backend for JavaEE Course Design 2021 Fall | TJU
 # Account
 
 1. 注册 SignupController.Post
